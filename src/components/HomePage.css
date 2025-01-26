@@ -1,41 +1,54 @@
 /* Overall Layout */
 .homepage {
   position: relative;
-  height: 100vh;
   width: 100%;
-  background: url("./../Assets/Images/Landing.png") no-repeat center
-    center/contain;
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   color: white;
   text-align: center;
+  overflow: hidden; /* Prevent overflow issues */
 }
 
 /* Navbar */
 .navbar {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 90%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(255, 255, 255, 0.8);
+  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);   */
+  z-index: 1;
 }
 
+/* Logo */
 .navbar .logo {
-  font-size: 1.5rem;
-  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.logo-image {
+  height: 40px;
+  width: auto;
+}
+
+/* Navbar Links */
+.navbar .nav-links {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
 }
 
 .navbar .nav-links a {
-  margin-left: 1rem;
   text-decoration: none;
-  color: white;
+  color: black;
   font-size: 1rem;
+  font-weight: 500;
   transition: color 0.3s;
 }
 
@@ -43,73 +56,58 @@
   color: #f0a500;
 }
 
-/* Main Content */
-.content {
-  max-width: 600px;
-  padding: 2rem;
-}
-
-.content h1 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-}
-
-.content p {
-  font-size: 1.2rem;
-  margin-bottom: 2rem;
-}
-
-/* Buttons */
-.buttons {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-}
-
-.btn {
-  padding: 0.8rem 1.5rem;
+/* Navbar Button */
+.btn-play-nav {
+  padding: 0.6rem 1rem;
+  background-color: #f0a500;
+  color: white;
+  border: none;
+  border-radius: 10px;
   font-size: 1rem;
   font-weight: bold;
-  border: none;
-  border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
-.btn-assessment {
-  background-color: #007bff;
-  color: white;
+.btn-play-nav:hover {
+  background-color: #f0a4006a;
 }
 
-.btn-assessment:hover {
-  background-color: #0056b3;
+/* Image Container */
+.image-container {
+  margin-top: 2rem; /* Space for the fixed navbar */
+  padding: 20px; /* Padding around the image */
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
-.btn-play {
-  background-color: #28a745;
-  color: white;
-}
-
-.btn-play:hover {
-  background-color: #1e7e34;
+.landing-image {
+  width: 90%;
+  height: 90%;
+  border-radius: 10px;
+  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); */
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .navbar .nav-links a {
-    font-size: 0.9rem;
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
-  .content h1 {
-    font-size: 2rem;
+  .nav-links {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 0.5rem;
   }
 
-  .content p {
-    font-size: 1rem;
-  }
-
-  .btn {
-    padding: 0.6rem 1rem;
+  .nav-links a,
+  .btn-play-nav {
+    text-align: left;
+    width: 100%;
+    padding: 0.8rem 1rem;
     font-size: 0.9rem;
   }
 }
