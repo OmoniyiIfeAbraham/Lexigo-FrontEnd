@@ -8,7 +8,7 @@ const HomePage = () => {
       <nav className="navbar">
         <div className="logo">
           <img
-            src={require("./../Assets/Images/Logo.png")}
+            src={require("./../../../Assets/Images/Logo.png")}
             alt="Logo"
             className="logo-image"
           />
@@ -23,7 +23,7 @@ const HomePage = () => {
       {/* Image Container */}
       <div className="image-container">
         <img
-          src={require("./../Assets/Images/Landing.png")}
+          src={require("./../../../Assets/Images/Landing.png")}
           alt="Landing"
           className="landing-image"
         />

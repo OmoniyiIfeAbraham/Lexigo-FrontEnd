@@ -1,11 +1,19 @@
 import logo from "./logo.svg";
 import "./App.css";
-import HomePage from "./components/Homepage";
+import { ReactNotifications } from "react-notifications-component";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import HomePage from "./components/Screens/Landing/Homepage";
 
 function App() {
   return (
     <div>
-      <HomePage />
+      <ReactNotifications />
+      <Router>
+        <Routes>
+          {/* index page */}
+          <Route path="/" element={<HomePage />} />
+        </Routes>
+      </Router>
     </div>
   );
 }
