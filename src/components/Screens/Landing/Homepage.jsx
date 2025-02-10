@@ -38,10 +38,20 @@ const HomePage = () => {
             the world of words with your animal friends!
           </p>
           <div className="flex space-x-4">
-            <button className="bg-green-500 px-4 py-2 rounded-lg hover:bg-green-700 transition">
+            <button
+              className="font-[Nunito] px-4 py-2 rounded-lg transition"
+              style={{ borderColor: Colors.Black, borderWidth: 1 }}
+            >
               Take Assessment
             </button>
-            <button className="bg-red-500 px-4 py-2 rounded-lg hover:bg-red-700 transition">
+            <button
+              className="px-4 py-2 rounded-lg transition font-[Nunito]"
+              style={{
+                color: Colors.White,
+                backgroundColor: Colors.Primary,
+                fontWeight: "bold",
+              }}
+            >
               Let's Play
             </button>
           </div>
