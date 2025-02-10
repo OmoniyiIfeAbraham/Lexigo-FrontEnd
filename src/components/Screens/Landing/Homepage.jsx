@@ -15,7 +15,7 @@ const HomePage = () => {
         <img
           src={require("./../../../Assets/Images/Landing/LandingImg.png")}
           alt="Banner"
-          className="w-full h-[calc(100vh-120px)] object-cover rounded-lg"
+          className="w-full h-[calc(100vh-120px)] md:object-fit rounded-lg"
         />
         {/* Overlay Text and Buttons */}
         <div className="absolute inset-0 flex flex-col justify-center items-center md:items-start bg-black bg-opacity-0 p-6 rounded-lg">
