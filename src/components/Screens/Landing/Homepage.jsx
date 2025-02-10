@@ -1,9 +1,10 @@
 import React from "react";
 import { Colors } from "../../Utils/Colors";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import NavComp from "../Components/LandingComp/NavComp";
 
 const HomePage = () => {
+  const navigate = useNavigate();
   return (
     <div className="h-screen flex flex-col">
       {/* Navigation Bar */}
@@ -51,6 +52,7 @@ const HomePage = () => {
                 backgroundColor: Colors.Primary,
                 fontWeight: "bold",
               }}
+              onClick={() => navigate("/auth/signin")}
             >
               Let's Play
             </button>

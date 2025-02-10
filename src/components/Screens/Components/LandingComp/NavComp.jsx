@@ -1,24 +1,25 @@
 import React from "react";
 import { Colors } from "../../../Utils/Colors";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const NavComp = () => {
+  const navigate = useNavigate();
   return (
     <div>
       <nav
         className="flex justify-between items-center p-4 h-[70px]"
         style={{ backgroundColor: Colors.White }}
       >
-        <div className="logo">
+        <button className="logo" onClick={() => navigate("/")}>
           <img
             src={require("./../../../../Assets/Images/Logo.png")}
             alt="Logo"
             className="h-12"
           />
-        </div>
+        </button>
         <div className="flex items-center space-x-6">
           <Link
-            href="#"
+            to="/"
             className="font-[Nunito]"
             style={{ color: Colors.Black }}
           >
@@ -38,6 +39,7 @@ const NavComp = () => {
               backgroundColor: Colors.Primary,
               fontWeight: "bold",
             }}
+            onClick={() => navigate("/auth/signin")}
           >
             Let's Play
           </button>
