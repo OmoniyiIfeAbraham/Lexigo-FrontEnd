@@ -4,10 +4,15 @@ import FormTitle from "./../Components/Form/FormTitle";
 import FormInput from "./../Components/Form/FormInput";
 import { Colors } from "./../../Utils/Colors";
 import { Link } from "react-router-dom";
-import "./SignInStyle.css";
+import "./SignUpStyle.css";
 
-const SignIn = () => {
-  const [inputs, setInputs] = useState({ email: "", password: "" });
+const SignUp = () => {
+  const [inputs, setInputs] = useState({
+    email: "",
+    password: "",
+    name: "",
+    type: "",
+  });
 
   const handleChange = (e) => {
     let { name, value } = e.target;
@@ -34,15 +39,32 @@ const SignIn = () => {
       {/* Right Section (Form) */}
       <div className="right-section w-full md:w-1/2 h-1/2 md:h-full flex flex-col items-center justify-center p-6">
         {/* Title */}
-        <FormTitle title="Hello Friend!" subTitle="Login to Learn and Play" />
+        <FormTitle
+          title="Hello Friend!"
+          subTitle="Create Your Lexigo account."
+        />
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="w-full max-w-md">
+          <FormInput
+            label="Child's Name"
+            type="text"
+            name="name"
+            input={inputs.name}
+            handleChange={handleChange}
+          />
           <FormInput
             label="Email"
             type="email"
             name="email"
             input={inputs.email}
+            handleChange={handleChange}
+          />
+          <FormInput
+            label="Dyslexia Type"
+            type="text"
+            name="type"
+            input={inputs.type}
             handleChange={handleChange}
           />
           <FormInput
@@ -66,7 +88,7 @@ const SignIn = () => {
             }}
             onClick={() => {}}
           >
-            Sign in
+            Sign up
           </button>
         </form>
 
@@ -80,9 +102,9 @@ const SignIn = () => {
 
         {/* Sign-up Link */}
         <div className="flex flex-row mt-10">
-          <p className="font-[Nunito]">Don't have an account?</p>
-          <Link to="/auth/signup">
-            <p className="font-[Nunito] font-bold ml-1">Create account</p>
+          <p className="font-[Nunito]">Have an account?</p>
+          <Link to="/auth/signin">
+            <p className="font-[Nunito] font-bold ml-1">Login</p>
           </Link>
         </div>
       </div>
@@ -90,4 +112,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default SignUp;

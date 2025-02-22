@@ -4,6 +4,7 @@ import { ReactNotifications } from "react-notifications-component";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import HomePage from "./components/Screens/Landing/Homepage";
 import SignIn from "./components/Screens/Auth/SignIn";
+import SignUp from "./components/Screens/Auth/SignUp";
 import ComingSoon from "./components/Screens/ComingSoon";
 
 function App() {
@@ -16,6 +17,8 @@ function App() {
           <Route path="/" element={<HomePage />} />
           {/* sign in page */}
           <Route path="/auth/signin" element={<SignIn />} />
+          {/* sign up page */}
+          <Route path="/auth/signup" element={<SignUp />} />
           {/* coming soon */}
           <Route path="/coming-soon" element={<ComingSoon />} />
         </Routes>

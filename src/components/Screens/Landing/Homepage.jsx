@@ -2,6 +2,7 @@ import React from "react";
 import { Colors } from "../../Utils/Colors";
 import { Link, useNavigate } from "react-router-dom";
 import NavComp from "../Components/LandingComp/NavComp";
+import "./HomePage.css";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -11,11 +12,11 @@ const HomePage = () => {
       <NavComp />
 
       {/* Image Section */}
-      <div className="flex-grow relative mx-12" style={{ marginTop: "25px" }}>
+      <div className="image-div flex-grow relative mx-12" style={{ marginTop: "25px" }}>
         <img
           src={require("./../../../Assets/Images/Landing/LandingImg.png")}
           alt="Banner"
-          className="w-full h-[calc(100vh-120px)] md:object-fit rounded-lg"
+          className="image w-full h-[calc(100vh-120px)] md:object-fit rounded-lg"
         />
         {/* Overlay Text and Buttons */}
         <div className="absolute inset-0 flex flex-col justify-center items-center md:items-start bg-black bg-opacity-0 p-6 rounded-lg">
