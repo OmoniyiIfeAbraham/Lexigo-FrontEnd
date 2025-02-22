@@ -40,6 +40,7 @@ const HomePage = () => {
           </p>
           <div className="flex space-x-4">
             <button
+              onClick={() => navigate("/coming-soon")}
               className="font-[Nunito] px-4 py-2 rounded-lg transition"
               style={{ borderColor: Colors.Black, borderWidth: 1 }}
             >

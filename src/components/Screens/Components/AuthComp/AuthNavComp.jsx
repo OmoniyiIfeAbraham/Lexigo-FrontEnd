@@ -22,7 +22,7 @@ const Header = () => {
       <img
         src={require("./../../../../Assets/Images/Auth/Lexigo Logo 1.png")}
         alt="Logo"
-        className="h-10"
+        className="h-10 mt-2"
       />
     </div>
   );

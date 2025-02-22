@@ -1,7 +1,7 @@
 import React from "react";
 import { Colors } from "../../../Utils/Colors";
 
-const FormInput = ({ label, type }) => {
+const FormInput = ({ label, type, input, handleChange, name }) => {
   return (
     <div style={{ marginTop: 10 }}>
       <label className="font-[Nunito]" style={{ fontSize: 16 }}>
@@ -19,6 +19,9 @@ const FormInput = ({ label, type }) => {
         }}
         className="w-full px-5 mt-2"
         type={type}
+        name={name}
+        value={input}
+        onChange={handleChange}
         onFocus={(e) => (e.target.style.borderColor = Colors.Primary)} // Change border color when active
         onBlur={(e) => (e.target.style.borderColor = Colors.Black)} // Reset border color when inactive
       />

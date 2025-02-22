@@ -26,7 +26,7 @@ const NavComp = () => {
             Home
           </Link>
           <Link
-            href="#"
+            to="/coming-soon"
             className="font-[Nunito]"
             style={{ color: Colors.Black }}
           >
