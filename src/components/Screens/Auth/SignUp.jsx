@@ -14,6 +14,12 @@ const SignUp = () => {
     type: "",
   });
 
+  const options = [
+    { label: "I'm not sure", value: "" },
+    { label: "Phonological Dyslexia", value: "Phonological Dyslexia" },
+    { label: "Surface Dyslexia", value: "Surface Dyslexia" },
+  ];
+
   const handleChange = (e) => {
     let { name, value } = e.target;
     setInputs({ ...inputs, [name]: value });
@@ -62,10 +68,11 @@ const SignUp = () => {
           />
           <FormInput
             label="Dyslexia Type"
-            type="text"
+            type="select"
             name="type"
             input={inputs.type}
             handleChange={handleChange}
+            options={options}
           />
           <FormInput
             label="Password"
