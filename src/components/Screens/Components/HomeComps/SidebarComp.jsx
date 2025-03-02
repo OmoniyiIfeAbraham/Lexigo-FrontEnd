@@ -5,8 +5,9 @@ import NavItem from "./NavItemComp";
 import { Link } from "react-router-dom";
 import "./SidebarCompStyle.css";
 
-const Sidebar = ({ active }) => {
+const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [active, setActive] = useState("Home");
 
   const toggleSidebar = () => setIsOpen(!isOpen);
 
@@ -37,24 +38,42 @@ const Sidebar = ({ active }) => {
 
         {/* Nav Items */}
         <nav className="flex flex-col w-full space-y-4">
-          <div className={active !== "Home" ? "active-tab" : null}>
+          <button
+            className={active === "Home" ? "active-tab" : null}
+            onClick={() => setActive("Home")}
+          >
             <NavItem
               icon={<Home size={20} color={Colors.White} />}
               text="Home"
             />
-          </div>
-          <NavItem
-            icon={<Keyboard size={20} color={Colors.White} />}
-            text="Type Test"
-          />
-          <NavItem
-            icon={<User size={20} color={Colors.White} />}
-            text="Profile"
-          />
-          <NavItem
-            icon={<LogOut size={20} color={Colors.White} />}
-            text="Logout"
-          />
+          </button>
+          <button
+            className={active === "Type Test" ? "active-tab" : null}
+            onClick={() => setActive("Type Test")}
+          >
+            <NavItem
+              icon={<Keyboard size={20} color={Colors.White} />}
+              text="Type Test"
+            />
+          </button>
+          <button
+            className={active === "Profile" ? "active-tab" : null}
+            onClick={() => setActive("Profile")}
+          >
+            <NavItem
+              icon={<User size={20} color={Colors.White} />}
+              text="Profile"
+            />
+          </button>
+          <button
+            className={active === "Logout" ? "active-tab" : null}
+            onClick={() => setActive("Logout")}
+          >
+            <NavItem
+              icon={<LogOut size={20} color={Colors.White} />}
+              text="Logout"
+            />
+          </button>
         </nav>
       </div>
 
