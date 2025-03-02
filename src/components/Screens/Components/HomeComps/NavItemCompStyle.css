@@ -1,0 +1,4 @@
+/* Hover Effect */
+.main-div:hover {
+  background-color: #ffe2ca !important; /* or any desired color */
+}

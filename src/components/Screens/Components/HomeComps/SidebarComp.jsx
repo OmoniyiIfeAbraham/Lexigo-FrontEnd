@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { Home, Keyboard, User, LogOut, Menu, X } from "lucide-react";
+import { Colors } from "../../../Utils/Colors";
+import NavItem from "./NavItemComp";
+import { Link } from "react-router-dom";
+import "./SidebarCompStyle.css";
 
-const Sidebar = () => {
+const Sidebar = ({ active }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleSidebar = () => setIsOpen(!isOpen);
@@ -18,19 +22,39 @@ const Sidebar = () => {
 
       {/* Sidebar */}
       <div
-        className={`fixed md:relative h-screen bg-gray-900 text-white w-64 p-5 transition-transform ${
+        className={`fixed md:relative h-screen text-white w-64 p-5 transition-transform ${
           isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
         } md:flex flex-col items-center md:w-64`}
+        style={{ backgroundColor: Colors.White }}
       >
         {/* Logo */}
-        <div className="text-xl font-bold mb-8">🚀 My Logo</div>
+        <Link to="/home" className="text-xl font-bold mb-8">
+          <img
+            src={require("./../../../../Assets/Images/Auth/Lexigo Logo 1.png")}
+            alt="logo"
+          />
+        </Link>
 
         {/* Nav Items */}
         <nav className="flex flex-col w-full space-y-4">
-          <NavItem icon={<Home size={20} />} text="Home" />
-          <NavItem icon={<Keyboard size={20} />} text="Type Test" />
-          <NavItem icon={<User size={20} />} text="Profile" />
-          <NavItem icon={<LogOut size={20} />} text="Logout" />
+          <div className={active !== "Home" ? "active-tab" : null}>
+            <NavItem
+              icon={<Home size={20} color={Colors.White} />}
+              text="Home"
+            />
+          </div>
+          <NavItem
+            icon={<Keyboard size={20} color={Colors.White} />}
+            text="Type Test"
+          />
+          <NavItem
+            icon={<User size={20} color={Colors.White} />}
+            text="Profile"
+          />
+          <NavItem
+            icon={<LogOut size={20} color={Colors.White} />}
+            text="Logout"
+          />
         </nav>
       </div>
 
@@ -42,16 +66,6 @@ const Sidebar = () => {
         ></div>
       )}
     </>
-  );
-};
-
-// Navbar Item Component
-const NavItem = ({ icon, text }) => {
-  return (
-    <div className="flex items-center space-x-3 p-3 hover:bg-gray-800 rounded-lg cursor-pointer">
-      {icon}
-      <span className="text-lg">{text}</span>
-    </div>
   );
 };
 
