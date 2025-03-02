@@ -47,7 +47,7 @@ const Quiz = () => {
             <img
               src={require("./../../../Assets/Images/HomePage/Lexigo dog 2.png")}
               alt="Dog"
-              className="absolute -bottom-6 -left-6 w-20 h-20"
+              className="absolute -bottom-12 -left-20 w-20 h-20"
             />
           </div>
         </div>
