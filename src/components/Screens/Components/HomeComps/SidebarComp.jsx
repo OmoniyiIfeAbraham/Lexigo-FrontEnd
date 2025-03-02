@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Home, Keyboard, User, LogOut, Menu, X } from "lucide-react";
+import { Home, ClipboardList, User, LogOut, Menu, X } from "lucide-react";
 import { Colors } from "../../../Utils/Colors";
 import NavItem from "./NavItemComp";
 import { Link } from "react-router-dom";
@@ -15,7 +15,8 @@ const Sidebar = () => {
     <>
       {/* Mobile Toggle Button */}
       <button
-        className="md:hidden p-3 fixed top-4 left-4 bg-gray-800 text-white rounded-lg z-50"
+        className="md:hidden p-3 fixed top-4 left-4 text-white rounded-lg z-50"
+        style={{ backgroundColor: Colors.Primary }}
         onClick={toggleSidebar}
       >
         {isOpen ? <X size={24} /> : <Menu size={24} />}
@@ -43,8 +44,14 @@ const Sidebar = () => {
             onClick={() => setActive("Home")}
           >
             <NavItem
-              icon={<Home size={20} color={Colors.White} />}
+              icon={
+                <Home
+                  size={20}
+                  color={active === "Home" ? Colors.Primary : Colors.White}
+                />
+              }
               text="Home"
+              active={active === "Home" ? true : false}
             />
           </button>
           <button
@@ -52,8 +59,14 @@ const Sidebar = () => {
             onClick={() => setActive("Type Test")}
           >
             <NavItem
-              icon={<Keyboard size={20} color={Colors.White} />}
+              icon={
+                <ClipboardList
+                  size={20}
+                  color={active === "Type Test" ? Colors.Primary : Colors.White}
+                />
+              }
               text="Type Test"
+              active={active === "Type Test" ? true : false}
             />
           </button>
           <button
@@ -61,8 +74,15 @@ const Sidebar = () => {
             onClick={() => setActive("Profile")}
           >
             <NavItem
-              icon={<User size={20} color={Colors.White} />}
+              icon={
+                <img
+                  src={require("./../../../../Assets/Images/HomePage/Lexigo dog 2.png")}
+                  alt="Profile-img"
+                  style={{ width: 24, height: 24 }}
+                />
+              }
               text="Profile"
+              active={active === "Profile" ? true : false}
             />
           </button>
           <button
@@ -70,20 +90,26 @@ const Sidebar = () => {
             onClick={() => setActive("Logout")}
           >
             <NavItem
-              icon={<LogOut size={20} color={Colors.White} />}
+              icon={
+                <LogOut
+                  size={20}
+                  color={active === "Logout" ? Colors.Primary : Colors.White}
+                />
+              }
               text="Logout"
+              active={active === "Logout" ? true : false}
             />
           </button>
         </nav>
       </div>
 
       {/* Overlay for mobile */}
-      {isOpen && (
+      {/* {isOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 md:hidden"
           onClick={toggleSidebar}
         ></div>
-      )}
+      )} */}
     </>
   );
 };
