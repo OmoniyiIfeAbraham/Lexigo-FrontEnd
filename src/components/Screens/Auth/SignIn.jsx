@@ -3,11 +3,12 @@ import AuthNavComp from "../Components/AuthComp/AuthNavComp";
 import FormTitle from "./../Components/Form/FormTitle";
 import FormInput from "./../Components/Form/FormInput";
 import { Colors } from "./../../Utils/Colors";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./SignInStyle.css";
 
 const SignIn = () => {
   const [inputs, setInputs] = useState({ email: "", password: "" });
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     let { name, value } = e.target;
@@ -17,6 +18,7 @@ const SignIn = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Data: ", inputs);
+    navigate("/home");
   };
   return (
     <div className="flex flex-col md:flex-row items-center justify-start h-screen">
@@ -64,7 +66,6 @@ const SignIn = () => {
               borderStyle: "solid",
               borderColor: Colors.Black,
             }}
-            onClick={() => {}}
           >
             Sign in
           </button>

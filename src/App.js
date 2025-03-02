@@ -6,6 +6,7 @@ import HomePage from "./components/Screens/Landing/Homepage";
 import SignIn from "./components/Screens/Auth/SignIn";
 import SignUp from "./components/Screens/Auth/SignUp";
 import ComingSoon from "./components/Screens/ComingSoon";
+import Home from "./components/Screens/Home/HomePage";
 
 function App() {
   return (
@@ -21,6 +22,8 @@ function App() {
           <Route path="/auth/signup" element={<SignUp />} />
           {/* coming soon */}
           <Route path="/coming-soon" element={<ComingSoon />} />
+          {/* // HomePage */}
+          <Route path="/home" element={<Home />} />
         </Routes>
       </Router>
     </div>
