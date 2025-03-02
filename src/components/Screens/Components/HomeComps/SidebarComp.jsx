@@ -1,13 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Home, ClipboardList, User, LogOut, Menu, X } from "lucide-react";
 import { Colors } from "../../../Utils/Colors";
 import NavItem from "./NavItemComp";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./SidebarCompStyle.css";
 
-const Sidebar = () => {
+const Sidebar = ({ takenQuiz }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [active, setActive] = useState("Home");
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [redirected, setRedirected] = useState(false); // ✅ Prevent multiple redirects
+
+  // Map routes to tab names
+  const screenMap = {
+    "/home": "Home",
+    "/quiz": "Type Test",
+    "/profile": "Profile",
+    "/auth/signin": "Logout",
+  };
+
+  const active = screenMap[location.pathname] || "Home";
+
+  useEffect(() => {
+    console.log(takenQuiz)
+    // ✅ Redirect only once if takenQuiz is false
+    if (takenQuiz === false && !redirected && location.pathname === "/home") {
+      navigate("/quiz", { replace: true });
+      setRedirected(true); // ✅ Mark as redirected
+    }
+  }, [takenQuiz, navigate, location.pathname, redirected]);
 
   const toggleSidebar = () => setIsOpen(!isOpen);
 
@@ -39,10 +60,7 @@ const Sidebar = () => {
 
         {/* Nav Items */}
         <nav className="flex flex-col w-full space-y-4">
-          <button
-            className={active === "Home" ? "active-tab" : null}
-            onClick={() => setActive("Home")}
-          >
+          <Link to="/home" className={active === "Home" ? "active-tab" : ""}>
             <NavItem
               icon={
                 <Home
@@ -51,12 +69,12 @@ const Sidebar = () => {
                 />
               }
               text="Home"
-              active={active === "Home" ? true : false}
+              active={active === "Home"}
             />
-          </button>
-          <button
-            className={active === "Type Test" ? "active-tab" : null}
-            onClick={() => setActive("Type Test")}
+          </Link>
+          <Link
+            to="/quiz"
+            className={active === "Type Test" ? "active-tab" : ""}
           >
             <NavItem
               icon={
@@ -66,12 +84,12 @@ const Sidebar = () => {
                 />
               }
               text="Type Test"
-              active={active === "Type Test" ? true : false}
+              active={active === "Type Test"}
             />
-          </button>
-          <button
-            className={active === "Profile" ? "active-tab" : null}
-            onClick={() => setActive("Profile")}
+          </Link>
+          <Link
+            to="/profile"
+            className={active === "Profile" ? "active-tab" : ""}
           >
             <NavItem
               icon={
@@ -82,12 +100,12 @@ const Sidebar = () => {
                 />
               }
               text="Profile"
-              active={active === "Profile" ? true : false}
+              active={active === "Profile"}
             />
-          </button>
-          <button
-            className={active === "Logout" ? "active-tab" : null}
-            onClick={() => setActive("Logout")}
+          </Link>
+          <Link
+            to="/auth/signin"
+            className={active === "Logout" ? "active-tab" : ""}
           >
             <NavItem
               icon={
@@ -97,19 +115,11 @@ const Sidebar = () => {
                 />
               }
               text="Logout"
-              active={active === "Logout" ? true : false}
+              active={active === "Logout"}
             />
-          </button>
+          </Link>
         </nav>
       </div>
-
-      {/* Overlay for mobile */}
-      {/* {isOpen && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 md:hidden"
-          onClick={toggleSidebar}
-        ></div>
-      )} */}
     </>
   );
 };

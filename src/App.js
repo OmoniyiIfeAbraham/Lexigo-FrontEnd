@@ -7,6 +7,8 @@ import SignIn from "./components/Screens/Auth/SignIn";
 import SignUp from "./components/Screens/Auth/SignUp";
 import ComingSoon from "./components/Screens/ComingSoon";
 import Home from "./components/Screens/Home/HomePage";
+import Quiz from "./components/Screens/Assesment/Quiz";
+import Profile from "./components/Screens/Profile/Profile";
 
 function App() {
   return (
@@ -24,6 +26,10 @@ function App() {
           <Route path="/coming-soon" element={<ComingSoon />} />
           {/* // HomePage */}
           <Route path="/home" element={<Home />} />
+          {/* assessment */}
+          <Route path="/quiz" element={<Quiz />} />
+          {/* profile */}
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </Router>
     </div>
