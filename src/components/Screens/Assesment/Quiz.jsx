@@ -34,7 +34,9 @@ const questions = [
 const Quiz = () => {
   const [takenQuiz, setTakenQuiz] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedOptions, setSelectedOptions] = useState(
+    Array(questions.length).fill(null)
+  );
 
   const navigate = useNavigate();
 
@@ -44,16 +46,27 @@ const Quiz = () => {
   };
 
   const handleNext = () => {
-    if (selectedOption !== null && currentQuestion < questions.length - 1) {
+    if (currentQuestion < questions.length - 1) {
       setCurrentQuestion((prev) => prev + 1);
-      setSelectedOption(null); // Reset selection for next question
     }
+  };
+
+  const handlePrevious = () => {
+    if (currentQuestion > 0) {
+      setCurrentQuestion((prev) => prev - 1);
+    }
+  };
+
+  const handleOptionSelect = (index) => {
+    const updatedSelections = [...selectedOptions];
+    updatedSelections[currentQuestion] = index; // Store selected option for current question
+    setSelectedOptions(updatedSelections);
   };
 
   return (
     <div className="flex relative">
       <Sidebar takenQuiz={takenQuiz} />
-      <main className="flex-1 p-6">
+      <main className="flex-1 p-6" style={{ backgroundColor: Colors.White }}>
         <div className="flex flex-col items-center p-6">
           {/* heading */}
           <h1
@@ -101,16 +114,20 @@ const Quiz = () => {
                   borderRadius: 32,
                   backgroundColor: Colors.Cream,
                   borderColor:
-                    selectedOption === index ? Colors.Orange : Colors.Bisque,
+                    selectedOptions[currentQuestion] === index
+                      ? Colors.Orange
+                      : Colors.Bisque,
                 }}
-                onClick={() => setSelectedOption(index)}
+                onClick={() => handleOptionSelect(index)}
               >
                 <p
                   key={index}
                   className="px-3 py-1 mr-5 font-[Nunito] font-bold"
                   style={{
                     backgroundColor:
-                      selectedOption === index ? Colors.Orange : Colors.Bisque,
+                      selectedOptions[currentQuestion] === index
+                        ? Colors.Orange
+                        : Colors.Bisque,
                     borderRadius: 100,
                     color: Colors.Black,
                   }}
@@ -126,17 +143,47 @@ const Quiz = () => {
               </button>
             ))}
           </div>
-
-          {/* Next Button */}
-          <button
-            className={`mt-6 px-6 py-3 bg-blue-500 text-white text-lg rounded-md ${
-              selectedOption === null ? "opacity-50 cursor-not-allowed" : ""
-            }`}
-            disabled={selectedOption === null}
-            onClick={handleNext}
-          >
-            Next
-          </button>
+        </div>
+        {/* controls */}
+        <div className="w-[100%] flex flex-row justify-between items-center mt-6">
+          {/* previous */}
+          {currentQuestion <= 0 ? (
+            <button>
+              <img
+                src={require("./../../../Assets/Images/AssesmentPage/back-inactive.png")}
+                className="w-20 h-20"
+              />
+            </button>
+          ) : (
+            <button onClick={handlePrevious}>
+              <img
+                src={require("./../../../Assets/Images/AssesmentPage/back-active.png")}
+                className="w-20 h-20"
+              />
+            </button>
+          )}
+          {/* next */}
+          {selectedOptions !== null && currentQuestion < 5 ? (
+            <button onClick={handleNext}>
+              <img
+                src={require("./../../../Assets/Images/AssesmentPage/front.png")}
+                className="w-20 h-20"
+              />
+            </button>
+          ) : currentQuestion === 5 ? (
+            <button
+              className={`mt-6 px-10 py-5 bg-blue-500 text-white text-lg font-[Nunito] font-bold`}
+              style={{
+                borderRadius: 40,
+                backgroundColor: Colors.Secondary,
+                opacity: selectedOptions === null ? 0.5 : 1,
+              }}
+              disabled={selectedOptions === null}
+              onClick={handleNext}
+            >
+              Submit
+            </button>
+          ) : null}
         </div>
       </main>
 

@@ -29,7 +29,7 @@ const Home = () => {
   return (
     <div className="flex">
       {!pass ? <Sidebar takenQuiz={takenQuiz} /> : <Sidebar />}
-      <main className="flex-1 p-6">
+      <main className="flex-1 p-6" style={{ backgroundColor: Colors.White }}>
         {/* Title & Description */}
         <div className="md:ml-10 ml-14">
           <h1 className="font-[Nunito] font-bold text-2xl text-black">
