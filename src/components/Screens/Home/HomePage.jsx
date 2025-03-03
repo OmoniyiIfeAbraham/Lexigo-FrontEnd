@@ -11,6 +11,8 @@ const Home = () => {
   // State for progress bars
   const [phonologicalProgress, setPhonologicalProgress] = useState(10);
   const [surfaceProgress, setSurfaceProgress] = useState(0);
+  const [selectedPhonological, setSelectedPhonological] = useState(false);
+  const [selectedSurface, setSelectedSurface] = useState(false);
   const location = useLocation();
 
   let pass = location.state?.pass;
@@ -60,11 +62,17 @@ const Home = () => {
 
           {/* Surface Image + Progress Bar */}
           <div className="img-main flex flex-col items-center">
-            <img
-              src={require("../../../Assets/Images/HomePage/surface.png")}
-              className="img w-[100%] md:w-[347px] md:h-[226px]"
-              alt="Surface"
-            />
+            <button onClick={() => setSelectedSurface(!selectedSurface)}>
+              <img
+                src={
+                  selectedSurface
+                    ? require("../../../Assets/Images/HomePage/surface selected.png")
+                    : require("../../../Assets/Images/HomePage/surface.png")
+                }
+                className="img w-[100%] md:w-[347px] md:h-[226px]"
+                alt="Surface"
+              />
+            </button>
             <div
               className="w-full mt-2 rounded-full"
               style={{
