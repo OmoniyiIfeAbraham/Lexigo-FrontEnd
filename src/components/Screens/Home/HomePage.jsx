@@ -6,7 +6,7 @@ import "./HomePageStyle.css";
 
 const Home = () => {
   const [takenQuiz, setTakenQuiz] = useState(false);
-  const [type, setType] = useState("");
+  const [type, setType] = useState("Phonological Dyslexia");
   const [showPopup, setShowPopup] = useState(true);
   // State for progress bars
   const [phonologicalProgress, setPhonologicalProgress] = useState(10);
@@ -17,6 +17,15 @@ const Home = () => {
 
   let pass = location.state?.pass;
   console.log("pass: ", pass);
+
+  const handlePhonologicalChange = () => {
+    setSelectedPhonological(!selectedPhonological);
+    setSelectedSurface(false);
+  };
+  const handleSurfaceChange = () => {
+    setSelectedSurface(!selectedSurface);
+    setSelectedPhonological(false);
+  };
   return (
     <div className="flex">
       {!pass ? <Sidebar takenQuiz={takenQuiz} /> : <Sidebar />}
@@ -35,11 +44,25 @@ const Home = () => {
         <div className="content flex flex-col md:flex-row gap-6 mt-14 items-center ml-10">
           {/* Phonological Image + Progress Bar */}
           <div className="img-main flex flex-col items-center md:mr-14">
-            <img
-              src={require("../../../Assets/Images/HomePage/phonological.png")}
-              className="img w-[100%] md:w-[347px] md:h-[226px]"
-              alt="Phonological"
-            />
+            <button onClick={() => handlePhonologicalChange()}>
+              {type === "Phonological Dyslexia" ? (
+                <img
+                  src={require("../../../Assets/Images/HomePage/phonological type.png")}
+                  className="img w-[100%] md:w-[347px] md:h-[226px]"
+                  alt="Phonological"
+                />
+              ) : (
+                <img
+                  src={
+                    selectedPhonological
+                      ? require("../../../Assets/Images/HomePage/phonological selected.png")
+                      : require("../../../Assets/Images/HomePage/phonological.png")
+                  }
+                  className="img w-[100%] md:w-[347px] md:h-[226px]"
+                  alt="Phonological"
+                />
+              )}
+            </button>
             <div
               className="w-full mt-2 rounded-full"
               style={{
@@ -62,7 +85,7 @@ const Home = () => {
 
           {/* Surface Image + Progress Bar */}
           <div className="img-main flex flex-col items-center">
-            <button onClick={() => setSelectedSurface(!selectedSurface)}>
+            <button onClick={() => handleSurfaceChange()}>
               <img
                 src={
                   selectedSurface
