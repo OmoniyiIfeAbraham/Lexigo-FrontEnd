@@ -4,8 +4,38 @@ import { useNavigate } from "react-router-dom";
 import "./QuizStyle.css";
 import { Colors } from "../../Utils/Colors";
 
+const questions = [
+  {
+    question: "Which word starts with the same sound as ‘dog’?",
+    options: ["bat", "duck", "cat"],
+  },
+  {
+    question: "What word do these sounds make? /c/ /a/ /t/",
+    options: ["cat", "bat", "car"],
+  },
+  {
+    question: "Which word rhymes with ‘hat’?",
+    options: ["mat", "dog", "sun"],
+  },
+  {
+    question: "Which letter is different?",
+    options: ["b", "d", "b"],
+  },
+  {
+    question: "Which word looks like ‘mop’?",
+    options: ["mop", "pop", "cop"],
+  },
+  {
+    question: "Which one has the letter ‘p’?",
+    options: ["pan", "ban", "man"],
+  },
+];
+
 const Quiz = () => {
   const [takenQuiz, setTakenQuiz] = useState(false);
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [selectedOption, setSelectedOption] = useState(null);
+
   const navigate = useNavigate();
 
   const handleCancel = () => {
@@ -13,11 +43,63 @@ const Quiz = () => {
     navigate("/home", { state: { pass: true } });
   };
 
+  const handleNext = () => {
+    if (selectedOption !== null && currentQuestion < questions.length - 1) {
+      setCurrentQuestion((prev) => prev + 1);
+      setSelectedOption(null); // Reset selection for next question
+    }
+  };
+
   return (
     <div className="flex relative">
       <Sidebar takenQuiz={takenQuiz} />
       <main className="flex-1 p-6">
-        <h1>Assessment Test</h1>
+        <div className="flex flex-col items-center p-6">
+          {/* Progress Bar with 6 Segments */}
+          <div className="w-full max-w-md flex justify-between mb-4">
+            {Array.from({ length: 6 }, (_, index) => (
+              <div
+                key={index}
+                className={`w-1/6 h-4 mx-1 rounded-lg ${
+                  index <= currentQuestion ? "bg-blue-500" : "bg-gray-300"
+                }`}
+              />
+            ))}
+          </div>
+
+          {/* Question */}
+          <h2 className="text-xl font-bold text-center mb-4">
+            {questions[currentQuestion].question}
+          </h2>
+
+          {/* Options */}
+          <div className="w-full max-w-md flex flex-col gap-4">
+            {questions[currentQuestion].options.map((option, index) => (
+              <button
+                key={index}
+                className={`px-6 py-3 w-full text-lg rounded-md border-2 ${
+                  selectedOption === index
+                    ? "bg-blue-500 text-white border-blue-500"
+                    : "border-gray-400"
+                }`}
+                onClick={() => setSelectedOption(index)}
+              >
+                {String.fromCharCode(97 + index).toUpperCase()}. {option}
+              </button>
+            ))}
+          </div>
+
+          {/* Next Button */}
+          <button
+            className={`mt-6 px-6 py-3 bg-blue-500 text-white text-lg rounded-md ${
+              selectedOption === null ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+            disabled={selectedOption === null}
+            onClick={handleNext}
+          >
+            Next
+          </button>
+        </div>
       </main>
 
       {/* Popup when takenQuiz is false */}
@@ -62,6 +144,7 @@ const Quiz = () => {
                   borderStyle: "solid",
                   borderColor: Colors.Primary,
                 }}
+                onClick={() => setTakenQuiz(true)}
               >
                 Begin
               </button>

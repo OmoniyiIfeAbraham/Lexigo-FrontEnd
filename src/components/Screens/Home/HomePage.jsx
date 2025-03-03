@@ -6,7 +6,7 @@ import "./HomePageStyle.css";
 
 const Home = () => {
   const [takenQuiz, setTakenQuiz] = useState(false);
-  const [type, setType] = useState("Surface Dyslexia");
+  const [type, setType] = useState("");
   const [showPopup, setShowPopup] = useState(true);
   // State for progress bars
   const [phonologicalProgress, setPhonologicalProgress] = useState(10);
