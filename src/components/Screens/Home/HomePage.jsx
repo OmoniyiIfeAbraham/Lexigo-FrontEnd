@@ -6,7 +6,7 @@ import "./HomePageStyle.css";
 
 const Home = () => {
   const [takenQuiz, setTakenQuiz] = useState(false);
-  const [type, setType] = useState("Phonological Dyslexia");
+  const [type, setType] = useState("Surface Dyslexia");
   const [showPopup, setShowPopup] = useState(true);
   // State for progress bars
   const [phonologicalProgress, setPhonologicalProgress] = useState(10);
@@ -47,7 +47,11 @@ const Home = () => {
             <button onClick={() => handlePhonologicalChange()}>
               {type === "Phonological Dyslexia" ? (
                 <img
-                  src={require("../../../Assets/Images/HomePage/phonological type.png")}
+                  src={
+                    selectedPhonological
+                      ? require("../../../Assets/Images/HomePage/phonological type.png")
+                      : require("../../../Assets/Images/HomePage/phonological n type.png")
+                  }
                   className="img w-[100%] md:w-[347px] md:h-[226px]"
                   alt="Phonological"
                 />
@@ -86,15 +90,27 @@ const Home = () => {
           {/* Surface Image + Progress Bar */}
           <div className="img-main flex flex-col items-center">
             <button onClick={() => handleSurfaceChange()}>
-              <img
-                src={
-                  selectedSurface
-                    ? require("../../../Assets/Images/HomePage/surface selected.png")
-                    : require("../../../Assets/Images/HomePage/surface.png")
-                }
-                className="img w-[100%] md:w-[347px] md:h-[226px]"
-                alt="Surface"
-              />
+              {type === "Surface Dyslexia" ? (
+                <img
+                  src={
+                    selectedSurface
+                      ? require("../../../Assets/Images/HomePage/surface selected type.png")
+                      : require("../../../Assets/Images/HomePage/surface type.png")
+                  }
+                  className="img w-[100%] md:w-[347px] md:h-[226px]"
+                  alt="Surface"
+                />
+              ) : (
+                <img
+                  src={
+                    selectedSurface
+                      ? require("../../../Assets/Images/HomePage/surface selected.png")
+                      : require("../../../Assets/Images/HomePage/surface.png")
+                  }
+                  className="img w-[100%] md:w-[347px] md:h-[226px]"
+                  alt="Surface"
+                />
+              )}
             </button>
             <div
               className="w-full mt-2 rounded-full"
