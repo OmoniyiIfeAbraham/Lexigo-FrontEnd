@@ -6,4 +6,5 @@ export const Colors = {
   Bisque: "#FFE2CA",
   Cream: "#FFF3E9",
   Pink60: "#FF6664A6",
+  Orange: "#FF9F4F",
 };

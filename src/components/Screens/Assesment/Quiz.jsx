@@ -6,28 +6,28 @@ import { Colors } from "../../Utils/Colors";
 
 const questions = [
   {
-    question: "Which word starts with the same sound as ‘dog’?",
-    options: ["bat", "duck", "cat"],
+    question: "Which word starts with the same sound as ‘Dog’?",
+    options: ["Bat", "Duck", "Cat"],
   },
   {
     question: "What word do these sounds make? /c/ /a/ /t/",
-    options: ["cat", "bat", "car"],
+    options: ["Cat", "Bat", "Car"],
   },
   {
-    question: "Which word rhymes with ‘hat’?",
-    options: ["mat", "dog", "sun"],
+    question: "Which word rhymes with ‘Hat’?",
+    options: ["Mat", "Dog", "Sun"],
   },
   {
     question: "Which letter is different?",
     options: ["b", "d", "b"],
   },
   {
-    question: "Which word looks like ‘mop’?",
-    options: ["mop", "pop", "cop"],
+    question: "Which word looks like ‘Mop’?",
+    options: ["Mop", "Pop", "Cop"],
   },
   {
     question: "Which one has the letter ‘p’?",
-    options: ["pan", "ban", "man"],
+    options: ["Pan", "Ban", "Man"],
   },
 ];
 
@@ -55,20 +55,39 @@ const Quiz = () => {
       <Sidebar takenQuiz={takenQuiz} />
       <main className="flex-1 p-6">
         <div className="flex flex-col items-center p-6">
+          {/* heading */}
+          <h1
+            className="font-[Nunito] font-bold text-[30px] my-6"
+            style={{ color: Colors.Black }}
+          >
+            Assessment Test
+          </h1>
           {/* Progress Bar with 6 Segments */}
-          <div className="w-full max-w-md flex justify-between mb-4">
+          <div className="w-full max-w-md flex justify-between mb-6">
             {Array.from({ length: 6 }, (_, index) => (
               <div
                 key={index}
-                className={`w-1/6 h-4 mx-1 rounded-lg ${
-                  index <= currentQuestion ? "bg-blue-500" : "bg-gray-300"
-                }`}
+                className={`w-1/6 h-[10px] mx-1 rounded-lg`}
+                style={{
+                  backgroundColor:
+                    index <= currentQuestion ? Colors.Secondary : Colors.Bisque,
+                }}
               />
             ))}
           </div>
+          {/* progress */}
+          <p
+            className="text-center mb-6 text-lg font-semibold font-[Nunito]"
+            style={{ color: Colors.Black }}
+          >
+            {currentQuestion + 1} / {questions.length}
+          </p>
 
           {/* Question */}
-          <h2 className="text-xl font-bold text-center mb-4">
+          <h2
+            className="text-xl font-normal font-[Nunito] text-center mb-6"
+            style={{ color: Colors.Black }}
+          >
             {questions[currentQuestion].question}
           </h2>
 
@@ -77,14 +96,33 @@ const Quiz = () => {
             {questions[currentQuestion].options.map((option, index) => (
               <button
                 key={index}
-                className={`px-6 py-3 w-full text-lg rounded-md border-2 ${
-                  selectedOption === index
-                    ? "bg-blue-500 text-white border-blue-500"
-                    : "border-gray-400"
-                }`}
+                className={`px-6 py-2 w-full text-lg border-2 flex flex-row items-center`}
+                style={{
+                  borderRadius: 32,
+                  backgroundColor: Colors.Cream,
+                  borderColor:
+                    selectedOption === index ? Colors.Orange : Colors.Bisque,
+                }}
                 onClick={() => setSelectedOption(index)}
               >
-                {String.fromCharCode(97 + index).toUpperCase()}. {option}
+                <p
+                  key={index}
+                  className="px-3 py-1 mr-5 font-[Nunito] font-bold"
+                  style={{
+                    backgroundColor:
+                      selectedOption === index ? Colors.Orange : Colors.Bisque,
+                    borderRadius: 100,
+                    color: Colors.Black,
+                  }}
+                >
+                  {String.fromCharCode(97 + index).toUpperCase()}
+                </p>
+                <p
+                  className="font-[Nunito] font-bold"
+                  style={{ color: Colors.Black }}
+                >
+                  {option}
+                </p>
               </button>
             ))}
           </div>
