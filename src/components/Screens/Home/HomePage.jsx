@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Sidebar from "../Components/HomeComps/SidebarComp";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Colors } from "../../Utils/Colors";
 import "./HomePageStyle.css";
 
@@ -14,6 +14,7 @@ const Home = () => {
   const [selectedPhonological, setSelectedPhonological] = useState(false);
   const [selectedSurface, setSelectedSurface] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   let pass = location.state?.pass;
   console.log("pass: ", pass);
@@ -25,6 +26,12 @@ const Home = () => {
   const handleSurfaceChange = () => {
     setSelectedSurface(!selectedSurface);
     setSelectedPhonological(false);
+  };
+
+  const handleStart = () => {
+    if (selectedPhonological) {
+      navigate("/phonological-path");
+    }
   };
   return (
     <div className="flex">
@@ -146,6 +153,7 @@ const Home = () => {
               borderStyle: "solid",
               borderColor: Colors.Pink60,
             }}
+            onClick={handleStart}
           >
             Start
           </button>

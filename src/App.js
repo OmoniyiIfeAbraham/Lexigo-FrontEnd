@@ -9,6 +9,7 @@ import ComingSoon from "./components/Screens/ComingSoon";
 import Home from "./components/Screens/Home/HomePage";
 import Quiz from "./components/Screens/Assesment/Quiz";
 import Profile from "./components/Screens/Profile/Profile";
+import Path from "./components/Screens/Phonological Modules/Path";
 
 function App() {
   return (
@@ -30,6 +31,8 @@ function App() {
           <Route path="/quiz" element={<Quiz />} />
           {/* profile */}
           <Route path="/profile" element={<Profile />} />
+          {/* phonological modules */}
+          <Route path="/phonological-path" element={<Path />} />
         </Routes>
       </Router>
     </div>
