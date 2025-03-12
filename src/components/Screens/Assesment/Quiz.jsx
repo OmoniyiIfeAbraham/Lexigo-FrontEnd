@@ -3,6 +3,7 @@ import Sidebar from "../Components/HomeComps/SidebarComp";
 import { useNavigate } from "react-router-dom";
 import "./QuizStyle.css";
 import { Colors } from "../../Utils/Colors";
+import { ChevronLeft, RotateCw } from "lucide-react";
 
 const questions = [
   {
@@ -180,7 +181,7 @@ const Quiz = () => {
                 opacity: selectedOptions === null ? 0.5 : 1,
               }}
               disabled={selectedOptions === null}
-              onClick={handleNext}
+              onClick={() => setShowResult(true)}
             >
               Submit
             </button>
@@ -246,33 +247,87 @@ const Quiz = () => {
         </div>
       )}
 
-      <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
-        {/* popup container */}
-        <div className="successPopup bg-white p-6 shadow-lg relative w-[591px] text-start flex flex-col items-center">
-          <img
-            src={require("./../../../Assets/Images/AssesmentPage/success.png")}
-            alt="success"
-            className="w-[416px] h-[60px]"
-          />
-          <img
-            src={require("./../../../Assets/Images/HomePage/Lexigo dog 2.png")}
-            alt="Dog"
-            className="w-20 h-20"
-          />
-          <p
-            className="successTitle text-[24px] font-[Nunito]"
-            style={{ color: Colors.RoastedCoffee }}
-          >
-            What you got
-          </p>
+      {showResult && (
+        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
+          {/* popup container */}
           <div
-            className="score w-[60%] h-[86px] flex justify-center items-center"
-            style={{ backgroundColor: Colors.BeastyBrown }}
+            className="successPopup p-6 shadow-lg relative w-[591px] text-start flex flex-col items-center"
+            style={{ backgroundColor: Colors.Cream }}
           >
-            <p>Score: 3 / 6</p>
+            <img
+              src={require("./../../../Assets/Images/AssesmentPage/success.png")}
+              alt="success"
+              className="w-[416px] h-[60px] my-3"
+            />
+            <img
+              src={require("./../../../Assets/Images/HomePage/Lexigo dog 2.png")}
+              alt="Dog"
+              className="w-20 h-20 my-3"
+            />
+            <p
+              className="successTitle text-[24px] font-[Nunito] my-1"
+              style={{ color: Colors.RoastedCoffee }}
+            >
+              What you got
+            </p>
+            <div
+              className="score w-[60%] h-[86px] flex justify-center items-center my-1"
+              style={{ backgroundColor: Colors.BeastyBrown }}
+            >
+              <p
+                className="score-text text-[32px] font-[Nunito]"
+                style={{ color: Colors.BeastyBrown2 }}
+              >
+                Score: 3 / 6
+              </p>
+            </div>
+            <p
+              className="percentage text-[36px] font-[Nunito] my-3"
+              style={{ color: Colors.BeastyBrown2 }}
+            >
+              100%
+            </p>
+            <p
+              className="percentage text-[20px] font-[Nunito]"
+              style={{ color: Colors.BeastyBrown2 }}
+            >
+              Phonological dyslexic
+            </p>
+            {/* buttons */}
+            <div className="flex justify-between items-center w-[100%] h-[100px]">
+              <button
+                className="navBtn w-[75px] h-[75px] flex justify-center items-center"
+                style={{ backgroundColor: Colors.Pompelmo }}
+                onClick={() => setShowResult(false)}
+              >
+                <ChevronLeft size={46} color={Colors.White} />
+              </button>
+              <button
+                className="px-4 py-2 transition font-[Nunito] w-[176.25px] h-[74.25px]"
+                style={{
+                  color: Colors.White,
+                  backgroundColor: Colors.Primary,
+                  fontWeight: "bold",
+                  borderRadius: 40,
+                  borderWidth: 1,
+                  borderStyle: "solid",
+                  borderColor: Colors.Primary,
+                }}
+                onClick={() => setShowResult(false)}
+              >
+                Results
+              </button>
+              <button
+                className="navBtn w-[75px] h-[75px] flex justify-center items-center"
+                style={{ backgroundColor: Colors.Pompelmo }}
+                onClick={() => setShowResult(false)}
+              >
+                <RotateCw size={46} color={Colors.White} />
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

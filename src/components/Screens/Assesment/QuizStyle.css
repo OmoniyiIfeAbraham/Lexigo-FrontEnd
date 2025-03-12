@@ -13,3 +13,12 @@
 .score {
   border-radius: 30px;
 }
+.score-text {
+  font-weight: 700;
+}
+.percentage {
+  font-weight: 400;
+}
+.navBtn {
+  border-radius: 100px;
+}
