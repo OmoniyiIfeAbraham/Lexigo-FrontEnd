@@ -37,6 +37,7 @@ const Quiz = () => {
   const [selectedOptions, setSelectedOptions] = useState(
     Array(questions.length).fill(null)
   );
+  const [showResult, setShowResult] = useState(false);
 
   const navigate = useNavigate();
 
@@ -244,6 +245,34 @@ const Quiz = () => {
           </div>
         </div>
       )}
+
+      <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
+        {/* popup container */}
+        <div className="successPopup bg-white p-6 shadow-lg relative w-[591px] text-start flex flex-col items-center">
+          <img
+            src={require("./../../../Assets/Images/AssesmentPage/success.png")}
+            alt="success"
+            className="w-[416px] h-[60px]"
+          />
+          <img
+            src={require("./../../../Assets/Images/HomePage/Lexigo dog 2.png")}
+            alt="Dog"
+            className="w-20 h-20"
+          />
+          <p
+            className="successTitle text-[24px] font-[Nunito]"
+            style={{ color: Colors.RoastedCoffee }}
+          >
+            What you got
+          </p>
+          <div
+            className="score w-[60%] h-[86px] flex justify-center items-center"
+            style={{ backgroundColor: Colors.BeastyBrown }}
+          >
+            <p>Score: 3 / 6</p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
