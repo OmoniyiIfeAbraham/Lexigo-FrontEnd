@@ -14,7 +14,7 @@ const Path = () => {
       }}
     >
       {/* Blur Overlay */}
-      <div className="absolute inset-0 backdrop-blur-md bg-black/10"></div>
+      {/* <div className="absolute inset-0 backdrop-blur-md bg-black/10"></div> */}
 
       {/* Content */}
       <div className="content relative z-10 h-full p-14">
