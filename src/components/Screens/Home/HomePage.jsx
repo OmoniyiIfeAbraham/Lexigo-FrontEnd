@@ -31,6 +31,9 @@ const Home = () => {
   const handleStart = () => {
     if (selectedPhonological) {
       navigate("/phonological-path");
+    } else if (selectedSurface) {
+      navigate("/surface-path");
+    } else {
     }
   };
   return (
