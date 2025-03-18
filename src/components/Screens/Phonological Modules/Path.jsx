@@ -58,7 +58,12 @@ const Path = () => {
         {/* buttons */}
         <div className="buttons flex w-full justify-between">
           {/* Alphabets Image with Text Overlay */}
-          <button className="btn relative w-[40%] mx-auto mt-8">
+          <button
+            className="btn relative w-[40%] mx-auto mt-8"
+            onClick={() => {
+              navigate("/phonological-path/alphabet");
+            }}
+          >
             <img
               src={require("./../../../Assets/Images/Phonological/one.png")}
               alt="Alphabets"
