@@ -10,3 +10,15 @@
 .progress-trophy {
   border-radius: 35px;
 }
+
+@media (width <= 655px) {
+  .buttons {
+    margin-top: 40px;
+  }
+}
+
+@media (width <= 620px) {
+  .buttons {
+    margin-top: 40px;
+  }
+}
