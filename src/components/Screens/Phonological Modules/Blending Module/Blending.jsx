@@ -27,7 +27,7 @@ const Blending = () => {
           >
             <ChevronLeft size={46} color={Colors.White} className="icon" />
           </button>
-          <h1 className="title text-[48px] font-[Nunito]">Alphabets</h1>
+          <h1 className="title text-[48px] font-[Nunito]">Blending words</h1>
           <button
             className="navBtn w-[75px] h-[75px] flex justify-center items-center"
             style={{ backgroundColor: Colors.Secondary, opacity: 0 }}
@@ -46,21 +46,6 @@ const Blending = () => {
               style={{ color: Colors.White }}
             >
               1
-            </h1>
-          </div>
-          <img
-            src={require("./../../../../Assets/Images/Phonological/Alphabets Module/Progress Bar.png")}
-            className="img w-[183px] h-[35px] mx-2"
-          />
-          <div
-            className="progress-two w-[70px] h-[70px] flex justify-center items-center"
-            style={{ backgroundColor: Colors.Grey }}
-          >
-            <h1
-              className="progress-text text-[32px] font-[Nunito]"
-              style={{ color: Colors.White }}
-            >
-              2
             </h1>
           </div>
           <img
@@ -87,16 +72,8 @@ const Blending = () => {
             }}
           >
             <img
-              src={require("./../../../../Assets/Images/Phonological/Alphabets Module/vowels.png")}
+              src={require("./../../../../Assets/Images/Phonological/Blending Module/one.png")}
               alt="Vowels"
-              className="w-[474px] h-[364px]"
-            />
-          </button>
-          {/* Blending Image with Text Overlay */}
-          <button className="btn relative w-[40%] mx-auto mt-8">
-            <img
-              src={require("./../../../../Assets/Images/Phonological/Alphabets Module/consonants.png")}
-              alt="Consonants"
               className="w-[474px] h-[364px]"
             />
           </button>

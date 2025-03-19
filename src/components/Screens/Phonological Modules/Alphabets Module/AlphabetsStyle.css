@@ -11,6 +11,13 @@
   border-radius: 35px;
 }
 
+@media (width <= 900px) {
+  .img {
+    width: 137px;
+    height: 26px;
+  }
+}
+
 @media (width <= 655px) {
   .navBtn {
     width: 56px;
