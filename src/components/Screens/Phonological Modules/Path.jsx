@@ -85,7 +85,12 @@ const Path = () => {
             </div>
           </button>
           {/* Blending Image with Text Overlay */}
-          <button className="btn relative w-[40%] mx-auto mt-8">
+          <button
+            className="btn relative w-[40%] mx-auto mt-8"
+            onClick={() => {
+              navigate("/phonological-path/blending");
+            }}
+          >
             <img
               src={require("./../../../Assets/Images/Phonological/two.png")}
               alt="Blending"
