@@ -25,14 +25,14 @@ const Alphabets = () => {
               navigate("/phonological-path");
             }}
           >
-            <ChevronLeft size={46} color={Colors.White} />
+            <ChevronLeft size={46} color={Colors.White} className="icon" />
           </button>
           <h1 className="title text-[48px] font-[Nunito]">Alphabets</h1>
           <button
             className="navBtn w-[75px] h-[75px] flex justify-center items-center"
             style={{ backgroundColor: Colors.Secondary, opacity: 0 }}
           >
-            <ChevronLeft size={46} color={Colors.White} />
+            <ChevronLeft size={46} color={Colors.White} className="icon" />
           </button>
         </div>
         {/* progress bar */}
@@ -50,7 +50,7 @@ const Alphabets = () => {
           </div>
           <img
             src={require("./../../../../Assets/Images/Phonological/Alphabets Module/Progress Bar.png")}
-            className="w-[183px] h-[35px] mx-2"
+            className="img w-[183px] h-[35px] mx-2"
           />
           <div
             className="progress-two w-[70px] h-[70px] flex justify-center items-center"
@@ -65,7 +65,7 @@ const Alphabets = () => {
           </div>
           <img
             src={require("./../../../../Assets/Images/Phonological/Alphabets Module/Progress Bar.png")}
-            className="w-[183px] h-[35px] mx-2"
+            className="img w-[183px] h-[35px] mx-2"
           />
           <div
             className="progress-trophy w-[70px] h-[70px] flex justify-center items-center"
@@ -73,7 +73,7 @@ const Alphabets = () => {
           >
             <img
               src={require("./../../../../Assets/Images/Phonological/Alphabets Module/Trophy.png")}
-              className="w-[43px] h-[44px]"
+              className="img-trophy w-[43px] h-[44px]"
             />
           </div>
         </div>

@@ -12,13 +12,118 @@
 }
 
 @media (width <= 655px) {
-  .buttons {
-    margin-top: 40px;
+  .navBtn {
+    width: 56px;
+    height: 56px;
+  }
+  .icon {
+    width: 35px;
+    height: 35px;
+  }
+  .title {
+    font-size: 36px;
+  }
+  .progress-one {
+    width: 50px;
+    height: 50px;
+  }
+  .progress-text {
+    font-size: 24px;
+  }
+  .img {
+    width: 137px;
+    height: 26px;
+  }
+  .progress-two {
+    width: 50px;
+    height: 50px;
+  }
+  .progress-trophy {
+    width: 50px;
+    height: 50px;
+  }
+  .img-trophy {
+    width: 24px;
+    height: 33px;
   }
 }
 
 @media (width <= 620px) {
   .buttons {
     margin-top: 40px;
+  }
+}
+
+@media (width <= 460px) {
+  .navBtn {
+    width: 42px;
+    height: 42px;
+  }
+  .icon {
+    width: 26px;
+    height: 26px;
+  }
+  .title {
+    font-size: 27px;
+  }
+  .progress-one {
+    width: 38px;
+    height: 38px;
+  }
+  .progress-text {
+    font-size: 18px;
+  }
+  .img {
+    width: 103px;
+    height: 20px;
+  }
+  .progress-two {
+    width: 38px;
+    height: 38px;
+  }
+  .progress-trophy {
+    width: 38px;
+    height: 38px;
+  }
+  .img-trophy {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+@media (width <= 360px) {
+  .navBtn {
+    width: 32px;
+    height: 32px;
+  }
+  .icon {
+    width: 20px;
+    height: 20px;
+  }
+  .title {
+    font-size: 20px;
+  }
+  .progress-one {
+    width: 29px;
+    height: 29px;
+  }
+  .progress-text {
+    font-size: 14px;
+  }
+  .img {
+    width: 77px;
+    height: 15px;
+  }
+  .progress-two {
+    width: 29px;
+    height: 29px;
+  }
+  .progress-trophy {
+    width: 29px;
+    height: 29px;
+  }
+  .img-trophy {
+    width: 18px;
+    height: 18px;
   }
 }
