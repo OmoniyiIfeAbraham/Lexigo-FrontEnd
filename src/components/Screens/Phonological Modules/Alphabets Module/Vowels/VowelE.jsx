@@ -4,16 +4,15 @@ import { Colors } from "../../../../Utils/Colors";
 import { useNavigate } from "react-router-dom";
 import "./VowelAStyle.css";
 
-const VowelA = () => {
+const VowelE = () => {
   const navigate = useNavigate();
-  const [showPopup, setShowPopup] = useState(true);
   const [playing, setPlaying] = useState(false);
 
   // Function to play audio
   const playSound = () => {
     setPlaying(true);
     const audio = new Audio(
-      require("./../../../../../Assets/Audio/Vowels/A.mp3")
+      require("./../../../../../Assets/Audio/Vowels/E.mp3")
     );
     audio.play();
     setTimeout(() => {
@@ -53,21 +52,23 @@ const VowelA = () => {
         </div>
         {/* body */}
         <div className="body flex w-full justify-between items-center mt-10">
-          <ChevronLeft
-            className="left w-[125px] h-[125px]"
-            style={{ color: Colors.Grey }}
-          />
+          <button onClick={() => navigate("/phonological-path/bd/vowelA")}>
+            <ChevronLeft
+              className="left w-[125px] h-[125px]"
+              style={{ color: Colors.Black }}
+            />
+          </button>
           <div className="letter-group flex justify-between items-center">
             <img
-              src={require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Aa.png")}
+              src={require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Ee.png")}
               className="letter w-[374px] h-[263px] mr-10"
             />
             <img
-              src={require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Apple.png")}
+              src={require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Egg.png")}
               className="object w-[286px] h-[313px]"
             />
           </div>
-          <button onClick={() => navigate("/phonological-path/bd/vowelE")}>
+          <button onClick={() => navigate("/phonological-path/bd/vowelI")}>
             <ChevronRight
               className="right w-[125px] h-[125px]"
               style={{ color: Colors.Black }}
@@ -99,35 +100,8 @@ const VowelA = () => {
           )}
         </div>
       </div>
-
-      {/* popup */}
-      {showPopup && (
-        <div
-          onClick={() => setShowPopup(false)}
-          className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50"
-        >
-          {/* Popup Container */}
-          <div className="popup bg-white p-8 shadow-lg relative w-104 text-start">
-            <p
-              className="text-lg font-semibold font-[Nunito]"
-              style={{ color: Colors.Black }}
-            >
-              Welcome to the vowel lesson little one <br /> Learn the sounds of
-              the 5 vowel letters <br /> Play to hear the sounds <br /> Follow
-              along and do the quiz 😁
-            </p>
-
-            {/* Dog Image (positioned outside but touching bottom-left border of popup) */}
-            <img
-              src={require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Owl.png")}
-              alt="Owl"
-              className="absolute -bottom-12 -left-20 w-20 h-20"
-            />
-          </div>
-        </div>
-      )}
     </div>
   );
 };
 
-export default VowelA;
+export default VowelE;
