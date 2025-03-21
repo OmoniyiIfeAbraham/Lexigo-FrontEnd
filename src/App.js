@@ -15,6 +15,7 @@ import Alphabets from "./components/Screens/Phonological Modules/Alphabets Modul
 import Blending from "./components/Screens/Phonological Modules/Blending Module/Blending";
 import VowelA from "./components/Screens/Phonological Modules/Alphabets Module/Vowels/VowelA";
 import VowelE from "./components/Screens/Phonological Modules/Alphabets Module/Vowels/VowelE";
+import VowelI from "./components/Screens/Phonological Modules/Alphabets Module/Vowels/VowelI";
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
           {/* vowels */}
           <Route path="/phonological-path/bd/vowelA" element={<VowelA />} />
           <Route path="/phonological-path/bd/vowelE" element={<VowelE />} />
+          <Route path="/phonological-path/bd/vowelI" element={<VowelI />} />
         </Routes>
       </Router>
     </div>
