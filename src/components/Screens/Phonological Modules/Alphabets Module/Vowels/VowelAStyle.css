@@ -1,0 +1,96 @@
+@media (width <= 945px) {
+  .header {
+    padding-left: 55px;
+    padding-right: 55px;
+  }
+}
+
+@media (width <= 900px) {
+  .body {
+    margin-top: 120px;
+  }
+  .letter {
+    width: 281px;
+    height: 197px;
+  }
+  .object {
+    width: 215px;
+    height: 235px;
+  }
+}
+
+@media (width <= 740px) {
+  .header {
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+  .letter {
+    width: 211px;
+    height: 148px;
+  }
+  .object {
+    width: 161px;
+    height: 176px;
+  }
+  .play {
+    margin-top: 80px;
+  }
+}
+
+@media (width <= 630px) {
+  .left {
+    width: 94px;
+    height: 94px;
+  }
+  .letter {
+    width: 158px;
+    height: 111px;
+  }
+  .object {
+    width: 121px;
+    height: 132px;
+  }
+  .right {
+    width: 94px;
+    height: 94px;
+  }
+  .play-btn {
+    width: 104px;
+    height: 104px;
+  }
+}
+
+@media (width <= 490px) {
+  .header {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  .letter {
+    width: 119px;
+    height: 83px;
+  }
+  .object {
+    width: 91px;
+    height: 99px;
+  }
+  .play-btn {
+    width: 104px;
+    height: 104px;
+  }
+}
+
+@media (width <= 415px) {
+  .letter {
+    margin-right: 10px;
+  }
+}
+
+@media (width <= 390px) {
+  .letter-group {
+    flex-direction: column;
+  }
+  .letter {
+    margin-right: 0px;
+    margin-bottom: 30px;
+  }
+}

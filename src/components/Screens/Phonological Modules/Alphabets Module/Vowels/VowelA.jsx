@@ -2,6 +2,7 @@ import { ChevronLeft, ChevronRight, Menu, X } from "lucide-react";
 import React, { useState } from "react";
 import { Colors } from "../../../../Utils/Colors";
 import { useNavigate } from "react-router-dom";
+import "./VowelAStyle.css";
 
 const VowelA = () => {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ const VowelA = () => {
     >
       <div className="content relative z-10 h-full">
         {/* header */}
-        <div className="flex w-full h-[75px] items-center justify-between px-[110px] pt-24">
+        <div className="header flex w-full h-[75px] items-center justify-between px-[110px] pt-24">
           <button
             className="navBtn w-[75px] h-[75px] flex justify-center items-center"
             style={{ backgroundColor: Colors.BeastyBrown2 }}
@@ -38,34 +39,34 @@ const VowelA = () => {
           </button>
         </div>
         {/* body */}
-        <div className="flex w-full justify-between items-center">
+        <div className="body flex w-full justify-between items-center mt-10">
           <ChevronLeft
-            className="w-[125px] h-[125px]"
+            className="left w-[125px] h-[125px]"
             style={{ color: Colors.Grey }}
           />
-          <div className="flex justify-between items-center mt-10">
+          <div className="letter-group flex justify-between items-center">
             <img
               src={require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Aa.png")}
-              className="w-[374px] h-[263px] mr-10"
+              className="letter w-[374px] h-[263px] mr-10"
             />
             <img
               src={require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Apple.png")}
-              className="w-[286px] h-[313px]"
+              className="object w-[286px] h-[313px]"
             />
           </div>
           <button>
             <ChevronRight
-              className="w-[125px] h-[125px]"
+              className="right w-[125px] h-[125px]"
               style={{ color: Colors.Black }}
             />
           </button>
         </div>
         {/* play */}
-        <div className="flex justify-center items-center">
+        <div className="play flex justify-center items-center mt-10">
           <button>
             <img
               src={require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Play.png")}
-              className="w-[138px] h-[138px] mt-10"
+              className="play-btn w-[138px] h-[138px]"
             />
           </button>
         </div>
