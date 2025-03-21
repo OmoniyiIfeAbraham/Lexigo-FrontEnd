@@ -1,4 +1,4 @@
-import { ChevronLeft, ChevronRight, Menu, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, Menu, Pause, X } from "lucide-react";
 import React, { useState } from "react";
 import { Colors } from "../../../../Utils/Colors";
 import { useNavigate } from "react-router-dom";
@@ -7,6 +7,19 @@ import "./VowelAStyle.css";
 const VowelA = () => {
   const navigate = useNavigate();
   const [showPopup, setShowPopup] = useState(true);
+  const [playing, setPlaying] = useState(false);
+
+  // Function to play audio
+  const playSound = () => {
+    setPlaying(true);
+    const audio = new Audio(
+      require("./../../../../../Assets/Audio/Vowels/A.mp3")
+    );
+    audio.play();
+    setTimeout(() => {
+      setPlaying(false);
+    }, 1500);
+  };
 
   return (
     <div
@@ -63,12 +76,27 @@ const VowelA = () => {
         </div>
         {/* play */}
         <div className="play flex justify-center items-center mt-10">
-          <button>
-            <img
-              src={require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Play.png")}
-              className="play-btn w-[138px] h-[138px]"
-            />
-          </button>
+          {playing ? (
+            <div
+              className="play-btn w-[138px] h-[138px] flex justify-center items-center"
+              style={{ backgroundColor: Colors.Bisque, borderRadius: 100 }}
+            >
+              <Pause
+                style={{
+                  width: "50%",
+                  height: "50%",
+                  color: Colors.BeastyBrown2,
+                }}
+              />
+            </div>
+          ) : (
+            <button onClick={playSound}>
+              <img
+                src={require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Play.png")}
+                className="play-btn w-[138px] h-[138px]"
+              />
+            </button>
+          )}
         </div>
       </div>
 
