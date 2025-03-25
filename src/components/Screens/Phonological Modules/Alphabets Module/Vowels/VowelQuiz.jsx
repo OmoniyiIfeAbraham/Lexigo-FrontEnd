@@ -2,17 +2,17 @@ import { ChevronLeft, ChevronRight, Menu, Pause, X } from "lucide-react";
 import React, { useState } from "react";
 import { Colors } from "../../../../Utils/Colors";
 import { useNavigate } from "react-router-dom";
-import "./VowelAStyle.css";
 
-const VowelU = () => {
+const VowelQuiz = () => {
   const navigate = useNavigate();
+  const [showPopup, setShowPopup] = useState(true);
   const [playing, setPlaying] = useState(false);
 
   // Function to play audio
   const playSound = () => {
     setPlaying(true);
     const audio = new Audio(
-      require("./../../../../../Assets/Audio/Vowels/U.mp3")
+      require("./../../../../../Assets/Audio/Vowels/A.mp3")
     );
     audio.play();
     setTimeout(() => {
@@ -23,7 +23,7 @@ const VowelU = () => {
   return (
     <div
       style={{
-        backgroundImage: `url(${require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Background-Text.png")})`,
+        backgroundImage: `url(${require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Background-Quiz-Text.png")})`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "100% 100vh", // Ensures full width while keeping height proportional
         backgroundPosition: "top center", // Aligns image to the top
@@ -52,23 +52,12 @@ const VowelU = () => {
         </div>
         {/* body */}
         <div className="body flex w-full justify-between items-center mt-10">
-          <button onClick={() => navigate("/phonological-path/bd/vowelO")}>
-            <ChevronLeft
-              className="left w-[125px] h-[125px]"
-              style={{ color: Colors.Black }}
-            />
-          </button>
-          <div className="letter-group flex justify-between items-center">
-            <img
-              src={require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Uu.png")}
-              className="letter w-[374px] h-[263px] mr-10"
-            />
-            <img
-              src={require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Umbrella.png")}
-              className="object w-[286px] h-[313px]"
-            />
-          </div>
-          <button onClick={() => navigate("/phonological-path/al/vowel/quiz")}>
+          <ChevronLeft
+            className="left w-[125px] h-[125px]"
+            style={{ color: Colors.Grey }}
+          />
+          <div className=""></div>
+          <button onClick={() => navigate("#")}>
             <ChevronRight
               className="right w-[125px] h-[125px]"
               style={{ color: Colors.Black }}
@@ -100,8 +89,50 @@ const VowelU = () => {
           )}
         </div>
       </div>
+
+      {/* popup */}
+      {showPopup && (
+        <div
+          onClick={() => setShowPopup(false)}
+          className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50"
+        >
+          {/* Popup Container */}
+          <div
+            className="popup bg-white p-8 shadow-lg relative w-104 text-start"
+            style={{
+              borderTopRightRadius: 50,
+              borderTopLeftRadius: 50,
+              borderBottomRightRadius: 50,
+              borderBottomLeftRadius: 10,
+            }}
+          >
+            <img
+              src={require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/star.png")}
+              alt="Star"
+              className="w-[104px] h-[104px]"
+              style={{
+                justifySelf: "center",
+              }}
+            />
+            <p
+              className="text-lg font-semibold font-[Nunito]"
+              style={{ color: Colors.Black }}
+            >
+              Well done young scholar, you have <br /> finished your very first
+              lesson. Its time to <br /> find out what you know. Lets go!!! 😁
+            </p>
+
+            {/* Dog Image (positioned outside but touching bottom-left border of popup) */}
+            <img
+              src={require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Owl.png")}
+              alt="Owl"
+              className="absolute -bottom-12 -left-20 w-20 h-20"
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
-export default VowelU;
+export default VowelQuiz;
