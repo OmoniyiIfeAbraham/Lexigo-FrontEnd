@@ -17,6 +17,7 @@ const VowelQuiz = () => {
   const [showPopup, setShowPopup] = useState(true);
   const [playing, setPlaying] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [showResult, setShowResult] = useState(false);
 
   // Function to play audio
   const playSound = () => {
@@ -74,10 +75,19 @@ const VowelQuiz = () => {
         </div>
         {/* body */}
         <div className="body flex w-full justify-between items-center mt-10">
-          <ChevronLeft
-            className="left w-[125px] h-[125px]"
-            style={{ color: Colors.Grey }}
-          />
+          {currentQuestion > 0 ? (
+            <button onClick={handlePrevious}>
+              <ChevronLeft
+                className="left w-[125px] h-[125px]"
+                style={{ color: Colors.Black }}
+              />
+            </button>
+          ) : (
+            <ChevronLeft
+              className="left w-[125px] h-[125px]"
+              style={{ color: Colors.Grey }}
+            />
+          )}
           <div className="w-full flex items-center flex-col">
             {/* Progress Bar with Segments */}
             <div className="w-full max-w-md flex justify-center mb-6">
@@ -134,7 +144,7 @@ const VowelQuiz = () => {
               </button>
             </div>
           </div>
-          <button onClick={() => navigate("#")}>
+          <button onClick={handleNext}>
             <ChevronRight
               className="right w-[125px] h-[125px]"
               style={{ color: Colors.Black }}
@@ -182,7 +192,10 @@ const VowelQuiz = () => {
               borderRadius: 20,
               backgroundColor: Colors.Pompelmo,
             }}
-            onClick={() => {}}
+            onClick={() => {
+              setShowResult(true);
+            }}
+            disabled={currentQuestion < 1}
           >
             Submit
           </button>
@@ -227,6 +240,62 @@ const VowelQuiz = () => {
               alt="Owl"
               className="absolute -bottom-12 -left-20 w-20 h-20"
             />
+          </div>
+        </div>
+      )}
+
+      {showResult && (
+        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
+          {/* popup container */}
+          <div
+            className="successPopup p-6 shadow-lg relative w-[591px] text-start flex flex-col items-center"
+            style={{ backgroundColor: Colors.Cream }}
+          >
+            {/* X Button positioned halfway out */}
+            <button
+              className="navBtn w-[75px] h-[75px] flex justify-center items-center absolute -top-8 -left-8"
+              style={{ backgroundColor: Colors.Pompelmo, borderRadius: "50%" }}
+              onClick={() => {
+                setShowResult(false);
+              }}
+            >
+              <X size={46} color={Colors.White} className="icon" />
+            </button>
+
+            <img
+              src={require("./../../../../../Assets/Images/AssesmentPage/success.png")}
+              alt="success"
+              className="w-[416px] h-[60px] my-3"
+            />
+            <img
+              src={require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Owl.png")}
+              alt="Owl"
+              className="w-[143px] h-[143px] my-3"
+            />
+            <p
+              className="successTitle text-[36px] font-[Nunito] my-1"
+              style={{ color: Colors.green, fontWeight: "bolder" }}
+            >
+              Yay Passed!
+            </p>
+            {/* buttons */}
+            <div className="flex justify-center items-center w-[100%] h-[100px]">
+              <button
+                className="px-4 py-2 transition font-[Nunito] w-[176.25px] h-[74.25px]"
+                style={{
+                  color: Colors.White,
+                  backgroundColor: Colors.Pompelmo,
+                  fontWeight: "bold",
+                  borderRadius: 40,
+                  borderWidth: 1,
+                  borderStyle: "solid",
+                  borderColor: Colors.Pompelmo,
+                }}
+                onClick={() => setShowResult(false)}
+              >
+                Next
+              </button>
+            </div>
           </div>
         </div>
       )}

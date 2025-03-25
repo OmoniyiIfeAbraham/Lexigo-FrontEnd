@@ -12,4 +12,5 @@ export const Colors = {
   BeastyBrown2: "#632D00",
   Pompelmo: "#FF6664",
   Grey: "#B7BDC7",
+  green: "#52BE00",
 };
