@@ -3,10 +3,20 @@ import React, { useState } from "react";
 import { Colors } from "../../../../Utils/Colors";
 import { useNavigate } from "react-router-dom";
 
+const questions = [
+  {
+    question: "Which letter makes the Aa sound?",
+  },
+  {
+    question: "Which letter makes the Aa sound?",
+  },
+];
+
 const VowelQuiz = () => {
   const navigate = useNavigate();
   const [showPopup, setShowPopup] = useState(true);
   const [playing, setPlaying] = useState(false);
+  const [currentQuestion, setCurrentQuestion] = useState(0);
 
   // Function to play audio
   const playSound = () => {
@@ -18,6 +28,18 @@ const VowelQuiz = () => {
     setTimeout(() => {
       setPlaying(false);
     }, 1500);
+  };
+
+  const handleNext = () => {
+    if (currentQuestion < questions.length - 1) {
+      setCurrentQuestion((prev) => prev + 1);
+    }
+  };
+
+  const handlePrevious = () => {
+    if (currentQuestion > 0) {
+      setCurrentQuestion((prev) => prev - 1);
+    }
   };
 
   return (
@@ -56,7 +78,62 @@ const VowelQuiz = () => {
             className="left w-[125px] h-[125px]"
             style={{ color: Colors.Grey }}
           />
-          <div className=""></div>
+          <div className="w-full flex items-center flex-col">
+            {/* Progress Bar with Segments */}
+            <div className="w-full max-w-md flex justify-center mb-6">
+              {Array.from({ length: 2 }, (_, index) => (
+                <div
+                  key={index}
+                  className={`w-1/6 h-[10px] mx-1 rounded-lg`}
+                  style={{
+                    backgroundColor:
+                      index <= currentQuestion
+                        ? Colors.Pompelmo
+                        : Colors.Bisque,
+                  }}
+                />
+              ))}
+            </div>
+            {/* progress */}
+            <p
+              className="text-center mb-6 text-lg font-semibold font-[Nunito]"
+              style={{ color: Colors.Black }}
+            >
+              {currentQuestion + 1} / {questions.length}
+            </p>
+            {/* Question */}
+            <h2
+              className="text-xl font-normal font-[Nunito] text-center mb-6"
+              style={{ color: Colors.Black }}
+            >
+              {/* {questions[currentQuestion].question} */}
+              Which letter makes the{" "}
+              <b style={{ color: Colors.Pompelmo }} className="text-[32px]">
+                Aa
+              </b>{" "}
+              sound?
+            </h2>
+            <div className="w-full flex justify-between px-32">
+              <button>
+                <img
+                  src={require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Option 1.png")}
+                  className="option-btn w-[162px] h-[154px]"
+                />
+              </button>
+              <button>
+                <img
+                  src={require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Option 2.png")}
+                  className="option-btn w-[162px] h-[154px]"
+                />
+              </button>
+              <button>
+                <img
+                  src={require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Option 3.png")}
+                  className="option-btn w-[162px] h-[154px]"
+                />
+              </button>
+            </div>
+          </div>
           <button onClick={() => navigate("#")}>
             <ChevronRight
               className="right w-[125px] h-[125px]"
@@ -65,7 +142,18 @@ const VowelQuiz = () => {
           </button>
         </div>
         {/* play */}
-        <div className="play flex justify-center items-center mt-10">
+        <div className="play flex justify-between items-center mt-10 px-24">
+          <button
+            className={`px-10 py-5 bg-blue-500 text-white text-lg font-[Nunito] font-bold`}
+            style={{
+              borderRadius: 20,
+              backgroundColor: Colors.Pompelmo,
+              opacity: 0,
+            }}
+            onClick={() => {}}
+          >
+            Submit
+          </button>
           {playing ? (
             <div
               className="play-btn w-[138px] h-[138px] flex justify-center items-center"
@@ -87,6 +175,17 @@ const VowelQuiz = () => {
               />
             </button>
           )}
+
+          <button
+            className={`px-10 py-5 bg-blue-500 text-white text-lg font-[Nunito] font-bold`}
+            style={{
+              borderRadius: 20,
+              backgroundColor: Colors.Pompelmo,
+            }}
+            onClick={() => {}}
+          >
+            Submit
+          </button>
         </div>
       </div>
 
