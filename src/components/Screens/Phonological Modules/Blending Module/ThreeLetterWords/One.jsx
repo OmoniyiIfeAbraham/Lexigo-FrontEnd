@@ -89,7 +89,7 @@ const One = () => {
               />
             </div>
           </div>
-          <button onClick={() => navigate("/phonological-path/bd/vowelE")}>
+          <button onClick={() => navigate("/phonological-path/blending/quiz")}>
             <ChevronRight
               className="right w-[125px] h-[125px]"
               style={{ color: Colors.Black }}

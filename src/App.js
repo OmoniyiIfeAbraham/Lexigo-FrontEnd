@@ -20,6 +20,7 @@ import VowelO from "./components/Screens/Phonological Modules/Alphabets Module/V
 import VowelU from "./components/Screens/Phonological Modules/Alphabets Module/Vowels/VowelU";
 import VowelQuiz from "./components/Screens/Phonological Modules/Alphabets Module/Vowels/VowelQuiz";
 import One from "./components/Screens/Phonological Modules/Blending Module/ThreeLetterWords/One";
+import BlendingQuiz from "./components/Screens/Phonological Modules/Blending Module/ThreeLetterWords/BlendingQuiz";
 
 function App() {
   return (
@@ -50,6 +51,7 @@ function App() {
           {/* blending module */}
           <Route path="/phonological-path/blending" element={<Blending />} />
           <Route path="/phonological-path/blending/one" element={<One />} />
+          <Route path="/phonological-path/blending/quiz" element={<BlendingQuiz />} />
           {/* vowels */}
           <Route path="/phonological-path/bd/vowelA" element={<VowelA />} />
           <Route path="/phonological-path/bd/vowelE" element={<VowelE />} />
