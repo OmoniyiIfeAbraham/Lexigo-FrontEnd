@@ -1,14 +1,14 @@
-import { ChevronLeft, ChevronRight, Menu, Pause, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, Menu, Pause, Plus, X } from "lucide-react";
 import React, { useState } from "react";
 import { Colors } from "../../../../Utils/Colors";
 import { useNavigate } from "react-router-dom";
 
 const questions = [
   {
-    question: "Which letter makes the Aa sound?",
+    question: "",
   },
   {
-    question: "Which letter makes the Aa sound?",
+    question: "",
   },
 ];
 const BlendingQuiz = () => {
@@ -110,34 +110,45 @@ const BlendingQuiz = () => {
               {currentQuestion + 1} / {questions.length}
             </p>
             {/* Question */}
-            <h2
-              className="text-xl font-normal font-[Nunito] text-center mb-6"
-              style={{ color: Colors.Black }}
-            >
-              {/* {questions[currentQuestion].question} */}
-              Which letter makes the{" "}
-              <b style={{ color: Colors.Pompelmo }} className="text-[32px]">
-                Aa
-              </b>{" "}
-              sound?
-            </h2>
-            <div className="w-full flex justify-between px-32">
+            <div className="w-full flex justify-center px-32 items-center">
+              <img
+                src={require("./../../../../../Assets/Images/Phonological/Blending Module/p.png")}
+                className="option-btn w-[90px] h-[90px]"
+              />
+
+              <Plus className="w-[50px] h-[50px] mx-5" />
+
+              <img
+                src={require("./../../../../../Assets/Images/Phonological/Blending Module/o.png")}
+                className="option-btn w-[90px] h-[90px]"
+              />
+
+              <Plus className="w-[50px] h-[50px] mx-5" />
+
+              <img
+                src={require("./../../../../../Assets/Images/Phonological/Blending Module/t.png")}
+                className="option-btn w-[90px] h-[90px]"
+              />
+            </div>
+            <div className="w-full flex justify-center px-32 items-center mt-10">
               <button>
                 <img
-                  src={require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Option 1.png")}
-                  className="option-btn w-[162px] h-[154px]"
+                  src={require("./../../../../../Assets/Images/Phonological/Blending Module/fan.png")}
+                  className="option-btn w-[173px] h-[62px] mr-10"
                 />
               </button>
+
               <button>
                 <img
-                  src={require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Option 2.png")}
-                  className="option-btn w-[162px] h-[154px]"
+                  src={require("./../../../../../Assets/Images/Phonological/Blending Module/pan.png")}
+                  className="option-btn w-[173px] h-[62px] mr-10"
                 />
               </button>
+
               <button>
                 <img
-                  src={require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Option 3.png")}
-                  className="option-btn w-[162px] h-[154px]"
+                  src={require("./../../../../../Assets/Images/Phonological/Blending Module/cat-option.png")}
+                  className="option-btn w-[173px] h-[62px]"
                 />
               </button>
             </div>
@@ -224,7 +235,7 @@ const BlendingQuiz = () => {
               className="w-[416px] h-[60px] my-3"
             />
             <img
-              src={require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Owl.png")}
+              src={require("./../../../../../Assets/Images/Phonological/Blending Module/Cat 2.png")}
               alt="Owl"
               className="w-[143px] h-[143px] my-3"
             />
