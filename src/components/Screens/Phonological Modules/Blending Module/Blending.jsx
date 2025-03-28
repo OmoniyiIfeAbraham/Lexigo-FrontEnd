@@ -68,7 +68,7 @@ const Blending = () => {
           <button
             className="btn relative w-[40%] mx-auto mt-8"
             onClick={() => {
-              navigate("#");
+              navigate("/phonological-path/blending/one");
             }}
           >
             <img
