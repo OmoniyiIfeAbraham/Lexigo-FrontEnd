@@ -12,11 +12,15 @@ const HomePage = () => {
       <NavComp />
 
       {/* Image Section */}
-      <div className="image-div flex-grow relative mx-12" style={{ marginTop: "25px" }}>
+      <div
+        className="image-div flex-grow relative mx-6 h-full"
+        // style={{ backgroundColor: "red" }}
+      >
         <img
           src={require("./../../../Assets/Images/Landing/LandingImg.png")}
           alt="Banner"
-          className="image w-full h-[calc(100vh-120px)] md:object-fit rounded-lg"
+          className="image h-[calc(100vh-90px)] object-cover rounded-lg"
+          style={{ width: "100%" }}
         />
         {/* Overlay Text and Buttons */}
         <div className="absolute inset-0 flex flex-col justify-center items-center md:items-start bg-black bg-opacity-0 p-6 rounded-lg">
