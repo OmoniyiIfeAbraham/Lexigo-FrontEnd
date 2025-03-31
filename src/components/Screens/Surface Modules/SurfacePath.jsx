@@ -58,7 +58,10 @@ const SurfacePath = () => {
         {/* buttons */}
         <div className="buttons flex w-full justify-center">
           {/* Alphabets Image with Text Overlay */}
-          <button className="btn relative w-[40%] mx-auto mt-8">
+          <button
+            className="btn relative w-[40%] mx-auto mt-8"
+            onClick={() => navigate("/surface-path/mirror")}
+          >
             <img
               src={require("./../../../Assets/Images/Surface/mirror.png")}
               alt="Alphabets"

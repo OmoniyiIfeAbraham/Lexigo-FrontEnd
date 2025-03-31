@@ -21,6 +21,7 @@ import VowelU from "./components/Screens/Phonological Modules/Alphabets Module/V
 import VowelQuiz from "./components/Screens/Phonological Modules/Alphabets Module/Vowels/VowelQuiz";
 import One from "./components/Screens/Phonological Modules/Blending Module/ThreeLetterWords/One";
 import BlendingQuiz from "./components/Screens/Phonological Modules/Blending Module/ThreeLetterWords/BlendingQuiz";
+import MirrorLetters from "./components/Screens/Surface Modules/MirrorLettersModule/MirrorLetters";
 
 function App() {
   return (
@@ -51,7 +52,10 @@ function App() {
           {/* blending module */}
           <Route path="/phonological-path/blending" element={<Blending />} />
           <Route path="/phonological-path/blending/one" element={<One />} />
-          <Route path="/phonological-path/blending/quiz" element={<BlendingQuiz />} />
+          <Route
+            path="/phonological-path/blending/quiz"
+            element={<BlendingQuiz />}
+          />
           {/* vowels */}
           <Route path="/phonological-path/bd/vowelA" element={<VowelA />} />
           <Route path="/phonological-path/bd/vowelE" element={<VowelE />} />
@@ -62,6 +66,8 @@ function App() {
             path="/phonological-path/al/vowel/quiz"
             element={<VowelQuiz />}
           />
+          {/* mirror letters */}
+          <Route path="/surface-path/mirror" element={<MirrorLetters />} />
         </Routes>
       </Router>
     </div>
