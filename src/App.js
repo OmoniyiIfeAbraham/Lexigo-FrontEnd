@@ -23,6 +23,7 @@ import One from "./components/Screens/Phonological Modules/Blending Module/Three
 import BlendingQuiz from "./components/Screens/Phonological Modules/Blending Module/ThreeLetterWords/BlendingQuiz";
 import MirrorLetters from "./components/Screens/Surface Modules/MirrorLettersModule/MirrorLetters";
 import MirrorLearning from "./components/Screens/Surface Modules/MirrorLettersModule/MirrorLearning";
+import MirrorQuiz from "./components/Screens/Surface Modules/MirrorLettersModule/MirrorQuiz";
 
 function App() {
   return (
@@ -72,6 +73,10 @@ function App() {
           <Route
             path="/surface-path/mr/learning"
             element={<MirrorLearning />}
+          />
+          <Route
+            path="/surface-path/mr/quiz"
+            element={<MirrorQuiz />}
           />
         </Routes>
       </Router>
