@@ -67,7 +67,7 @@ const MirrorLetters = () => {
           <button
             className="btn relative w-[40%] mx-auto mt-8"
             onClick={() => {
-              navigate("/phonological-path/blending/one");
+              navigate("/surface-path/mr/learning");
             }}
           >
             <img
