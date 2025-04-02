@@ -5,10 +5,10 @@ import { useNavigate } from "react-router-dom";
 
 const questions = [
   {
-    question: "Which letter makes the Aa sound?",
+    question: "Select the letters p’s ",
   },
   {
-    question: "Which letter makes the Aa sound?",
+    question: "Select the letters q’s ",
   },
 ];
 
@@ -18,6 +18,10 @@ const MirrorQuiz = () => {
   const [playing, setPlaying] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [showResult, setShowResult] = useState(false);
+  const [selectP1, setSelectP1] = useState(false);
+  const [selectP2, setSelectP2] = useState(false);
+  const [selectQ1, setSelectQ1] = useState(false);
+  const [selectQ2, setSelectQ2] = useState(false);
 
   // Function to play audio
   const playSound = () => {
@@ -32,13 +36,46 @@ const MirrorQuiz = () => {
   const handleNext = () => {
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion((prev) => prev + 1);
+      setSelectP1(false);
+      setSelectP2(false);
+      setSelectQ1(false);
+      setSelectQ2(false);
     }
   };
 
   const handlePrevious = () => {
     if (currentQuestion > 0) {
       setCurrentQuestion((prev) => prev - 1);
+      setSelectP1(false);
+      setSelectP2(false);
+      setSelectQ1(false);
+      setSelectQ2(false);
     }
+  };
+
+  const handleSelectP1 = () => {
+    setSelectP1(!selectP1);
+    // setSelectP2(false);
+    setSelectQ1(false);
+    setSelectQ2(false);
+  };
+  const handleSelectP2 = () => {
+    setSelectP2(!selectP2);
+    // setSelectP1(false);
+    setSelectQ1(false);
+    setSelectQ2(false);
+  };
+  const handleSelectQ1 = () => {
+    setSelectQ1(!selectQ1);
+    setSelectP2(false);
+    setSelectP1(false);
+    // setSelectQ2(false);
+  };
+  const handleSelectQ2 = () => {
+    setSelectQ2(!selectQ2);
+    setSelectP2(false);
+    // setSelectQ1(false);
+    setSelectP1(false);
   };
 
   return (
@@ -58,7 +95,7 @@ const MirrorQuiz = () => {
             className="navBtn w-[75px] h-[75px] flex justify-center items-center"
             style={{ backgroundColor: Colors.BeastyBrown2 }}
             onClick={() => {
-              navigate("/phonological-path/alphabet");
+              navigate("/surface-path/mirror");
             }}
           >
             <X size={46} color={Colors.White} className="icon" />
@@ -115,31 +152,85 @@ const MirrorQuiz = () => {
               style={{ color: Colors.Black }}
             >
               {/* {questions[currentQuestion].question} */}
-              Which letter makes the{" "}
+              Select the letters{" "}
               <b style={{ color: Colors.Pompelmo }} className="text-[32px]">
-                Aa
-              </b>{" "}
-              sound?
+                {currentQuestion === 0 ? "p’s" : "q’s"}
+              </b>
             </h2>
             <div className="w-full flex justify-between px-32">
-              <button>
-                <img
-                  src={require("./../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Option 1.png")}
-                  className="option-btn w-[162px] h-[154px]"
-                />
-              </button>
-              <button>
-                <img
-                  src={require("./../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Option 2.png")}
-                  className="option-btn w-[162px] h-[154px]"
-                />
-              </button>
-              <button>
-                <img
-                  src={require("./../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Option 3.png")}
-                  className="option-btn w-[162px] h-[154px]"
-                />
-              </button>
+              {currentQuestion === 0 ? (
+                <>
+                  <button onClick={handleSelectP1}>
+                    <img
+                      src={
+                        selectP1
+                          ? require("./../../../../Assets/Images/Surface/Mirror Letters/p-n.png")
+                          : require("./../../../../Assets/Images/Surface/Mirror Letters/p-n-r.png")
+                      }
+                      className="option-btn w-[161px] h-[161px]"
+                      style={selectP1 ? { zIndex: 10 } : null}
+                    />
+                  </button>
+                  <button onClick={handleSelectQ1}>
+                    <img
+                      src={
+                        selectQ1
+                          ? require("./../../../../Assets/Images/Surface/Mirror Letters/q-n.png")
+                          : require("./../../../../Assets/Images/Surface/Mirror Letters/q-n-r.png")
+                      }
+                      className="option-btn w-[161px] h-[161px]"
+                      style={selectQ1 ? { zIndex: 10 } : null}
+                    />
+                  </button>
+                  <button onClick={handleSelectP2}>
+                    <img
+                      src={
+                        selectP2
+                          ? require("./../../../../Assets/Images/Surface/Mirror Letters/p-n.png")
+                          : require("./../../../../Assets/Images/Surface/Mirror Letters/p-n-r.png")
+                      }
+                      className="option-btn w-[161px] h-[161px]"
+                      style={selectP2 ? { zIndex: 10 } : null}
+                    />
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button onClick={handleSelectQ1}>
+                    <img
+                      src={
+                        selectQ1
+                          ? require("./../../../../Assets/Images/Surface/Mirror Letters/q-n.png")
+                          : require("./../../../../Assets/Images/Surface/Mirror Letters/q-n-r.png")
+                      }
+                      className="option-btn w-[161px] h-[161px]"
+                      style={selectQ1 ? { zIndex: 10 } : null}
+                    />
+                  </button>
+                  <button onClick={handleSelectQ2}>
+                    <img
+                      src={
+                        selectQ2
+                          ? require("./../../../../Assets/Images/Surface/Mirror Letters/q-n.png")
+                          : require("./../../../../Assets/Images/Surface/Mirror Letters/q-n-r.png")
+                      }
+                      className="option-btn w-[161px] h-[161px]"
+                      style={selectQ2 ? { zIndex: 10 } : null}
+                    />
+                  </button>
+                  <button onClick={handleSelectP1}>
+                    <img
+                      src={
+                        selectP1
+                          ? require("./../../../../Assets/Images/Surface/Mirror Letters/p-n.png")
+                          : require("./../../../../Assets/Images/Surface/Mirror Letters/p-n-r.png")
+                      }
+                      className="option-btn w-[161px] h-[161px]"
+                      style={selectP1 ? { zIndex: 10 } : null}
+                    />
+                  </button>
+                </>
+              )}
             </div>
           </div>
           <button onClick={handleNext}>
@@ -160,7 +251,7 @@ const MirrorQuiz = () => {
             }}
             onClick={() => {}}
           >
-            Submit
+            Done
           </button>
           {playing ? (
             <div
@@ -195,9 +286,37 @@ const MirrorQuiz = () => {
             }}
             disabled={currentQuestion < 1}
           >
-            Submit
+            Done
           </button>
         </div>
+      </div>
+
+      {(selectP1 || selectP2 || selectQ1 || selectQ2) && (
+        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-9"></div>
+      )}
+
+      {/* bottom popup */}
+      <div
+        className="absolute bg-white p-8 shadow-lg w-104 text-start bottom-20 left-40 z-15"
+        style={{
+          borderTopRightRadius: 20,
+          borderBottomRightRadius: 20,
+          borderTopLeftRadius: 20,
+        }}
+      >
+        <p
+          className="text-lg font-semibold font-[Nunito]"
+          style={{ color: Colors.Black }}
+        >
+          {currentQuestion === 0 ? "You can do it" : "Almost there"}
+        </p>
+
+        {/* Dog Image (positioned outside but touching bottom-left border of popup) */}
+        <img
+          src={require("./../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Owl.png")}
+          alt="Owl"
+          className="absolute -bottom-12 -left-20 w-20 h-20"
+        />
       </div>
 
       {/* popup */}
@@ -289,9 +408,9 @@ const MirrorQuiz = () => {
                   borderStyle: "solid",
                   borderColor: Colors.Pompelmo,
                 }}
-                onClick={() => setShowResult(false)}
+                onClick={() => navigate("/surface-path/mirror")}
               >
-                Next
+                Back to Lesson
               </button>
             </div>
           </div>

@@ -88,7 +88,8 @@ const Sidebar = ({ takenQuiz }) => {
             />
           </Link>
           <Link
-            to="/profile"
+            // to="/profile"
+            to="/coming-soon"
             className={active === "Profile" ? "active-tab" : ""}
           >
             <NavItem
