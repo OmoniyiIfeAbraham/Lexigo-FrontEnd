@@ -13,26 +13,32 @@ const questions = [
   {
     question: "Which word starts with the same sound as ‘Dog’?",
     options: ["Bat", "Duck", "Cat"],
+    correct: "Duck",
   },
   {
     question: "What word do these sounds make? /c/ /a/ /t/",
     options: ["Cat", "Bat", "Car"],
+    correct: "Cat",
   },
   {
     question: "Which word rhymes with ‘Hat’?",
     options: ["Mat", "Dog", "Sun"],
+    correct: "Mat",
   },
   {
     question: "Which letter is different?",
     options: ["b", "d", "b"],
+    correct: "d",
   },
   {
     question: "Which word looks like ‘Mop’?",
     options: ["Mop", "Pop", "Cop"],
+    correct: "mop",
   },
   {
     question: "Which one has the letter ‘p’?",
     options: ["Pan", "Ban", "Man"],
+    correct: "Pan",
   },
 ];
 
@@ -45,6 +51,10 @@ const Quiz = () => {
   const [showResult, setShowResult] = useState(false);
   const [score, setScore] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [result, setResult] = useState("");
+
+  const [phonologicalScore, setPhonologicalScore] = useState(0);
+  const [surfaceScore, setSurfaceScore] = useState(0);
 
   const navigate = useNavigate();
 
@@ -54,9 +64,38 @@ const Quiz = () => {
   };
 
   const handleNext = () => {
-    if (currentQuestion < questions.length - 1) {
-      setCurrentQuestion((prev) => prev + 1);
+    const selectedIndex = selectedOptions[currentQuestion];
+    const selectedAnswer = questions[currentQuestion].options[selectedIndex];
+    const correctAnswer = questions[currentQuestion].correct;
+
+    if (selectedAnswer === correctAnswer) {
+      console.log(`Question ${currentQuestion + 1}: ✅ Correct`);
+      setScore((prev) => {
+        const newScore = prev + 1;
+
+        // Fire the API after score has increased
+        axios
+          .get(
+            `http://localhost:6000/api/test/type/progress/add?level=${currentQuestion}&score=${newScore}`
+          )
+          .then(() => console.log("Progress saved"))
+          .catch((err) => console.error("Progress error", err));
+
+        return newScore;
+      });
+    } else {
+      console.log(`Question ${currentQuestion + 1}: ❌ Incorrect`);
+      axios
+        .get(
+          `http://localhost:6000/api/test/type/progress/add?level=${currentQuestion}&score=${score}`
+        )
+        .then(() => console.log("Progress saved"))
+        .catch((err) => console.error("Progress error", err));
     }
+
+    // if (currentQuestion < questions.length - 1) {
+    setCurrentQuestion((prev) => prev + 1);
+    // }
   };
 
   const handlePrevious = () => {
@@ -129,6 +168,66 @@ const Quiz = () => {
   useEffect(() => {
     StartQuiz();
   }, []);
+
+  const handleSubmit = () => {
+    const selectedIndex = selectedOptions[currentQuestion];
+    const selectedAnswer = questions[currentQuestion].options[selectedIndex];
+    const correctAnswer = questions[currentQuestion].correct;
+
+    let finalScore = score;
+
+    // Evaluate last question
+    if (selectedAnswer === correctAnswer) {
+      console.log(`Question ${currentQuestion + 1}: ✅ Correct`);
+      finalScore += 1;
+      setScore(finalScore); // optional, since we’re not going to next
+    } else {
+      console.log(`Question ${currentQuestion + 1}: ❌ Incorrect`);
+    }
+
+    // Calculate result based on score in each category
+    let phonologicalScore = 0;
+    let surfaceScore = 0;
+
+    for (let i = 0; i < questions.length; i++) {
+      const selectedIndex = selectedOptions[i];
+      const selected = questions[i].options[selectedIndex];
+      if (selected === questions[i].correct) {
+        if (i < 3) phonologicalScore++;
+        else surfaceScore++;
+      }
+    }
+
+    // Determine type based on LOWEST score
+    let dyslexiaType = "";
+    if (phonologicalScore < surfaceScore)
+      dyslexiaType = "Phonological Dyslexia";
+    else if (surfaceScore < phonologicalScore)
+      dyslexiaType = "Surface Dyslexia";
+    else if (phonologicalScore === surfaceScore && phonologicalScore < 3)
+      dyslexiaType = "Mixed Dyslexia";
+
+    // Final progress send
+    axios
+      .get(
+        `http://localhost:6000/api/test/type/progress/add?level=${currentQuestion}&score=${finalScore}&result=${encodeURIComponent(
+          dyslexiaType
+        )}`
+      )
+      .then(() => console.log("Final progress saved"))
+      .catch((err) => console.error("Submit progress error", err));
+
+    setResult(dyslexiaType);
+
+    console.log("Phonological Score:", phonologicalScore);
+    console.log("Surface Score:", surfaceScore);
+    console.log("Final Total Score:", phonologicalScore + surfaceScore);
+    console.log("Detected Dyslexia Type:", dyslexiaType);
+
+    setShowResult(true);
+  };
+
+  console.log(score);
 
   if (loading) {
     return (
@@ -254,7 +353,7 @@ const Quiz = () => {
                 opacity: selectedOptions === null ? 0.5 : 1,
               }}
               disabled={selectedOptions === null}
-              onClick={() => setShowResult(true)}
+              onClick={handleSubmit}
             >
               Submit
             </button>
