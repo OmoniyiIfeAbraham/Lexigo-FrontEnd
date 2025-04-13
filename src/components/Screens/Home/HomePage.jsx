@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../Components/HomeComps/SidebarComp";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Colors } from "../../Utils/Colors";
 import "./HomePageStyle.css";
+import Swal from "sweetalert2";
+import { BaseUrl } from "../../Config/Config";
+import axios from "axios";
+import Notify from "../../Notification/Notify";
 
 const Home = () => {
   const [takenQuiz, setTakenQuiz] = useState(false);
@@ -13,6 +17,8 @@ const Home = () => {
   const [surfaceProgress, setSurfaceProgress] = useState(0);
   const [selectedPhonological, setSelectedPhonological] = useState(false);
   const [selectedSurface, setSelectedSurface] = useState(false);
+  const [loading, setLoading] = useState(true); // default is loading
+
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -36,6 +42,72 @@ const Home = () => {
     } else {
     }
   };
+
+  const FetchData = async () => {
+    Swal.fire({
+      imageUrl:
+        "https://upload.wikimedia.org/wikipedia/commons/c/c7/Loading_2.gif",
+      imageHeight: 50,
+      showCloseButton: false,
+      showConfirmButton: false,
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+    });
+    try {
+      const Data = await localStorage.getItem("Profile");
+      const parsedData = JSON.parse(Data);
+
+      let url = `${BaseUrl}/api/profile/view`;
+
+      let response = await axios.get(url, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${parsedData.Auth}`,
+        },
+      });
+
+      if (response.data.Error === false) {
+        await localStorage.setItem(
+          "Profile-Details",
+          JSON.stringify(response.data.Data)
+        );
+        console.log(response.data);
+        if (response.data.Data.Type !== "") {
+          setTakenQuiz(true);
+        }
+      } else {
+        Notify({
+          title: "Error",
+          message: response.data.Error,
+          Type: "danger",
+        });
+      }
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.Error || error.message || "An error occurred.";
+      Notify({
+        title: "Error",
+        message: errorMessage,
+        Type: "danger",
+      });
+    } finally {
+      Swal.close();
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    FetchData();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p>Loading...</p>
+      </div>
+    );
+  }
+
   return (
     <div className="flex">
       {!pass ? (
