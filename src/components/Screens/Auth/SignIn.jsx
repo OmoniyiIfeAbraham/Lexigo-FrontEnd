@@ -5,6 +5,10 @@ import FormInput from "./../Components/Form/FormInput";
 import { Colors } from "./../../Utils/Colors";
 import { Link, useNavigate } from "react-router-dom";
 import "./SignInStyle.css";
+import Notify from "../../Notification/Notify";
+import Swal from "sweetalert2";
+import { BaseUrl } from "../../Config/Config";
+import axios from "axios";
 
 const SignIn = () => {
   const [inputs, setInputs] = useState({ email: "", password: "" });
@@ -15,10 +19,56 @@ const SignIn = () => {
     setInputs({ ...inputs, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Data: ", inputs);
-    navigate("/home");
+    Swal.fire({
+      imageUrl:
+        "https://upload.wikimedia.org/wikipedia/commons/c/c7/Loading_2.gif",
+      imageHeight: 50,
+      showCloseButton: false,
+      showConfirmButton: false,
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+    });
+    try {
+      let url = `${BaseUrl}/api/login`;
+      let formData = new FormData();
+      formData.append("Email", inputs.email);
+      formData.append("Password", inputs.password);
+
+      let response = await axios.post(url, formData, {
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (response.data.Error === false) {
+        await localStorage.setItem(
+          "Profile",
+          JSON.stringify(response.data.Data)
+        );
+        Notify({
+          title: "Success",
+          message: "Login successful",
+          Type: "success",
+        });
+        navigate("/home");
+      } else {
+        Notify({
+          title: "Error",
+          message: response.data.Error,
+          Type: "danger",
+        });
+      }
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.Error || error.message || "An error occurred.";
+      Notify({
+        title: "Error",
+        message: errorMessage,
+        Type: "danger",
+      });
+    } finally {
+      Swal.close();
+    }
   };
   return (
     <div className="flex flex-col md:flex-row items-center justify-start h-screen">

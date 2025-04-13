@@ -3,8 +3,12 @@ import AuthNavComp from "../Components/AuthComp/AuthNavComp";
 import FormTitle from "./../Components/Form/FormTitle";
 import FormInput from "./../Components/Form/FormInput";
 import { Colors } from "./../../Utils/Colors";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./SignUpStyle.css";
+import Swal from "sweetalert2";
+import { BaseUrl } from "../../Config/Config";
+import axios from "axios";
+import Notify from "../../Notification/Notify";
 
 const SignUp = () => {
   const [inputs, setInputs] = useState({
@@ -13,6 +17,8 @@ const SignUp = () => {
     name: "",
     type: "",
   });
+
+  const navigate = useNavigate();
 
   const options = [
     { label: "I'm not sure", value: "" },
@@ -25,9 +31,54 @@ const SignUp = () => {
     setInputs({ ...inputs, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Data: ", inputs);
+    Swal.fire({
+      imageUrl:
+        "https://upload.wikimedia.org/wikipedia/commons/c/c7/Loading_2.gif",
+      imageHeight: 50,
+      showCloseButton: false,
+      showConfirmButton: false,
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+    });
+    try {
+      let url = `${BaseUrl}/api/register`;
+      let formData = new FormData();
+      formData.append("Password", inputs.password);
+      formData.append("Name", inputs.name);
+      formData.append("Email", inputs.email);
+      formData.append("Type", inputs.type);
+
+      let response = await axios.post(url, formData, {
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (response.data.Error === false) {
+        Notify({
+          title: "Success",
+          message: "Registeration successful",
+          Type: "success",
+        });
+        navigate("/auth/signin");
+      } else {
+        Notify({
+          title: "Error",
+          message: response.data.Error,
+          Type: "danger",
+        });
+      }
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.Error || error.message || "An error occurred.";
+      Notify({
+        title: "Error",
+        message: errorMessage,
+        Type: "danger",
+      });
+    } finally {
+      Swal.close();
+    }
   };
   return (
     <div className="flex flex-col md:flex-row items-center justify-start h-screen">

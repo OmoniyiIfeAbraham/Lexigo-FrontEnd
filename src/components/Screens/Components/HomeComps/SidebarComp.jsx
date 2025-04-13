@@ -4,8 +4,12 @@ import { Colors } from "../../../Utils/Colors";
 import NavItem from "./NavItemComp";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./SidebarCompStyle.css";
+import Swal from "sweetalert2";
+import { BaseUrl } from "../../../Config/Config";
+import axios from "axios";
+import Notify from "../../../Notification/Notify";
 
-const Sidebar = ({ takenQuiz }) => {
+const Sidebar = ({ takenQuiz, setTakenQuiz }) => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -21,8 +25,61 @@ const Sidebar = ({ takenQuiz }) => {
 
   const active = screenMap[location.pathname] || "Home";
 
+  const FetchData = async () => {
+    Swal.fire({
+      imageUrl:
+        "https://upload.wikimedia.org/wikipedia/commons/c/c7/Loading_2.gif",
+      imageHeight: 50,
+      showCloseButton: false,
+      showConfirmButton: false,
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+    });
+    try {
+      const Data = await localStorage.getItem("Profile");
+      const parsedData = JSON.parse(Data);
+
+      let url = `${BaseUrl}/api/profile/view`;
+
+      let response = await axios.get(url, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${parsedData.Auth}`,
+        },
+      });
+
+      if (response.data.Error === false) {
+        await localStorage.setItem(
+          "Profile-Details",
+          JSON.stringify(response.data.Data)
+        ); 
+        console.log(response.data);
+        if (response.data.Data.Type !== "") {
+         setTakenQuiz(true)
+        }
+      } else {
+        Notify({
+          title: "Error",
+          message: response.data.Error,
+          Type: "danger",
+        });
+      }
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.Error || error.message || "An error occurred.";
+      Notify({
+        title: "Error",
+        message: errorMessage,
+        Type: "danger",
+      });
+    } finally {
+      Swal.close();
+    }
+  };
+
   useEffect(() => {
-    console.log(takenQuiz)
+    FetchData();
+    console.log(takenQuiz);
     // ✅ Redirect only once if takenQuiz is false
     if (takenQuiz === false && !redirected && location.pathname === "/home") {
       navigate("/quiz", { replace: true });
