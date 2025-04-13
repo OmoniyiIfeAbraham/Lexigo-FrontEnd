@@ -33,7 +33,7 @@ const questions = [
   {
     question: "Which word looks like ‘Mop’?",
     options: ["Mop", "Pop", "Cop"],
-    correct: "mop",
+    correct: "Mop",
   },
   {
     question: "Which one has the letter ‘p’?",
@@ -63,39 +63,59 @@ const Quiz = () => {
     navigate("/home", { state: { pass: true } });
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
+    const Data = await localStorage.getItem("Profile");
+    const parsedData = JSON.parse(Data);
+
     const selectedIndex = selectedOptions[currentQuestion];
     const selectedAnswer = questions[currentQuestion].options[selectedIndex];
     const correctAnswer = questions[currentQuestion].correct;
 
+    let newScore = score;
+    let newPscore = phonologicalScore;
+    let newSscore = surfaceScore;
+
     if (selectedAnswer === correctAnswer) {
       console.log(`Question ${currentQuestion + 1}: ✅ Correct`);
-      setScore((prev) => {
-        const newScore = prev + 1;
+      newScore += 1;
 
-        // Fire the API after score has increased
-        axios
-          .get(
-            `http://localhost:6000/api/test/type/progress/add?level=${currentQuestion}&score=${newScore}`
-          )
-          .then(() => console.log("Progress saved"))
-          .catch((err) => console.error("Progress error", err));
+      if (currentQuestion < 3) {
+        newPscore += 1;
+      } else {
+        newSscore += 1;
+      }
 
-        return newScore;
-      });
+      setScore(newScore);
+      setPhonologicalScore(newPscore);
+      setSurfaceScore(newSscore);
     } else {
       console.log(`Question ${currentQuestion + 1}: ❌ Incorrect`);
-      axios
-        .get(
-          `http://localhost:6000/api/test/type/progress/add?level=${currentQuestion}&score=${score}`
-        )
-        .then(() => console.log("Progress saved"))
-        .catch((err) => console.error("Progress error", err));
     }
 
-    // if (currentQuestion < questions.length - 1) {
+    try {
+      await axios.get(
+        `${BaseUrl}/api/test/type/progress/add?level=${currentQuestion}&score=${newScore}&Pscore=${newPscore}&Sscore=${newSscore}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${parsedData.Auth}`,
+          },
+        }
+      );
+      console.log("Progress saved");
+    } catch (err) {
+      console.error("Progress error", err);
+      const errorMessage =
+        err.response?.data?.Error || err.message || "An error occurred.";
+      Notify({
+        title: "Error",
+        message: errorMessage,
+        Type: "danger",
+      });
+    }
+
+    // Go to next question only after request completes
     setCurrentQuestion((prev) => prev + 1);
-    // }
   };
 
   const handlePrevious = () => {
@@ -124,7 +144,7 @@ const Quiz = () => {
       const Data = await localStorage.getItem("Profile");
       const parsedData = JSON.parse(Data);
 
-      console.log(`Bearer ${parsedData.Auth}`);
+      // console.log(`Bearer ${parsedData.Auth}`);
 
       let url = `${BaseUrl}/api/test/type/start`;
 
@@ -141,8 +161,14 @@ const Quiz = () => {
 
       if (response.data.Error === false) {
         console.log("initial: ", response.data);
-        setCurrentQuestion(response.data.Data.Progress);
+        setCurrentQuestion(
+          response.data.Data.Progress == 0
+            ? response.data.Data.Progress
+            : response.data.Data.Progress + 1
+        );
         setScore(response.data.Data.Score);
+        setPhonologicalScore(response.data.Data.PhonologicalScore);
+        setSurfaceScore(response.data.Data.SurfaceScore);
         setTakenQuiz(response.data.Data.Completed);
       } else {
         Notify({
@@ -169,59 +195,79 @@ const Quiz = () => {
     StartQuiz();
   }, []);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    const Data = await localStorage.getItem("Profile");
+    const parsedData = JSON.parse(Data);
+
     const selectedIndex = selectedOptions[currentQuestion];
     const selectedAnswer = questions[currentQuestion].options[selectedIndex];
     const correctAnswer = questions[currentQuestion].correct;
 
     let finalScore = score;
 
-    // Evaluate last question
+    // Evaluate current question
+    let isCorrect = false;
     if (selectedAnswer === correctAnswer) {
       console.log(`Question ${currentQuestion + 1}: ✅ Correct`);
       finalScore += 1;
-      setScore(finalScore); // optional, since we’re not going to next
+      setScore(finalScore); // Update score state
+      isCorrect = true;
     } else {
       console.log(`Question ${currentQuestion + 1}: ❌ Incorrect`);
     }
 
-    // Calculate result based on score in each category
-    let phonologicalScore = 0;
-    let surfaceScore = 0;
+    // Increment scores based on only the current question
+    let newPScore = phonologicalScore;
+    let newSScore = surfaceScore;
 
-    for (let i = 0; i < questions.length; i++) {
-      const selectedIndex = selectedOptions[i];
-      const selected = questions[i].options[selectedIndex];
-      if (selected === questions[i].correct) {
-        if (i < 3) phonologicalScore++;
-        else surfaceScore++;
+    if (isCorrect) {
+      if (currentQuestion < 3) {
+        newPScore += 1;
+        setPhonologicalScore(newPScore);
+      } else {
+        newSScore += 1;
+        setSurfaceScore(newSScore);
       }
     }
 
     // Determine type based on LOWEST score
     let dyslexiaType = "";
-    if (phonologicalScore < surfaceScore)
-      dyslexiaType = "Phonological Dyslexia";
-    else if (surfaceScore < phonologicalScore)
-      dyslexiaType = "Surface Dyslexia";
-    else if (phonologicalScore === surfaceScore && phonologicalScore < 3)
+    if (newPScore < newSScore) dyslexiaType = "Phonological Dyslexia";
+    else if (newSScore < newPScore) dyslexiaType = "Surface Dyslexia";
+    else if (newPScore === newSScore && newPScore < 3)
       dyslexiaType = "Mixed Dyslexia";
+    else if (newPScore === newSScore) dyslexiaType = "None";
 
-    // Final progress send
-    axios
-      .get(
-        `http://localhost:6000/api/test/type/progress/add?level=${currentQuestion}&score=${finalScore}&result=${encodeURIComponent(
+    // Save updated progress
+    try {
+      await axios.get(
+        `${BaseUrl}/api/test/type/progress/add?level=${currentQuestion}&score=${finalScore}&Pscore=${newPScore}&Sscore=${newSScore}&result=${encodeURIComponent(
           dyslexiaType
-        )}`
-      )
-      .then(() => console.log("Final progress saved"))
-      .catch((err) => console.error("Submit progress error", err));
+        )}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${parsedData.Auth}`,
+          },
+        }
+      );
+      console.log("Final progress saved");
+    } catch (err) {
+      console.error("Submit progress error", err);
+      const errorMessage =
+        err.response?.data?.Error || err.message || "An error occurred.";
+      Notify({
+        title: "Error",
+        message: errorMessage,
+        Type: "danger",
+      });
+    }
 
     setResult(dyslexiaType);
 
-    console.log("Phonological Score:", phonologicalScore);
-    console.log("Surface Score:", surfaceScore);
-    console.log("Final Total Score:", phonologicalScore + surfaceScore);
+    console.log("Phonological Score:", newPScore);
+    console.log("Surface Score:", newSScore);
+    console.log("Final Total Score:", newPScore + newSScore);
     console.log("Detected Dyslexia Type:", dyslexiaType);
 
     setShowResult(true);
@@ -458,13 +504,13 @@ const Quiz = () => {
               className="percentage text-[36px] font-[Nunito] my-3"
               style={{ color: Colors.BeastyBrown2 }}
             >
-              100%
+              {(score / 6) * 100}%
             </p>
             <p
               className="percentage text-[20px] font-[Nunito]"
               style={{ color: Colors.BeastyBrown2 }}
             >
-              Phonological dyslexic
+              {result}
             </p>
             {/* buttons */}
             <div className="flex justify-between items-center w-[100%] h-[100px]">
