@@ -17,7 +17,7 @@ const Home = () => {
   const [surfaceProgress, setSurfaceProgress] = useState(0);
   const [selectedPhonological, setSelectedPhonological] = useState(false);
   const [selectedSurface, setSelectedSurface] = useState(false);
-  const [loading, setLoading] = useState(true); // default is loading
+  const [loading, setLoading] = useState(true);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -74,6 +74,7 @@ const Home = () => {
         console.log(response.data);
         if (response.data.Data.Type !== "") {
           setTakenQuiz(true);
+          setType(response.data.Data.Type);
         }
       } else {
         Notify({

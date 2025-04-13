@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../Components/HomeComps/SidebarComp";
 import { useNavigate } from "react-router-dom";
 import "./QuizStyle.css";
 import { Colors } from "../../Utils/Colors";
 import { ChevronLeft, RotateCw } from "lucide-react";
+import Swal from "sweetalert2";
+import { BaseUrl } from "../../Config/Config";
+import axios from "axios";
+import Notify from "../../Notification/Notify";
 
 const questions = [
   {
@@ -39,6 +43,8 @@ const Quiz = () => {
     Array(questions.length).fill(null)
   );
   const [showResult, setShowResult] = useState(false);
+  const [score, setScore] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
 
@@ -64,6 +70,73 @@ const Quiz = () => {
     updatedSelections[currentQuestion] = index; // Store selected option for current question
     setSelectedOptions(updatedSelections);
   };
+
+  const StartQuiz = async () => {
+    Swal.fire({
+      imageUrl:
+        "https://upload.wikimedia.org/wikipedia/commons/c/c7/Loading_2.gif",
+      imageHeight: 50,
+      showCloseButton: false,
+      showConfirmButton: false,
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+    });
+    try {
+      const Data = await localStorage.getItem("Profile");
+      const parsedData = JSON.parse(Data);
+
+      console.log(`Bearer ${parsedData.Auth}`);
+
+      let url = `${BaseUrl}/api/test/type/start`;
+
+      let response = await axios.post(
+        url,
+        {},
+        {
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${parsedData.Auth}`,
+          },
+        }
+      );
+
+      if (response.data.Error === false) {
+        console.log("initial: ", response.data);
+        setCurrentQuestion(response.data.Data.Progress);
+        setScore(response.data.Data.Score);
+        setTakenQuiz(response.data.Data.Completed);
+      } else {
+        Notify({
+          title: "Error",
+          message: response.data.Error,
+          Type: "danger",
+        });
+      }
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.Error || error.message || "An error occurred.";
+      Notify({
+        title: "Error",
+        message: errorMessage,
+        Type: "danger",
+      });
+    } finally {
+      Swal.close();
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    StartQuiz();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p>Loading...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="flex relative">
@@ -232,6 +305,7 @@ const Quiz = () => {
                   borderColor: Colors.Primary,
                 }}
                 onClick={() => setTakenQuiz(true)}
+                // onClick={() => StartQuiz()}
               >
                 Begin
               </button>
@@ -278,7 +352,7 @@ const Quiz = () => {
                 className="score-text text-[32px] font-[Nunito]"
                 style={{ color: Colors.BeastyBrown2 }}
               >
-                Score: 3 / 6
+                Score: {score} / 6
               </p>
             </div>
             <p
