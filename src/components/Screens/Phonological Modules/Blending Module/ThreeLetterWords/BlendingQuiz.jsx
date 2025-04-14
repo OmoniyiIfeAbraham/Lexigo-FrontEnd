@@ -1,7 +1,11 @@
 import { ChevronLeft, ChevronRight, Menu, Pause, Plus, X } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Colors } from "../../../../Utils/Colors";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { BaseUrl } from "../../../../Config/Config";
+import Notify from "../../../../Notification/Notify";
+import Swal from "sweetalert2";
 
 const questions = [
   {
@@ -16,6 +20,12 @@ const BlendingQuiz = () => {
   const [playing, setPlaying] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [showResult, setShowResult] = useState(false);
+  const [selectedFan, setSelectedFan] = useState(false);
+  const [selectedCat, setSelectedCat] = useState(false);
+  const [selectedPan, setSelectedPan] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [score, setScore] = useState(0);
+  const [finalScore, setFinalScore] = useState(0);
 
   // Function to play audio
   const playSound = () => {
@@ -29,9 +39,102 @@ const BlendingQuiz = () => {
     }, 1500);
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
+    const Data = await localStorage.getItem("Profile");
+    const parsedData = JSON.parse(Data);
+
+    let newScore = score;
+
+    if (
+      (currentQuestion == 0 && selectedCat) ||
+      (currentQuestion == 1 && selectedPan)
+    ) {
+      console.log(`Question ${currentQuestion + 1}: ✅ Correct`);
+      newScore += 1;
+
+      setScore(newScore);
+    } else {
+      console.log(`Question ${currentQuestion + 1}: ❌ Incorrect`);
+    }
+
+    try {
+      await axios.get(
+        `${BaseUrl}/api/phonological/quiz/blending/progress/add?level=${currentQuestion}&score=${newScore}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${parsedData.Auth}`,
+          },
+        }
+      );
+      console.log("Progress saved");
+    } catch (err) {
+      console.error("Progress error", err);
+      const errorMessage =
+        err.response?.data?.Error || err.message || "An error occurred.";
+      Notify({
+        title: "Error",
+        message: errorMessage,
+        Type: "danger",
+      });
+    }
+
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion((prev) => prev + 1);
+    }
+
+    setSelectedCat(false);
+    setSelectedFan(false);
+    setSelectedPan(false);
+  };
+
+  const handleSubmit = async () => {
+    const Data = await localStorage.getItem("Profile");
+    const parsedData = JSON.parse(Data);
+
+    let newScore = 0;
+
+    if (
+      (currentQuestion == 0 && selectedCat) ||
+      (currentQuestion == 1 && selectedPan)
+    ) {
+      console.log(`Question ${currentQuestion + 1}: ✅ Correct`);
+      newScore += 1;
+      setScore(newScore);
+    } else {
+      console.log(`Question ${currentQuestion + 1}: ❌ Incorrect`);
+    }
+
+    try {
+      const response = await axios.get(
+        `${BaseUrl}/api/phonological/quiz/blending/progress/add?level=${currentQuestion}&score=${newScore}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${parsedData.Auth}`,
+          },
+        }
+      );
+      console.log("Final Progress Saved");
+      setFinalScore(response.data.Data.Score);
+
+      // Swal.fire({
+      //   icon: "success",
+      //   title: "Quiz Completed!",
+      //   text: `You scored ${newScore} / ${questions.length}`,
+      // });
+
+      // navigate("/phonological-path/alphabet"); // or go to results page
+      setShowResult(true);
+    } catch (err) {
+      console.error("Final Progress Error", err);
+      const errorMessage =
+        err.response?.data?.Error || err.message || "An error occurred.";
+      Notify({
+        title: "Error",
+        message: errorMessage,
+        Type: "danger",
+      });
     }
   };
 
@@ -39,7 +142,95 @@ const BlendingQuiz = () => {
     if (currentQuestion > 0) {
       setCurrentQuestion((prev) => prev - 1);
     }
+
+    setSelectedCat(false);
+    setSelectedFan(false);
+    setSelectedPan(false);
+    setScore(0);
   };
+
+  const handleFanChange = () => {
+    setSelectedFan(!selectedFan);
+    setSelectedCat(false);
+    setSelectedPan(false);
+  };
+
+  const handleCatChange = () => {
+    setSelectedCat(!selectedCat);
+    setSelectedFan(false);
+    setSelectedPan(false);
+  };
+
+  const handlePanChange = () => {
+    setSelectedPan(!selectedPan);
+    setSelectedCat(false);
+    setSelectedFan(false);
+  };
+
+  const StartQuiz = async () => {
+    Swal.fire({
+      imageUrl:
+        "https://upload.wikimedia.org/wikipedia/commons/c/c7/Loading_2.gif",
+      imageHeight: 50,
+      showCloseButton: false,
+      showConfirmButton: false,
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+    });
+    try {
+      const Data = await localStorage.getItem("Profile");
+      const parsedData = JSON.parse(Data);
+
+      // console.log(`Bearer ${parsedData.Auth}`);
+
+      let url = `${BaseUrl}/api/phonological/quiz/blending/quiz/start`;
+
+      let response = await axios.post(
+        url,
+        {},
+        {
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${parsedData.Auth}`,
+          },
+        }
+      );
+
+      if (response.data.Error === false) {
+        console.log("initial: ", response.data);
+        setCurrentQuestion(response.data.Data.Progress);
+      } else {
+        Notify({
+          title: "Error",
+          message: response.data.Error,
+          Type: "danger",
+        });
+      }
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.Error || error.message || "An error occurred.";
+      Notify({
+        title: "Error",
+        message: errorMessage,
+        Type: "danger",
+      });
+    } finally {
+      Swal.close();
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    // StartQuiz();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p>Loading...</p>
+      </div>
+    );
+  }
 
   return (
     <div
@@ -110,55 +301,97 @@ const BlendingQuiz = () => {
               {currentQuestion + 1} / {questions.length}
             </p>
             {/* Question */}
-            <div className="w-full flex justify-center px-32 items-center">
-              <img
-                src={require("./../../../../../Assets/Images/Phonological/Blending Module/p.png")}
-                className="option-btn w-[90px] h-[90px]"
-              />
+            {currentQuestion === 0 ? (
+              <div className="w-full flex justify-center px-32 items-center">
+                <img
+                  src={require("./../../../../../Assets/Images/Phonological/Blending Module/c.png")}
+                  className="option-btn w-[90px] h-[90px]"
+                />
 
-              <Plus className="w-[50px] h-[50px] mx-5" />
+                <Plus className="w-[50px] h-[50px] mx-5" />
 
-              <img
-                src={require("./../../../../../Assets/Images/Phonological/Blending Module/o.png")}
-                className="option-btn w-[90px] h-[90px]"
-              />
+                <img
+                  src={require("./../../../../../Assets/Images/Phonological/Blending Module/a.png")}
+                  className="option-btn w-[90px] h-[90px]"
+                />
 
-              <Plus className="w-[50px] h-[50px] mx-5" />
+                <Plus className="w-[50px] h-[50px] mx-5" />
 
-              <img
-                src={require("./../../../../../Assets/Images/Phonological/Blending Module/t.png")}
-                className="option-btn w-[90px] h-[90px]"
-              />
-            </div>
+                <img
+                  src={require("./../../../../../Assets/Images/Phonological/Blending Module/t.png")}
+                  className="option-btn w-[90px] h-[90px]"
+                />
+              </div>
+            ) : (
+              <div className="w-full flex justify-center px-32 items-center">
+                <img
+                  src={require("./../../../../../Assets/Images/Phonological/Blending Module/p.png")}
+                  className="option-btn w-[90px] h-[90px]"
+                />
+
+                <Plus className="w-[50px] h-[50px] mx-5" />
+
+                <img
+                  src={require("./../../../../../Assets/Images/Phonological/Blending Module/a.png")}
+                  className="option-btn w-[90px] h-[90px]"
+                />
+
+                <Plus className="w-[50px] h-[50px] mx-5" />
+
+                <img
+                  src={require("./../../../../../Assets/Images/Phonological/Blending Module/n.png")}
+                  className="option-btn w-[90px] h-[90px]"
+                />
+              </div>
+            )}
             <div className="w-full flex justify-center px-32 items-center mt-10">
-              <button>
+              <button onClick={handleFanChange}>
                 <img
-                  src={require("./../../../../../Assets/Images/Phonological/Blending Module/fan.png")}
+                  src={
+                    selectedFan
+                      ? require("./../../../../../Assets/Images/Phonological/Blending Module/fan-Filled.png")
+                      : require("./../../../../../Assets/Images/Phonological/Blending Module/fan.png")
+                  }
                   className="option-btn w-[173px] h-[62px] mr-10"
                 />
               </button>
 
-              <button>
+              <button onClick={handlePanChange}>
                 <img
-                  src={require("./../../../../../Assets/Images/Phonological/Blending Module/pan.png")}
+                  src={
+                    selectedPan
+                      ? require("./../../../../../Assets/Images/Phonological/Blending Module/pan-Filled.png")
+                      : require("./../../../../../Assets/Images/Phonological/Blending Module/pan.png")
+                  }
                   className="option-btn w-[173px] h-[62px] mr-10"
                 />
               </button>
 
-              <button>
+              <button onClick={handleCatChange}>
                 <img
-                  src={require("./../../../../../Assets/Images/Phonological/Blending Module/cat-option.png")}
+                  src={
+                    selectedCat
+                      ? require("./../../../../../Assets/Images/Phonological/Blending Module/cat-option-Filled.png")
+                      : require("./../../../../../Assets/Images/Phonological/Blending Module/cat-option.png")
+                  }
                   className="option-btn w-[173px] h-[62px]"
                 />
               </button>
             </div>
           </div>
-          <button onClick={handleNext}>
+          {currentQuestion < 1 ? (
+            <button onClick={handleNext}>
+              <ChevronRight
+                className="right w-[125px] h-[125px]"
+                style={{ color: Colors.Black }}
+              />
+            </button>
+          ) : (
             <ChevronRight
               className="right w-[125px] h-[125px]"
               style={{ color: Colors.Black }}
             />
-          </button>
+          )}
         </div>
         {/* play */}
         <div className="play flex justify-between items-center mt-10 px-24">
@@ -201,9 +434,7 @@ const BlendingQuiz = () => {
               borderRadius: 20,
               backgroundColor: Colors.Pompelmo,
             }}
-            onClick={() => {
-              setShowResult(true);
-            }}
+            onClick={handleSubmit}
             disabled={currentQuestion < 1}
           >
             Submit

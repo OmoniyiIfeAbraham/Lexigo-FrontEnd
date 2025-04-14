@@ -11,7 +11,7 @@ import Notify from "../../../Notification/Notify";
 const Alphabets = () => {
   const navigate = useNavigate();
   const [showPopup, setShowPopup] = useState(true);
-  const [progress, setProgress] = useState(2);
+  const [progress, setProgress] = useState(0);
 
   const ViewProgress = async () => {
     Swal.fire({

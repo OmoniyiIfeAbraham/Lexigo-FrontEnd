@@ -1,12 +1,70 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Colors } from "../../../Utils/Colors";
 import { ChevronLeft } from "lucide-react";
 import "./BlendingStyle.css";
+import Swal from "sweetalert2";
+import { BaseUrl } from "../../../Config/Config";
+import axios from "axios";
+import Notify from "../../../Notification/Notify";
 
 const Blending = () => {
   const navigate = useNavigate();
   const [showPopup, setShowPopup] = useState(true);
+  const [progress, setProgress] = useState(0);
+
+  const ViewProgress = async () => {
+    Swal.fire({
+      imageUrl:
+        "https://upload.wikimedia.org/wikipedia/commons/c/c7/Loading_2.gif",
+      imageHeight: 50,
+      showCloseButton: false,
+      showConfirmButton: false,
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+    });
+    try {
+      const Data = await localStorage.getItem("Profile");
+      const parsedData = JSON.parse(Data);
+
+      // console.log(`Bearer ${parsedData.Auth}`);
+
+      let url = `${BaseUrl}/api/phonological/module/blending/view`;
+
+      let response = await axios.get(url, {
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${parsedData.Auth}`,
+        },
+      });
+
+      if (response.data.Error === false) {
+        console.log("initial: ", response.data);
+        setProgress(response.data.Data.Progress);
+      } else {
+        Notify({
+          title: "Error",
+          message: response.data.Error,
+          Type: "danger",
+        });
+      }
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.Error || error.message || "An error occurred.";
+      Notify({
+        title: "Error",
+        message: errorMessage,
+        Type: "danger",
+      });
+    } finally {
+      Swal.close();
+    }
+  };
+
+  useEffect(() => {
+    ViewProgress();
+  }, []);
+
   return (
     <div
       style={{
@@ -49,15 +107,25 @@ const Blending = () => {
             </h1>
           </div>
           <img
-            src={require("./../../../../Assets/Images/Phonological/Alphabets Module/Progress Bar.png")}
+            src={
+              progress === 1
+                ? require("./../../../../Assets/Images/Phonological/Alphabets Module/Progress Bar-Filled.png")
+                : require("./../../../../Assets/Images/Phonological/Alphabets Module/Progress Bar.png")
+            }
             className="img w-[183px] h-[35px] mx-2"
           />
           <div
             className="progress-trophy w-[70px] h-[70px] flex justify-center items-center"
-            style={{ backgroundColor: Colors.Grey }}
+            style={{
+              backgroundColor: progress === 1 ? Colors.Secondary : Colors.Grey,
+            }}
           >
             <img
-              src={require("./../../../../Assets/Images/Phonological/Alphabets Module/Trophy.png")}
+              src={
+                progress === 1
+                  ? require("./../../../../Assets/Images/Phonological/Alphabets Module/Trophy-Filled.png")
+                  : require("./../../../../Assets/Images/Phonological/Alphabets Module/Trophy.png")
+              }
               className="img-trophy w-[43px] h-[44px]"
             />
           </div>

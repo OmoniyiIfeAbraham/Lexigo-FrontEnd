@@ -167,7 +167,7 @@ const Home = () => {
             >
               <div
                 style={{
-                  width: `${(phonologicalProgress / 4) * 100}%`,
+                  width: `${(phonologicalProgress / 6) * 100}%`,
                   height: "21px",
                   backgroundColor: Colors.Secondary, // Blue
                   borderRadius: "50px",

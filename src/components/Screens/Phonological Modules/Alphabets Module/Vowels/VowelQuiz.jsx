@@ -27,6 +27,7 @@ const VowelQuiz = () => {
   const [selectedO, setSelectedO] = useState(false);
   const [loading, setLoading] = useState(true);
   const [score, setScore] = useState(0);
+  const [finalScore, setFinalScore] = useState(0);
 
   // Function to play audio
   const playSound = () => {
@@ -88,6 +89,56 @@ const VowelQuiz = () => {
     setSelectedO(false);
   };
 
+  const handleSubmit = async () => {
+    const Data = await localStorage.getItem("Profile");
+    const parsedData = JSON.parse(Data);
+
+    let newScore = 0;
+
+    if (
+      (currentQuestion == 0 && selectedA) ||
+      (currentQuestion == 1 && selectedO)
+    ) {
+      console.log(`Question ${currentQuestion + 1}: ✅ Correct`);
+      newScore += 1;
+      setScore(newScore);
+    } else {
+      console.log(`Question ${currentQuestion + 1}: ❌ Incorrect`);
+    }
+
+    try {
+      const response = await axios.get(
+        `${BaseUrl}/api/phonological/quiz/alphabets/vowel/progress/add?level=${currentQuestion}&score=${newScore}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${parsedData.Auth}`,
+          },
+        }
+      );
+      console.log("Final Progress Saved");
+      setFinalScore(response.data.Data.Score);
+
+      // Swal.fire({
+      //   icon: "success",
+      //   title: "Quiz Completed!",
+      //   text: `You scored ${newScore} / ${questions.length}`,
+      // });
+
+      // navigate("/phonological-path/alphabet"); // or go to results page
+      setShowResult(true);
+    } catch (err) {
+      console.error("Final Progress Error", err);
+      const errorMessage =
+        err.response?.data?.Error || err.message || "An error occurred.";
+      Notify({
+        title: "Error",
+        message: errorMessage,
+        Type: "danger",
+      });
+    }
+  };
+
   const handlePrevious = () => {
     if (currentQuestion > 0) {
       setCurrentQuestion((prev) => prev - 1);
@@ -95,6 +146,7 @@ const VowelQuiz = () => {
     setSelectedA(false);
     setSelectedE(false);
     setSelectedO(false);
+    setScore(0);
   };
 
   console.log(currentQuestion);
@@ -364,9 +416,7 @@ const VowelQuiz = () => {
               borderRadius: 20,
               backgroundColor: Colors.Pompelmo,
             }}
-            onClick={() => {
-              setShowResult(true);
-            }}
+            onClick={handleSubmit}
             disabled={currentQuestion < 1}
           >
             Submit
@@ -429,6 +479,7 @@ const VowelQuiz = () => {
               style={{ backgroundColor: Colors.Pompelmo, borderRadius: "50%" }}
               onClick={() => {
                 setShowResult(false);
+                navigate("/phonological-path/alphabet");
               }}
             >
               <X size={46} color={Colors.White} className="icon" />
@@ -444,12 +495,28 @@ const VowelQuiz = () => {
               alt="Owl"
               className="w-[143px] h-[143px] my-3"
             />
-            <p
-              className="successTitle text-[36px] font-[Nunito] my-1"
-              style={{ color: Colors.green, fontWeight: "bolder" }}
-            >
-              Yay Passed!
-            </p>
+            {finalScore === 0 ? (
+              <p
+                className="successTitle text-[36px] font-[Nunito] my-1"
+                style={{ color: Colors.Pompelmo, fontWeight: "bolder" }}
+              >
+                Not Bad. Keep Trying!
+              </p>
+            ) : finalScore === 1 ? (
+              <p
+                className="successTitle text-[36px] font-[Nunito] my-1"
+                style={{ color: Colors.Orange, fontWeight: "bolder" }}
+              >
+                Nice Work!
+              </p>
+            ) : (
+              <p
+                className="successTitle text-[36px] font-[Nunito] my-1"
+                style={{ color: Colors.green, fontWeight: "bolder" }}
+              >
+                Yay Passed!
+              </p>
+            )}
             {/* buttons */}
             <div className="flex justify-center items-center w-[100%] h-[100px]">
               <button
@@ -463,7 +530,10 @@ const VowelQuiz = () => {
                   borderStyle: "solid",
                   borderColor: Colors.Pompelmo,
                 }}
-                onClick={() => setShowResult(false)}
+                onClick={() => {
+                  setShowResult(false);
+                  navigate("/phonological-path/alphabet");
+                }}
               >
                 Next
               </button>
