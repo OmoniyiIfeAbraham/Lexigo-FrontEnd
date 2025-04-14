@@ -13,7 +13,7 @@ const Home = () => {
   const [type, setType] = useState("");
   const [showPopup, setShowPopup] = useState(true);
   // State for progress bars
-  const [phonologicalProgress, setPhonologicalProgress] = useState(10);
+  const [phonologicalProgress, setPhonologicalProgress] = useState(0);
   const [surfaceProgress, setSurfaceProgress] = useState(0);
   const [selectedPhonological, setSelectedPhonological] = useState(false);
   const [selectedSurface, setSelectedSurface] = useState(false);
@@ -72,6 +72,8 @@ const Home = () => {
           JSON.stringify(response.data.Data)
         );
         console.log(response.data);
+        setPhonologicalProgress(response.data.Data.PhonologicalProgress || 0);
+        setSurfaceProgress(response.data.Data.SurfaceProgress || 0);
         if (response.data.Data.Type !== "") {
           setTakenQuiz(true);
           setType(response.data.Data.Type);
@@ -165,7 +167,7 @@ const Home = () => {
             >
               <div
                 style={{
-                  width: `${phonologicalProgress}%`,
+                  width: `${(phonologicalProgress / 4) * 100}%`,
                   height: "21px",
                   backgroundColor: Colors.Secondary, // Blue
                   borderRadius: "50px",
@@ -210,7 +212,7 @@ const Home = () => {
             >
               <div
                 style={{
-                  width: `${surfaceProgress}%`,
+                  width: `${(surfaceProgress / 2) * 100}%`,
                   height: "21px",
                   backgroundColor: Colors.Secondary,
                   borderRadius: "50px",

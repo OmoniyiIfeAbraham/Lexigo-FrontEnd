@@ -1,7 +1,11 @@
 import { ChevronLeft, ChevronRight, Menu, Pause, X } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Colors } from "../../../../Utils/Colors";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import { BaseUrl } from "../../../../Config/Config";
+import axios from "axios";
+import Notify from "../../../../Notification/Notify";
 
 const questions = [
   {
@@ -18,6 +22,11 @@ const VowelQuiz = () => {
   const [playing, setPlaying] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [showResult, setShowResult] = useState(false);
+  const [selectedA, setSelectedA] = useState(false);
+  const [selectedE, setSelectedE] = useState(false);
+  const [selectedO, setSelectedO] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [score, setScore] = useState(0);
 
   // Function to play audio
   const playSound = () => {
@@ -31,17 +40,147 @@ const VowelQuiz = () => {
     }, 1500);
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
+    const Data = await localStorage.getItem("Profile");
+    const parsedData = JSON.parse(Data);
+
+    let newScore = score;
+
+    if (
+      (currentQuestion == 0 && selectedA) ||
+      (currentQuestion == 1 && selectedO)
+    ) {
+      console.log(`Question ${currentQuestion + 1}: ✅ Correct`);
+      newScore += 1;
+
+      setScore(newScore);
+    } else {
+      console.log(`Question ${currentQuestion + 1}: ❌ Incorrect`);
+    }
+
+    try {
+      await axios.get(
+        `${BaseUrl}/api/phonological/quiz/alphabets/vowel/progress/add?level=${currentQuestion}&score=${newScore}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${parsedData.Auth}`,
+          },
+        }
+      );
+      console.log("Progress saved");
+    } catch (err) {
+      console.error("Progress error", err);
+      const errorMessage =
+        err.response?.data?.Error || err.message || "An error occurred.";
+      Notify({
+        title: "Error",
+        message: errorMessage,
+        Type: "danger",
+      });
+    }
+
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion((prev) => prev + 1);
     }
+    setSelectedA(false);
+    setSelectedE(false);
+    setSelectedO(false);
   };
 
   const handlePrevious = () => {
     if (currentQuestion > 0) {
       setCurrentQuestion((prev) => prev - 1);
     }
+    setSelectedA(false);
+    setSelectedE(false);
+    setSelectedO(false);
   };
+
+  console.log(currentQuestion);
+
+  const handleAChange = () => {
+    setSelectedA(!selectedA);
+    setSelectedE(false);
+    setSelectedO(false);
+  };
+
+  const handleEChange = () => {
+    setSelectedE(!selectedE);
+    setSelectedA(false);
+    setSelectedO(false);
+  };
+
+  const handleOChange = () => {
+    setSelectedO(!selectedO);
+    setSelectedE(false);
+    setSelectedA(false);
+  };
+
+  const StartQuiz = async () => {
+    Swal.fire({
+      imageUrl:
+        "https://upload.wikimedia.org/wikipedia/commons/c/c7/Loading_2.gif",
+      imageHeight: 50,
+      showCloseButton: false,
+      showConfirmButton: false,
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+    });
+    try {
+      const Data = await localStorage.getItem("Profile");
+      const parsedData = JSON.parse(Data);
+
+      // console.log(`Bearer ${parsedData.Auth}`);
+
+      let url = `${BaseUrl}/api/phonological/quiz/alphabets/vowel/quiz/start`;
+
+      let response = await axios.post(
+        url,
+        {},
+        {
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${parsedData.Auth}`,
+          },
+        }
+      );
+
+      if (response.data.Error === false) {
+        console.log("initial: ", response.data);
+        setCurrentQuestion(response.data.Data.Progress);
+      } else {
+        Notify({
+          title: "Error",
+          message: response.data.Error,
+          Type: "danger",
+        });
+      }
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.Error || error.message || "An error occurred.";
+      Notify({
+        title: "Error",
+        message: errorMessage,
+        Type: "danger",
+      });
+    } finally {
+      Swal.close();
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    StartQuiz();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p>Loading...</p>
+      </div>
+    );
+  }
 
   return (
     <div
@@ -112,44 +251,77 @@ const VowelQuiz = () => {
               {currentQuestion + 1} / {questions.length}
             </p>
             {/* Question */}
-            <h2
-              className="text-xl font-normal font-[Nunito] text-center mb-6"
-              style={{ color: Colors.Black }}
-            >
-              {/* {questions[currentQuestion].question} */}
-              Which letter makes the{" "}
-              <b style={{ color: Colors.Pompelmo }} className="text-[32px]">
-                Aa
-              </b>{" "}
-              sound?
-            </h2>
+            {currentQuestion === 0 ? (
+              <h2
+                className="text-xl font-normal font-[Nunito] text-center mb-6"
+                style={{ color: Colors.Black }}
+              >
+                {/* {questions[currentQuestion].question} */}
+                Which letter makes the{" "}
+                <b style={{ color: Colors.Pompelmo }} className="text-[32px]">
+                  Aa
+                </b>{" "}
+                sound?
+              </h2>
+            ) : (
+              <h2
+                className="text-xl font-normal font-[Nunito] text-center mb-6"
+                style={{ color: Colors.Black }}
+              >
+                {/* {questions[currentQuestion].question} */}
+                Which letter makes the{" "}
+                <b style={{ color: Colors.Pompelmo }} className="text-[32px]">
+                  Oo
+                </b>{" "}
+                sound?
+              </h2>
+            )}
             <div className="w-full flex justify-between px-32">
-              <button>
+              <button onClick={handleAChange}>
                 <img
-                  src={require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Option 1.png")}
+                  src={
+                    selectedA
+                      ? require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Option 1-S.png")
+                      : require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Option 1.png")
+                  }
                   className="option-btn w-[162px] h-[154px]"
                 />
               </button>
-              <button>
+              <button onClick={handleEChange}>
                 <img
-                  src={require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Option 2.png")}
+                  src={
+                    selectedE
+                      ? require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Option 2-S.png")
+                      : require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Option 2.png")
+                  }
                   className="option-btn w-[162px] h-[154px]"
                 />
               </button>
-              <button>
+              <button onClick={handleOChange}>
                 <img
-                  src={require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Option 3.png")}
+                  src={
+                    selectedO
+                      ? require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Option 3-S.png")
+                      : require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Option 3.png")
+                  }
                   className="option-btn w-[162px] h-[154px]"
                 />
               </button>
             </div>
           </div>
-          <button onClick={handleNext}>
+          {currentQuestion < 1 ? (
+            <button onClick={handleNext}>
+              <ChevronRight
+                className="right w-[125px] h-[125px]"
+                style={{ color: Colors.Black }}
+              />
+            </button>
+          ) : (
             <ChevronRight
               className="right w-[125px] h-[125px]"
-              style={{ color: Colors.Black }}
+              style={{ color: Colors.Grey }}
             />
-          </button>
+          )}
         </div>
         {/* play */}
         <div className="play flex justify-between items-center mt-10 px-24">
