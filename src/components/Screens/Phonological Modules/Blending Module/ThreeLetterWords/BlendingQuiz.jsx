@@ -221,7 +221,7 @@ const BlendingQuiz = () => {
   };
 
   useEffect(() => {
-    // StartQuiz();
+    StartQuiz();
   }, []);
 
   if (loading) {
@@ -455,6 +455,7 @@ const BlendingQuiz = () => {
               style={{ backgroundColor: Colors.Pompelmo, borderRadius: "50%" }}
               onClick={() => {
                 setShowResult(false);
+                navigate("/phonological-path/blending");
               }}
             >
               <X size={46} color={Colors.White} className="icon" />
@@ -470,12 +471,28 @@ const BlendingQuiz = () => {
               alt="Owl"
               className="w-[143px] h-[143px] my-3"
             />
-            <p
-              className="successTitle text-[36px] font-[Nunito] my-1"
-              style={{ color: Colors.green, fontWeight: "bolder" }}
-            >
-              Yay Passed!
-            </p>
+            {finalScore === 0 ? (
+              <p
+                className="successTitle text-[36px] font-[Nunito] my-1"
+                style={{ color: Colors.Pompelmo, fontWeight: "bolder" }}
+              >
+                Not Bad. Keep Trying!
+              </p>
+            ) : finalScore === 1 ? (
+              <p
+                className="successTitle text-[36px] font-[Nunito] my-1"
+                style={{ color: Colors.Orange, fontWeight: "bolder" }}
+              >
+                Nice Work!
+              </p>
+            ) : (
+              <p
+                className="successTitle text-[36px] font-[Nunito] my-1"
+                style={{ color: Colors.green, fontWeight: "bolder" }}
+              >
+                Yay Passed!
+              </p>
+            )}
             {/* buttons */}
             <div className="flex justify-center items-center w-[100%] h-[100px]">
               <button
@@ -489,7 +506,10 @@ const BlendingQuiz = () => {
                   borderStyle: "solid",
                   borderColor: Colors.Pompelmo,
                 }}
-                onClick={() => setShowResult(false)}
+                onClick={() => {
+                  setShowResult(false);
+                  navigate("/phonological-path/blending");
+                }}
               >
                 Next
               </button>
