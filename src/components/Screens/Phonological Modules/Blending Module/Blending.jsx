@@ -108,7 +108,7 @@ const Blending = () => {
           </div>
           <img
             src={
-              progress === 1
+              progress >= 1
                 ? require("./../../../../Assets/Images/Phonological/Alphabets Module/Progress Bar-Filled.png")
                 : require("./../../../../Assets/Images/Phonological/Alphabets Module/Progress Bar.png")
             }
@@ -117,12 +117,12 @@ const Blending = () => {
           <div
             className="progress-trophy w-[70px] h-[70px] flex justify-center items-center"
             style={{
-              backgroundColor: progress === 1 ? Colors.Secondary : Colors.Grey,
+              backgroundColor: progress >= 1 ? Colors.Secondary : Colors.Grey,
             }}
           >
             <img
               src={
-                progress === 1
+                progress >= 1
                   ? require("./../../../../Assets/Images/Phonological/Alphabets Module/Trophy-Filled.png")
                   : require("./../../../../Assets/Images/Phonological/Alphabets Module/Trophy.png")
               }

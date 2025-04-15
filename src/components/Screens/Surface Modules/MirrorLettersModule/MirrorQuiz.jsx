@@ -1,7 +1,11 @@
 import { ChevronLeft, ChevronRight, Menu, Pause, X } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Colors } from "../../../Utils/Colors";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { BaseUrl } from "../../../Config/Config";
+import Notify from "../../../Notification/Notify";
+import Swal from "sweetalert2";
 
 const questions = [
   {
@@ -22,6 +26,9 @@ const MirrorQuiz = () => {
   const [selectP2, setSelectP2] = useState(false);
   const [selectQ1, setSelectQ1] = useState(false);
   const [selectQ2, setSelectQ2] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [score, setScore] = useState(0);
+  const [finalScore, setFinalScore] = useState(0);
 
   // Function to play audio
   const playSound = () => {
@@ -33,13 +40,94 @@ const MirrorQuiz = () => {
     }, 1500);
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
+    const Data = await localStorage.getItem("Profile");
+    const parsedData = JSON.parse(Data);
+
+    let newScore = score;
+
+    if (
+      (currentQuestion == 0 && selectP1 && selectP2) ||
+      (currentQuestion == 1 && selectQ1 && selectQ2)
+    ) {
+      console.log(`Question ${currentQuestion + 1}: ✅ Correct`);
+      newScore += 1;
+
+      setScore(newScore);
+    } else {
+      console.log(`Question ${currentQuestion + 1}: ❌ Incorrect`);
+    }
+
+    try {
+      await axios.get(
+        `${BaseUrl}/api/surface/quiz/progress/add?level=${currentQuestion}&score=${newScore}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${parsedData.Auth}`,
+          },
+        }
+      );
+      console.log("Progress saved");
+    } catch (err) {
+      console.error("Progress error", err);
+      const errorMessage =
+        err.response?.data?.Error || err.message || "An error occurred.";
+      Notify({
+        title: "Error",
+        message: errorMessage,
+        Type: "danger",
+      });
+    }
+
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion((prev) => prev + 1);
       setSelectP1(false);
       setSelectP2(false);
       setSelectQ1(false);
       setSelectQ2(false);
+    }
+  };
+
+  const handleSubmit = async () => {
+    const Data = await localStorage.getItem("Profile");
+    const parsedData = JSON.parse(Data);
+
+    let newScore = 0;
+
+    if (
+      (currentQuestion == 0 && selectP1 && selectP2) ||
+      (currentQuestion == 1 && selectQ1 && selectQ2)
+    ) {
+      console.log(`Question ${currentQuestion + 1}: ✅ Correct`);
+      newScore += 1;
+      setScore(newScore);
+    } else {
+      console.log(`Question ${currentQuestion + 1}: ❌ Incorrect`);
+    }
+
+    try {
+      const response = await axios.get(
+        `${BaseUrl}/api/surface/quiz/progress/add?level=${currentQuestion}&score=${newScore}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${parsedData.Auth}`,
+          },
+        }
+      );
+      console.log("Final Progress Saved");
+      setFinalScore(response.data.Data.Score);
+      setShowResult(true);
+    } catch (err) {
+      console.error("Final Progress Error", err);
+      const errorMessage =
+        err.response?.data?.Error || err.message || "An error occurred.";
+      Notify({
+        title: "Error",
+        message: errorMessage,
+        Type: "danger",
+      });
     }
   };
 
@@ -50,6 +138,7 @@ const MirrorQuiz = () => {
       setSelectP2(false);
       setSelectQ1(false);
       setSelectQ2(false);
+      setScore(0);
     }
   };
 
@@ -77,6 +166,71 @@ const MirrorQuiz = () => {
     // setSelectQ1(false);
     setSelectP1(false);
   };
+
+  const StartQuiz = async () => {
+    Swal.fire({
+      imageUrl:
+        "https://upload.wikimedia.org/wikipedia/commons/c/c7/Loading_2.gif",
+      imageHeight: 50,
+      showCloseButton: false,
+      showConfirmButton: false,
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+    });
+    try {
+      const Data = await localStorage.getItem("Profile");
+      const parsedData = JSON.parse(Data);
+
+      // console.log(`Bearer ${parsedData.Auth}`);
+
+      let url = `${BaseUrl}/api/surface/quiz/start`;
+
+      let response = await axios.post(
+        url,
+        {},
+        {
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${parsedData.Auth}`,
+          },
+        }
+      );
+
+      if (response.data.Error === false) {
+        console.log("initial: ", response.data);
+        setCurrentQuestion(response.data.Data.Progress);
+      } else {
+        Notify({
+          title: "Error",
+          message: response.data.Error,
+          Type: "danger",
+        });
+      }
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.Error || error.message || "An error occurred.";
+      Notify({
+        title: "Error",
+        message: errorMessage,
+        Type: "danger",
+      });
+    } finally {
+      Swal.close();
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    // StartQuiz();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p>Loading...</p>
+      </div>
+    );
+  }
 
   return (
     <div
@@ -233,12 +387,19 @@ const MirrorQuiz = () => {
               )}
             </div>
           </div>
-          <button onClick={handleNext}>
+          {currentQuestion < 1 ? (
+            <button onClick={handleNext}>
+              <ChevronRight
+                className="right w-[125px] h-[125px]"
+                style={{ color: Colors.Black }}
+              />
+            </button>
+          ) : (
             <ChevronRight
               className="right w-[125px] h-[125px]"
               style={{ color: Colors.Black }}
             />
-          </button>
+          )}
         </div>
         {/* play */}
         <div className="play flex justify-between items-center mt-10 px-24">
@@ -281,9 +442,7 @@ const MirrorQuiz = () => {
               borderRadius: 20,
               backgroundColor: Colors.Pompelmo,
             }}
-            onClick={() => {
-              setShowResult(true);
-            }}
+            onClick={handleSubmit}
             disabled={currentQuestion < 1}
           >
             Done
@@ -374,6 +533,7 @@ const MirrorQuiz = () => {
               style={{ backgroundColor: Colors.Pompelmo, borderRadius: "50%" }}
               onClick={() => {
                 setShowResult(false);
+                navigate("/surface-path/mirror");
               }}
             >
               <X size={46} color={Colors.White} className="icon" />
@@ -389,12 +549,28 @@ const MirrorQuiz = () => {
               alt="Owl"
               className="w-[143px] h-[143px] my-3"
             />
-            <p
-              className="successTitle text-[36px] font-[Nunito] my-1"
-              style={{ color: Colors.green, fontWeight: "bolder" }}
-            >
-              Yay Passed!
-            </p>
+            {finalScore === 0 ? (
+              <p
+                className="successTitle text-[36px] font-[Nunito] my-1"
+                style={{ color: Colors.Pompelmo, fontWeight: "bolder" }}
+              >
+                Not Bad. Keep Trying!
+              </p>
+            ) : finalScore === 1 ? (
+              <p
+                className="successTitle text-[36px] font-[Nunito] my-1"
+                style={{ color: Colors.Orange, fontWeight: "bolder" }}
+              >
+                Nice Work!
+              </p>
+            ) : (
+              <p
+                className="successTitle text-[36px] font-[Nunito] my-1"
+                style={{ color: Colors.green, fontWeight: "bolder" }}
+              >
+                Yay Passed!
+              </p>
+            )}
             {/* buttons */}
             <div className="flex justify-center items-center w-[100%] h-[100px]">
               <button
@@ -408,7 +584,10 @@ const MirrorQuiz = () => {
                   borderStyle: "solid",
                   borderColor: Colors.Pompelmo,
                 }}
-                onClick={() => navigate("/surface-path/mirror")}
+                onClick={() => {
+                  setShowResult(false);
+                  navigate("/surface-path/mirror");
+                }}
               >
                 Back to Lesson
               </button>
