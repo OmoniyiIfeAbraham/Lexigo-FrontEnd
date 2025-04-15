@@ -221,7 +221,7 @@ const MirrorQuiz = () => {
   };
 
   useEffect(() => {
-    // StartQuiz();
+    StartQuiz();
   }, []);
 
   if (loading) {

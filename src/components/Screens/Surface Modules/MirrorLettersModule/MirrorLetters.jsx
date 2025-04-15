@@ -61,7 +61,7 @@ const MirrorLetters = () => {
   };
 
   useEffect(() => {
-    // ViewProgress();
+    ViewProgress();
   }, []);
 
   return (
