@@ -24,6 +24,7 @@ import BlendingQuiz from "./components/Screens/Phonological Modules/Blending Mod
 import MirrorLetters from "./components/Screens/Surface Modules/MirrorLettersModule/MirrorLetters";
 import MirrorLearning from "./components/Screens/Surface Modules/MirrorLettersModule/MirrorLearning";
 import MirrorQuiz from "./components/Screens/Surface Modules/MirrorLettersModule/MirrorQuiz";
+import ChangePassword from "./components/Screens/Auth/ChangePassword";
 
 function App() {
   return (
@@ -37,6 +38,11 @@ function App() {
           <Route path="/auth/signin" element={<SignIn />} />
           {/* sign up page */}
           <Route path="/auth/signup" element={<SignUp />} />
+          {/* update passowrd page */}
+          <Route
+            path="/auth/password/change/:id/:email"
+            element={<ChangePassword />}
+          />
           {/* coming soon */}
           <Route path="/coming-soon" element={<ComingSoon />} />
           {/* // HomePage */}
@@ -74,10 +80,7 @@ function App() {
             path="/surface-path/mr/learning"
             element={<MirrorLearning />}
           />
-          <Route
-            path="/surface-path/mr/quiz"
-            element={<MirrorQuiz />}
-          />
+          <Route path="/surface-path/mr/quiz" element={<MirrorQuiz />} />
         </Routes>
       </Router>
     </div>
