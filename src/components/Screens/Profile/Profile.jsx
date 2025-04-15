@@ -8,13 +8,6 @@ import Notify from "../../Notification/Notify";
 const Profile = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  // const user = {
-  //   Name: "Jane Doe",
-  //   Email: "jane@example.com",
-  //   Type: "Phonological Dyslexia",
-  //   PhonologicalProgress: 3,
-  //   SurfaceProgress: 1,
-  // };
 
   const FetchData = async () => {
     Swal.fire({
@@ -30,7 +23,7 @@ const Profile = () => {
       const Data = await localStorage.getItem("Profile");
       const parsedData = JSON.parse(Data);
 
-      let url = `${BaseUrl}/api/profile/view`;
+      let url = `${BaseUrl}/api/profile/view/all`;
 
       let response = await axios.get(url, {
         headers: {
@@ -40,11 +33,8 @@ const Profile = () => {
       });
 
       if (response.data.Error === false) {
-        await localStorage.setItem(
-          "Profile-Details",
-          JSON.stringify(response.data.Data)
-        );
-        console.log(response.data);
+        console.log("okayyyy");
+        console.log("all: ", response.data);
         setUser(response.data.Data);
       } else {
         Notify({
@@ -67,6 +57,114 @@ const Profile = () => {
     }
   };
 
+  const ResetSurface = async () => {
+    if (
+      window.confirm(
+        "Are you sure you want to reset your surface dyslexia progress?"
+      )
+    ) {
+      Swal.fire({
+        imageUrl:
+          "https://upload.wikimedia.org/wikipedia/commons/c/c7/Loading_2.gif",
+        imageHeight: 50,
+        showCloseButton: false,
+        showConfirmButton: false,
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+      });
+      try {
+        const Data = await localStorage.getItem("Profile");
+        const parsedData = JSON.parse(Data);
+
+        let url = `${BaseUrl}/api/profile/reset-surface`;
+
+        let response = await axios.get(url, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${parsedData.Auth}`,
+          },
+        });
+
+        if (response.data.Error === false) {
+          // console.log("all: ", response.data);
+          // setUser(response.data.Data);
+          FetchData();
+        } else {
+          Notify({
+            title: "Error",
+            message: response.data.Error,
+            Type: "danger",
+          });
+        }
+      } catch (error) {
+        const errorMessage =
+          error.response?.data?.Error || error.message || "An error occurred.";
+        Notify({
+          title: "Error",
+          message: errorMessage,
+          Type: "danger",
+        });
+      } finally {
+        Swal.close();
+        setLoading(false);
+      }
+    }
+  };
+
+  const ResetTypeTest = async () => {
+    if (
+      window.confirm(
+        "Are you sure you want to reset your type test result? You might have to take it again!"
+      )
+    ) {
+      Swal.fire({
+        imageUrl:
+          "https://upload.wikimedia.org/wikipedia/commons/c/c7/Loading_2.gif",
+        imageHeight: 50,
+        showCloseButton: false,
+        showConfirmButton: false,
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+      });
+      try {
+        const Data = await localStorage.getItem("Profile");
+        const parsedData = JSON.parse(Data);
+
+        let url = `${BaseUrl}/api/profile/reset-type-test`;
+
+        let response = await axios.get(url, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${parsedData.Auth}`,
+          },
+        });
+
+        if (response.data.Error === false) {
+          // console.log("all: ", response.data);
+          // setUser(response.data.Data);
+          FetchData();
+        } else {
+          Notify({
+            title: "Error",
+            message: response.data.Error,
+            Type: "danger",
+          });
+        }
+      } catch (error) {
+        const errorMessage =
+          error.response?.data?.Error || error.message || "An error occurred.";
+        Notify({
+          title: "Error",
+          message: errorMessage,
+          Type: "danger",
+        });
+      } finally {
+        Swal.close();
+        setLoading(false);
+      }
+    }
+  };
+
   useEffect(() => {
     FetchData();
   }, []);
@@ -83,6 +181,14 @@ const Profile = () => {
     }
   };
 
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p>Loading...</p>
+      </div>
+    );
+  }
+
   return (
     <div className="flex min-h-screen bg-gray-100">
       <Sidebar />
@@ -93,21 +199,38 @@ const Profile = () => {
         <div className="bg-white rounded-2xl shadow-md p-6 max-w-3xl w-full">
           <div className="mb-4">
             <p className="text-gray-700 text-lg">
-              <span className="font-semibold">Name:</span> {user?.Name}
+              <span className="font-semibold">Name:</span> {user?.User?.Name}
             </p>
             <p className="text-gray-700 text-lg">
-              <span className="font-semibold">Email:</span> {user?.Email}
+              <span className="font-semibold">Email:</span> {user?.User?.Email}
             </p>
             <p className="text-gray-700 text-lg">
-              <span className="font-semibold">Dyslexia Type:</span> {user?.Type}
+              <span className="font-semibold">Dyslexia Type:</span>{" "}
+              {user?.User?.Type}
             </p>
             <p className="text-gray-700 text-lg">
               <span className="font-semibold">Phonological Progress:</span>{" "}
-              {user?.PhonologicalProgress} / 6
+              {user?.User?.PhonologicalProgress || 0} / 6
             </p>
             <p className="text-gray-700 text-lg">
               <span className="font-semibold">Surface Progress:</span>{" "}
-              {user?.SurfaceProgress} / 2
+              {user?.User?.SurfaceProgress || 0} / 2
+            </p>
+            <p className="text-gray-700 text-lg">
+              <span className="font-semibold">Blending Quiz Score:</span>{" "}
+              {user?.Blending?.Score || 0}
+            </p>
+            <p className="text-gray-700 text-lg">
+              <span className="font-semibold">Mirror Quiz Score:</span>{" "}
+              {user?.Mirror?.Score || 0}
+            </p>
+            <p className="text-gray-700 text-lg">
+              <span className="font-semibold">Dyslxia Type Quiz Score:</span>{" "}
+              {user?.Type?.Score || 0}
+            </p>
+            <p className="text-gray-700 text-lg">
+              <span className="font-semibold">Vowel Quiz Score:</span>{" "}
+              {user?.Vowel?.Score || 0}
             </p>
           </div>
 
@@ -132,9 +255,15 @@ const Profile = () => {
             </button>
             <button
               className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-xl"
-              onClick={() => handleReset("surface")}
+              onClick={ResetSurface}
             >
               Reset Surface Progress
+            </button>
+            <button
+              className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-xl"
+              onClick={ResetTypeTest}
+            >
+              Reset Type Test Result
             </button>
           </div>
         </div>
