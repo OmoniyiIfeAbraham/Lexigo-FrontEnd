@@ -130,9 +130,9 @@ const Home = () => {
         </div>
 
         {/* Images & Progress Bars */}
-        <div className="content flex flex-col md:flex-row gap-6 mt-14 items-center ml-10">
+        <div className="contentn flex flex-col md:flex-row gap-6 mt-14 items-center ml-10">
           {/* Phonological Image + Progress Bar */}
-          <div className="img-main flex flex-col items-center md:mr-14">
+          <div className="img-mainn flex flex-col items-center md:mr-14">
             <button onClick={() => handlePhonologicalChange()}>
               {type === "Phonological Dyslexia" ? (
                 <img
@@ -141,7 +141,7 @@ const Home = () => {
                       ? require("../../../Assets/Images/HomePage/phonological type.png")
                       : require("../../../Assets/Images/HomePage/phonological n type.png")
                   }
-                  className="img w-[100%] md:w-[347px] md:h-[226px]"
+                  className="imgn w-[100%] md:w-[347px] md:h-[226px]"
                   alt="Phonological"
                 />
               ) : (
@@ -151,7 +151,7 @@ const Home = () => {
                       ? require("../../../Assets/Images/HomePage/phonological selected.png")
                       : require("../../../Assets/Images/HomePage/phonological.png")
                   }
-                  className="img w-[100%] md:w-[347px] md:h-[226px]"
+                  className="imgn w-[100%] md:w-[347px] md:h-[226px]"
                   alt="Phonological"
                 />
               )}
@@ -177,7 +177,7 @@ const Home = () => {
           </div>
 
           {/* Surface Image + Progress Bar */}
-          <div className="img-main flex flex-col items-center">
+          <div className="img-mainn flex flex-col items-center">
             <button onClick={() => handleSurfaceChange()}>
               {type === "Surface Dyslexia" ? (
                 <img
@@ -186,7 +186,7 @@ const Home = () => {
                       ? require("../../../Assets/Images/HomePage/surface selected type.png")
                       : require("../../../Assets/Images/HomePage/surface type.png")
                   }
-                  className="img w-[100%] md:w-[347px] md:h-[226px]"
+                  className="imgn w-[100%] md:w-[347px] md:h-[226px]"
                   alt="Surface"
                 />
               ) : (
@@ -196,7 +196,7 @@ const Home = () => {
                       ? require("../../../Assets/Images/HomePage/surface selected.png")
                       : require("../../../Assets/Images/HomePage/surface.png")
                   }
-                  className="img w-[100%] md:w-[347px] md:h-[226px]"
+                  className="imgn w-[100%] md:w-[347px] md:h-[226px]"
                   alt="Surface"
                 />
               )}
