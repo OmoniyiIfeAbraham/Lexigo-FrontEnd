@@ -25,6 +25,7 @@ import MirrorLetters from "./components/Screens/Surface Modules/MirrorLettersMod
 import MirrorLearning from "./components/Screens/Surface Modules/MirrorLettersModule/MirrorLearning";
 import MirrorQuiz from "./components/Screens/Surface Modules/MirrorLettersModule/MirrorQuiz";
 import ChangePassword from "./components/Screens/Auth/ChangePassword";
+import SendResetLink from "./components/Screens/Auth/SendResetLink";
 
 function App() {
   return (
@@ -42,6 +43,10 @@ function App() {
           <Route
             path="/auth/password/change/:id/:email"
             element={<ChangePassword />}
+          />
+          <Route
+            path="/auth/password/send-reset"
+            element={<SendResetLink />}
           />
           {/* coming soon */}
           <Route path="/coming-soon" element={<ComingSoon />} />

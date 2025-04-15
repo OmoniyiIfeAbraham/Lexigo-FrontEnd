@@ -4,27 +4,15 @@ import FormTitle from "./../Components/Form/FormTitle";
 import FormInput from "./../Components/Form/FormInput";
 import { Colors } from "./../../Utils/Colors";
 import { Link, useNavigate } from "react-router-dom";
-import "./SignUpStyle.css";
+import "./SignInStyle.css";
+import Notify from "../../Notification/Notify";
 import Swal from "sweetalert2";
 import { BaseUrl } from "../../Config/Config";
 import axios from "axios";
-import Notify from "../../Notification/Notify";
 
-const SignUp = () => {
-  const [inputs, setInputs] = useState({
-    email: "",
-    password: "",
-    name: "",
-    type: "",
-  });
-
+const SendResetLink = () => {
+  const [inputs, setInputs] = useState({ email: "" });
   const navigate = useNavigate();
-
-  const options = [
-    { label: "I'm not sure", value: "" },
-    { label: "Phonological Dyslexia", value: "Phonological Dyslexia" },
-    { label: "Surface Dyslexia", value: "Surface Dyslexia" },
-  ];
 
   const handleChange = (e) => {
     let { name, value } = e.target;
@@ -43,12 +31,9 @@ const SignUp = () => {
       allowEscapeKey: false,
     });
     try {
-      let url = `${BaseUrl}/api/register`;
+      let url = `${BaseUrl}/api/register/forgot-password`;
       let formData = new FormData();
-      formData.append("Password", inputs.password);
-      formData.append("Name", inputs.name);
-      formData.append("Email", inputs.email);
-      formData.append("Type", inputs.type);
+      formData.append("email", inputs.email);
 
       let response = await axios.post(url, formData, {
         headers: { "Content-Type": "application/json" },
@@ -57,10 +42,12 @@ const SignUp = () => {
       if (response.data.Error === false) {
         Notify({
           title: "Success",
-          message: "Registeration successful",
+          message: "Password Reset Link sent to your email.",
           Type: "success",
         });
-        navigate("/auth/signin");
+        await localStorage.setItem("ResetEmail", response.data.Email);
+        await localStorage.setItem("Resettoken", response.data.ID);
+        setInputs({ email: "" });
       } else {
         Notify({
           title: "Error",
@@ -98,38 +85,16 @@ const SignUp = () => {
         {/* Title */}
         <FormTitle
           title="Hello Friend!"
-          subTitle="Create Your Lexigo account."
+          subTitle="Enter Email to Continue..."
         />
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="w-full max-w-md">
           <FormInput
-            label="Child's Name"
-            type="text"
-            name="name"
-            input={inputs.name}
-            handleChange={handleChange}
-          />
-          <FormInput
             label="Email"
             type="email"
             name="email"
             input={inputs.email}
-            handleChange={handleChange}
-          />
-          <FormInput
-            label="Dyslexia Type"
-            type="select"
-            name="type"
-            input={inputs.type}
-            handleChange={handleChange}
-            options={options}
-          />
-          <FormInput
-            label="Password"
-            type="password"
-            name="password"
-            input={inputs.password}
             handleChange={handleChange}
           />
           <button
@@ -144,23 +109,14 @@ const SignUp = () => {
               borderStyle: "solid",
               borderColor: Colors.Black,
             }}
-            onClick={() => {}}
           >
-            Sign up
+            Update
           </button>
         </form>
 
-        {/* Forgot Password Link */}
-        <Link
-          to="/auth/password/send-reset"
-          className="flex items-start w-full max-w-md mt-4"
-        >
-          <p className="font-[Nunito]">Forgot Password?</p>
-        </Link>
-
         {/* Sign-up Link */}
         <div className="flex flex-row mt-10">
-          <p className="font-[Nunito]">Have an account?</p>
+          <p className="font-[Nunito]">Already have an account?</p>
           <Link to="/auth/signin">
             <p className="font-[Nunito] font-bold ml-1">Login</p>
           </Link>
@@ -170,4 +126,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SendResetLink;

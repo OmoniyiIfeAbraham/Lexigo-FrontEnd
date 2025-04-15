@@ -123,7 +123,7 @@ const SignIn = () => {
 
         {/* Forgot Password Link */}
         <Link
-          to="/coming-soon"
+          to="/auth/password/send-reset"
           className="flex items-start w-full max-w-md mt-4"
         >
           <p className="font-[Nunito]">Forgot Password?</p>

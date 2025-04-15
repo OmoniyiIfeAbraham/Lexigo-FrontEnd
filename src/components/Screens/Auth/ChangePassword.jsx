@@ -31,9 +31,11 @@ const ChangePassword = () => {
       allowEscapeKey: false,
     });
     try {
-      let url = `${BaseUrl}/api/login`;
+      const Email = await localStorage.getItem("ResetEmail");
+      const ID = await localStorage.getItem("Resettoken");
+
+      let url = `${BaseUrl}/api/register/change-password?email=${Email}&id=${ID}`;
       let formData = new FormData();
-      formData.append("Email", inputs.email);
       formData.append("Password", inputs.password);
 
       let response = await axios.post(url, formData, {
@@ -41,16 +43,12 @@ const ChangePassword = () => {
       });
 
       if (response.data.Error === false) {
-        await localStorage.setItem(
-          "Profile",
-          JSON.stringify(response.data.Data)
-        );
         Notify({
           title: "Success",
-          message: "Login successful",
+          message: "Password Changed Successfully",
           Type: "success",
         });
-        navigate("/home");
+        navigate("/auth/signin");
       } else {
         Notify({
           title: "Error",
