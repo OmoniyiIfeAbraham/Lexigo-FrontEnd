@@ -14,89 +14,31 @@
   font-weight: 700;
 }
 
-@media (width <= 1025px) {
-  .content {
-    width: 100%;
-  }
-  .btn {
-    margin-left: -25px;
-  }
-}
-
-@media (width <= 935px) {
-  .button-txt {
-    font-size: 20px;
-  }
-  .alphabet {
-    font-size: 44px;
-  }
-}
-
-@media (width <= 826px) {
-  .button-txt {
-    font-size: 16px;
-  }
-  .alphabet {
-    font-size: 40px;
-  }
-}
-@media (width <= 655px) {
-  .content {
-    padding: 7px;
-  }
-  .popup {
-    width: 75%;
-  }
-  .btn {
-    margin-left: 0;
-  }
-}
-@media (width <= 555px) {
-  .navBtn {
-    width: 50px;
-    height: 50px;
-  }
-  .title {
-    font-size: 32px;
-  }
-  .title-sub {
-    font-size: 18px;
-  }
-  .btn {
-    width: 45%;
-  }
-  .button-txt {
-    font-size: 14px;
-  }
-  .alphabet {
-    font-size: 36px;
-  }
-}
-@media (width <= 450px) {
-  .buttons {
-    flex-direction: column;
-  }
-  .dog-img {
-    margin-right: 5px;
-    width: 40px;
-    height: 40px;
-  }
-  .title-sub {
-    font-size: 16px;
-  }
-  .btn {
+@media (width <= 1115px) {
+  .img {
     width: 90%;
   }
-  .button-txt {
-    font-size: 18px;
-  }
   .alphabet {
-    font-size: 40px;
+    font-size: 60px;
+  }
+  .button-txt {
+    font-size: 30px;
+  }
+  .buttons {
+    padding-left: 20px;
   }
 }
 
-@media (width <= 375px) {
-  .title {
-    font-size: 20px;
+@media (width <= 1082px) {
+  .btn {
+    margin-left: 0px;
+  }
+  .img {
+    height: 100%;
   }
 }
+
+@media (width <= 900px) {
+
+}
+
