@@ -7,7 +7,7 @@ import "./PathStyle.css";
 const Path = () => {
   const navigate = useNavigate();
   return (
-    <div className="relative w-screen h-screen overflow-hidden">
+    <div className="relative min-h-screen w-screen overflow-auto">
       {/* Fullscreen Image Div */}
       <div className="absolute inset-0 w-full h-full z-0">
         <img
@@ -19,7 +19,7 @@ const Path = () => {
 
       {/* Content Layer */}
       <div className="relative z-10 h-full p-14">
-        <div className="bg-red-700 h-[30%] w-full">
+        <div className="h-[30%] w-full">
           {/* header */}
           <div className="flex w-full h-[75px] items-center justify-between">
             <button
@@ -61,9 +61,30 @@ const Path = () => {
           </div>
         </div>
         {/* buttons */}
-        <div className="buttons flex w-full justify-evenly h-[70%] bg-green-900 items-center">
+        <div className="buttons flex w-full justify-evenly h-[70%] items-center mt-10">
           {/* Alphabets Image with Text Overlay */}
           <button
+            className="btn relative w-[40%] h-[80%] overflow-hidden"
+            onClick={() => {
+              navigate("/phonological-path/alphabet");
+            }}
+          >
+            <img
+              src={require("./../../../Assets/Images/Phonological/one.png")}
+              alt="Alphabets"
+              className="img w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 flex flex-col justify-start items-start py-10 px-5 z-10">
+              <p className="alphabet text-[48px] font-[Nunito] text-black">
+                alphabets
+              </p>
+              <p className="button-txt text-[24px] font-[Nunito] text-black text-start">
+                learn the sounds of your vowels and consonants
+              </p>
+            </div>
+          </button>
+
+          {/* <button
             className="btn relative w-[40%] h-[80%]"
             onClick={() => {
               navigate("/phonological-path/alphabet");
@@ -73,6 +94,10 @@ const Path = () => {
               src={require("./../../../Assets/Images/Phonological/one.png")}
               alt="Alphabets"
               className="img w-full h-[80%]"
+            />
+            <img
+              src={require("./../../../Assets/Images/Phonological/one.png")}
+              className="alt-img w-full"
             />
             <div className="absolute inset-0 flex flex-col items-start py-10 px-5 h-full w-[50%]">
               <p
@@ -88,9 +113,30 @@ const Path = () => {
                 learn the sounds of your vowels and consonants
               </p>
             </div>
-          </button>
+          </button> */}
           {/* Blending Image with Text Overlay */}
           <button
+            className="btn relative w-[40%] h-[80%] overflow-hidden"
+            onClick={() => {
+              navigate("/phonological-path/blending");
+            }}
+          >
+            <img
+              src={require("./../../../Assets/Images/Phonological/two.png")}
+              alt="Blending"
+              className="img w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 flex flex-col justify-start items-start py-10 px-5 z-10">
+              <p className="alphabet text-[48px] font-[Nunito] text-black">
+                blending
+              </p>
+              <p className="button-txt text-[24px] font-[Nunito] text-black text-start">
+                learn how to blend letters with sounds and pictures
+              </p>
+            </div>
+          </button>
+
+          {/* <button
             className="btn relative w-[40%] h-[80%]"
             onClick={() => {
               navigate("/phonological-path/blending");
@@ -100,6 +146,10 @@ const Path = () => {
               src={require("./../../../Assets/Images/Phonological/two.png")}
               alt="Blending"
               className="img w-full h-[80%]"
+            />
+            <img
+              src={require("./../../../Assets/Images/Phonological/two.png")}
+              className="alt-img w-full"
             />
             <div className="absolute inset-0 flex flex-col items-start py-10 px-5 h-full w-[50%]">
               <p
@@ -115,7 +165,7 @@ const Path = () => {
                 learn how to blend letters with sounds and pictures
               </p>
             </div>
-          </button>
+          </button> */}
         </div>
       </div>
     </div>
