@@ -71,7 +71,7 @@ const Alphabets = () => {
         backgroundColor: Colors.Cream,
         backgroundImage: `url(${require("./../../../../Assets/Images/Phonological/Alphabets Module/background.png")})`,
       }}
-      className="w-screen h-screen relative bg-cover bg-center"
+      className="w-screen min-h-screen relative bg-cover bg-center overflow-y-auto"
     >
       <div className="content relative z-10 h-full p-14">
         {/* header */}
@@ -152,8 +152,27 @@ const Alphabets = () => {
           </div>
         </div>
         {/* buttons */}
-        <div className="buttons flex w-full justify-between mt-2">
-          {/* vowels Image with Text Overlay */}
+        <div className="buttons flex w-full mt-2">
+          <button
+            className="btn relative mx-auto mt-8"
+            onClick={() => {
+              navigate("/phonological-path/bd/vowelA");
+            }}
+          >
+            <img
+              src={require("./../../../../Assets/Images/Phonological/Alphabets Module/vowels.png")}
+              alt="Vowels"
+            />
+          </button>
+          <button className="btn relative mx-auto mt-8">
+            <img
+              src={require("./../../../../Assets/Images/Phonological/Alphabets Module/consonants.png")}
+              alt="Consonants"
+            />
+          </button>
+        </div>
+
+        {/* <div className="buttons flex w-full justify-between mt-2">
           <button
             className="btn relative w-[40%] mx-auto mt-8"
             onClick={() => {
@@ -166,7 +185,7 @@ const Alphabets = () => {
               className="w-[474px] h-[364px]"
             />
           </button>
-          {/* Blending Image with Text Overlay */}
+
           <button className="btn relative w-[40%] mx-auto mt-8">
             <img
               src={require("./../../../../Assets/Images/Phonological/Alphabets Module/consonants.png")}
@@ -174,7 +193,7 @@ const Alphabets = () => {
               className="w-[474px] h-[364px]"
             />
           </button>
-        </div>
+        </div> */}
       </div>
 
       {/* popup */}
