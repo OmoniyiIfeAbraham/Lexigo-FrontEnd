@@ -28,7 +28,7 @@ const VowelA = () => {
         <img
           src={require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Background-Text.png")}
           alt="Background"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-fit"
         />
       </div>
       
