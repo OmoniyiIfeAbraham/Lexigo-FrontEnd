@@ -22,7 +22,7 @@ const VowelA = () => {
   };
 
   return (
-    <div className="w-full min-h-screen relative overflow-hidden">
+    <div className="w-full relative wrapper">
       {/* Full-screen background image div */}
       <div className="absolute inset-0 z-0">
         <img
@@ -34,7 +34,7 @@ const VowelA = () => {
       
       <div className="content relative z-10 h-full">
         {/* header */}
-        <div className="header flex w-full h-[75px] items-center justify-between px-[110px] pt-24">
+        <div className="header flex w-full h-[75px] items-center justify-between">
           <button
             className="navBtn w-[75px] h-[75px] flex justify-center items-center"
             style={{ backgroundColor: Colors.BeastyBrown2 }}
@@ -53,7 +53,7 @@ const VowelA = () => {
           </button>
         </div>
         {/* body */}
-        <div className="body flex w-full justify-between items-center mt-10">
+        <div className="body flex w-full justify-between items-center">
           <ChevronLeft
             className="left w-[125px] h-[125px]"
             style={{ color: Colors.Grey }}
@@ -76,7 +76,7 @@ const VowelA = () => {
           </button>
         </div>
         {/* play */}
-        <div className="play flex justify-center items-center mt-10">
+        <div className="play flex justify-center items-center">
           {playing ? (
             <div
               className="play-btn w-[138px] h-[138px] flex justify-center items-center"

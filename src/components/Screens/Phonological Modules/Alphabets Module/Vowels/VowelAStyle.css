@@ -1,113 +1,31 @@
-/* @media (width <= 2000px) {
-  .body {
-    margin-top: 125px
-  }
-}
-
-@media (width <= 945px) {
-  .header {
-    padding-left: 55px;
-    padding-right: 55px;
-  }
-}
-
-@media (width <= 900px) {
-  .letter {
-    width: 281px;
-    height: 197px;
-  }
-  .object {
-    width: 215px;
-    height: 235px;
-  }
-}
-
-@media (width <= 740px) {
-  .header {
-    padding-left: 25px;
-    padding-right: 25px;
-  }
-  .letter {
-    width: 211px;
-    height: 148px;
-  }
-  .object {
-    width: 161px;
-    height: 176px;
-  }
-  .play {
-    margin-top: 80px;
-  }
-}
-
-@media (width <= 630px) {
-  .left {
-    width: 94px;
-    height: 94px;
-  }
-  .letter {
-    width: 158px;
-    height: 111px;
-  }
-  .object {
-    width: 121px;
-    height: 132px;
-  }
-  .right {
-    width: 94px;
-    height: 94px;
-  }
-  .play-btn {
-    width: 104px;
-    height: 104px;
-  }
-}
-
-@media (width <= 490px) {
-  .header {
-    padding-left: 5px;
-    padding-right: 5px;
-  }
-  .letter {
-    width: 119px;
-    height: 83px;
-  }
-  .object {
-    width: 91px;
-    height: 99px;
-  }
-  .play-btn {
-    width: 104px;
-    height: 104px;
-  }
-}
-
-@media (width <= 415px) {
-  .letter {
-    margin-right: 10px;
-  }
-}
-
-@media (width <= 390px) {
-  .letter-group {
-    flex-direction: column;
-  }
-  .letter {
-    margin-right: 0px;
-    margin-bottom: 30px;
-  }
-} */
-
 /* General styling */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  height: 100%;
+}
+
+@media (max-height: 650px), (max-width: 768px) {
+  html,
+  body {
+    overflow-y: auto;
+  }
+}
+
 .content {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center; /* centers vertically */
+  padding-bottom: 60px; /* some space for play button */
   position: relative;
 }
 
 /* Header */
-.header {
+/* .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -115,23 +33,27 @@
   width: 100%;
   padding: 24px 110px 0 110px;
   position: relative;
+} */
+
+.header {
+  padding-top: 60px;
+  padding-left: 115px;
+  padding-right: 115px;
 }
 
 /* Body layout */
 .body {
   display: flex;
-  justify-content: center;
   align-items: center;
-  margin-top: 125px;
   width: 100%;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
 }
 
 .letter-group {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
 }
 
 /* Owl Popup */
@@ -146,7 +68,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 80px;
+  margin-bottom: 20px;
+  margin-bottom: 100px;
 }
 
 /* Chevron and button styles adjust via class names from React */
@@ -156,6 +79,22 @@
 .object,
 .play-btn {
   transition: all 0.3s ease;
+}
+
+/* This class handles conditional scrolling based on screen height */
+
+.wrapper {
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-height: 650px), (max-width: 768px) {
+  .wrapper {
+    height: auto;
+    overflow-y: auto;
+  }
 }
 
 /* Media Queries */
@@ -168,11 +107,11 @@
 }
 
 /* Medium large */
-@media (max-width: 945px) {
+/* @media (max-width: 945px) {
   .header {
     padding: 24px 55px 0 55px;
   }
-}
+} */
 
 /* Tablet size */
 @media (max-width: 900px) {
@@ -188,9 +127,9 @@
 
 /* Smaller tablets / big phones */
 @media (max-width: 740px) {
-  .header {
+  /* .header {
     padding: 24px 25px 0 25px;
-  }
+  } */
   .letter {
     width: 211px;
     height: 148px;
@@ -224,9 +163,9 @@
 
 /* Smaller phones */
 @media (max-width: 490px) {
-  .header {
+  /* .header {
     padding: 24px 5px 0 5px;
-  }
+  } */
   .letter {
     width: 119px;
     height: 83px;
