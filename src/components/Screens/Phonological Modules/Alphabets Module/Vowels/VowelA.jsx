@@ -22,15 +22,16 @@ const VowelA = () => {
   };
 
   return (
-    <div
-      style={{
-        backgroundImage: `url(${require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Background-Text.png")})`,
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "100% 100vh", // Ensures full width while keeping height proportional
-        backgroundPosition: "top center", // Aligns image to the top
-      }}
-      className="w-full min-h-screen relative"
-    >
+    <div className="w-full min-h-screen relative overflow-hidden">
+      {/* Full-screen background image div */}
+      <div className="absolute inset-0 z-0">
+        <img
+          src={require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Background-Text.png")}
+          alt="Background"
+          className="w-full h-full object-cover"
+        />
+      </div>
+      
       <div className="content relative z-10 h-full">
         {/* header */}
         <div className="header flex w-full h-[75px] items-center justify-between px-[110px] pt-24">
