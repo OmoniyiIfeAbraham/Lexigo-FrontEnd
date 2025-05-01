@@ -54,6 +54,9 @@ const Profile = () => {
         message: errorMessage,
         Type: "danger",
       });
+      if (errorMessage === "Unauthorized, please log in again") {
+        navigate("/auth/signin");
+      }
     } finally {
       Swal.close();
       setLoading(false);

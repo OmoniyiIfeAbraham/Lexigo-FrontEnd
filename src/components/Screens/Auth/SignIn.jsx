@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AuthNavComp from "../Components/AuthComp/AuthNavComp";
 import FormTitle from "./../Components/Form/FormTitle";
 import FormInput from "./../Components/Form/FormInput";
@@ -70,6 +70,14 @@ const SignIn = () => {
       Swal.close();
     }
   };
+
+  useEffect(() => {
+    const DoIt = async () => {
+      await localStorage.removeItem("Profile");
+      await localStorage.removeItem("Profile-Details");
+    };
+    DoIt();
+  }, []);
   return (
     <div className="flex flex-col md:flex-row items-center justify-start h-screen">
       {/* Left Section (Image) */}

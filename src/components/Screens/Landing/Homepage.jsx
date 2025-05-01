@@ -1,11 +1,79 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Colors } from "../../Utils/Colors";
 import { Link, useNavigate } from "react-router-dom";
 import NavComp from "../Components/LandingComp/NavComp";
 import "./HomePage.css";
+import Swal from "sweetalert2";
+import { BaseUrl } from "../../Config/Config";
+import axios from "axios";
+import Notify from "../../Notification/Notify";
 
 const HomePage = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+
+  const FetchData = async () => {
+    Swal.fire({
+      imageUrl:
+        "https://upload.wikimedia.org/wikipedia/commons/c/c7/Loading_2.gif",
+      imageHeight: 50,
+      showCloseButton: false,
+      showConfirmButton: false,
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+    });
+    try {
+      const Data = await localStorage.getItem("Profile");
+      const parsedData = JSON.parse(Data);
+
+      let url = `${BaseUrl}/api/profile/view`;
+
+      let response = await axios.get(url, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${parsedData?.Auth}`,
+        },
+      });
+
+      if (response.data.Error === false) {
+        Notify({
+          title: "Success",
+          message: "Login successful",
+          Type: "success",
+        });
+        navigate("/home");
+      } else {
+        Notify({
+          title: "Error",
+          message: response.data.Error,
+          Type: "danger",
+        });
+      }
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.Error || error.message || "An error occurred.";
+      if (
+        errorMessage === "Unauthorized, please log in again" ||
+        errorMessage === "Invalid or expired token"
+      ) {
+        console.log("");
+      } else {
+        Notify({
+          title: "Error",
+          message: errorMessage,
+          Type: "danger",
+        });
+      }
+    } finally {
+      Swal.close();
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    FetchData();
+  }, []);
+
   return (
     <div className="h-screen flex flex-col">
       {/* Navigation Bar */}
