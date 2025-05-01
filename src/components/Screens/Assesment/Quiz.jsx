@@ -68,7 +68,7 @@ const Quiz = () => {
     const parsedData = JSON.parse(Data);
 
     const selectedIndex = selectedOptions[currentQuestion];
-    const selectedAnswer = questions[currentQuestion].options[selectedIndex];
+    const selectedAnswer = questions[currentQuestion]?.options[selectedIndex];
     const correctAnswer = questions[currentQuestion].correct;
 
     let newScore = score;
@@ -162,7 +162,7 @@ const Quiz = () => {
       if (response.data.Error === false) {
         console.log("initial: ", response.data);
         setCurrentQuestion(
-          response.data.Data.Progress == 0
+          response.data.Data.Progress == 0 || response.data.Data.Progress == 5
             ? response.data.Data.Progress
             : response.data.Data.Progress + 1
         );
@@ -200,7 +200,7 @@ const Quiz = () => {
     const parsedData = JSON.parse(Data);
 
     const selectedIndex = selectedOptions[currentQuestion];
-    const selectedAnswer = questions[currentQuestion].options[selectedIndex];
+    const selectedAnswer = questions[currentQuestion]?.options[selectedIndex];
     const correctAnswer = questions[currentQuestion].correct;
 
     let finalScore = score;
@@ -321,12 +321,12 @@ const Quiz = () => {
             className="text-xl font-normal font-[Nunito] text-center mb-6"
             style={{ color: Colors.Black }}
           >
-            {questions[currentQuestion].question}
+            {questions[currentQuestion]?.question}
           </h2>
 
           {/* Options */}
           <div className="w-full max-w-md flex flex-col gap-4">
-            {questions[currentQuestion].options.map((option, index) => (
+            {questions[currentQuestion]?.options.map((option, index) => (
               <button
                 key={index}
                 className={`px-6 py-2 w-full text-lg border-2 flex flex-row items-center`}
