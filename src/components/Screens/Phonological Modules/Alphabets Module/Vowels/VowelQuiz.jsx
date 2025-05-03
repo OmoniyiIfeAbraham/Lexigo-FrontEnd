@@ -235,18 +235,17 @@ const VowelQuiz = () => {
   }
 
   return (
-    <div
-      style={{
-        backgroundImage: `url(${require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Background-Quiz-Text.png")})`,
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "100% 100vh", // Ensures full width while keeping height proportional
-        backgroundPosition: "top center", // Aligns image to the top
-      }}
-      className="w-full min-h-screen relative"
-    >
+    <div className="relative w-full wrapper">
+      <div className="absolute inset-0 z-0">
+        <img
+          src={require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Background-Quiz-Text.png")}
+          alt="Background"
+          className="w-full h-full object-fit"
+        />
+      </div>
       <div className="content relative z-10 h-full">
         {/* header */}
-        <div className="header flex w-full h-[75px] items-center justify-between px-[110px] pt-24">
+        <div className="header flex w-full h-[75px] items-center justify-between">
           <button
             className="navBtn w-[75px] h-[75px] flex justify-center items-center"
             style={{ backgroundColor: Colors.BeastyBrown2 }}
@@ -265,7 +264,7 @@ const VowelQuiz = () => {
           </button>
         </div>
         {/* body */}
-        <div className="body flex w-full justify-between items-center mt-10">
+        <div className="body flex w-full justify-between items-center">
           {currentQuestion > 0 ? (
             <button onClick={handlePrevious}>
               <ChevronLeft
@@ -285,7 +284,7 @@ const VowelQuiz = () => {
               {Array.from({ length: 2 }, (_, index) => (
                 <div
                   key={index}
-                  className={`w-1/6 h-[10px] mx-1 rounded-lg`}
+                  className={`bar w-1/6 h-[10px] mx-1 rounded-lg`}
                   style={{
                     backgroundColor:
                       index <= currentQuestion
@@ -328,7 +327,7 @@ const VowelQuiz = () => {
                 sound?
               </h2>
             )}
-            <div className="w-full flex justify-between px-32">
+            <div className="options w-full flex justify-between px-32">
               <button onClick={handleAChange}>
                 <img
                   src={
@@ -362,7 +361,11 @@ const VowelQuiz = () => {
             </div>
           </div>
           {currentQuestion < 1 ? (
-            <button onClick={handleNext}>
+            <button
+              disabled={!selectedA && !selectedE && !selectedO}
+              onClick={handleNext}
+              className="disabled:opacity-50"
+            >
               <ChevronRight
                 className="right w-[125px] h-[125px]"
                 style={{ color: Colors.Black }}
@@ -376,9 +379,9 @@ const VowelQuiz = () => {
           )}
         </div>
         {/* play */}
-        <div className="play flex justify-between items-center mt-10 px-24">
+        <div className="play flex justify-between items-center">
           <button
-            className={`px-10 py-5 bg-blue-500 text-white text-lg font-[Nunito] font-bold`}
+            className={`submit px-10 py-5 bg-blue-500 text-white text-lg font-[Nunito] font-bold`}
             style={{
               borderRadius: 20,
               backgroundColor: Colors.Pompelmo,
@@ -405,19 +408,21 @@ const VowelQuiz = () => {
             <button onClick={playSound}>
               <img
                 src={require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Play.png")}
-                className="play-btn w-[138px] h-[138px]"
+                className="play-btn w-[138px] h-[138px] mx-20"
               />
             </button>
           )}
 
           <button
-            className={`px-10 py-5 bg-blue-500 text-white text-lg font-[Nunito] font-bold`}
+            className={`submit px-10 py-5 bg-blue-500 text-white text-lg font-[Nunito] font-bold`}
             style={{
               borderRadius: 20,
               backgroundColor: Colors.Pompelmo,
             }}
             onClick={handleSubmit}
-            disabled={currentQuestion < 1}
+            disabled={
+              currentQuestion < 1 || (!selectedA && !selectedE && !selectedO)
+            }
           >
             Submit
           </button>

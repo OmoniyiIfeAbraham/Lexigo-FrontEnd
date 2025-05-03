@@ -56,6 +56,11 @@ body {
   /* flex-wrap: wrap; */
 }
 
+.options {
+  display: flex;
+  justify-content: space-between;
+}
+
 /* Owl Popup */
 .popup {
   width: 416px;
@@ -121,6 +126,14 @@ body {
   }
 }
 
+@media (max-width: 959px) {
+  .options {
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+  }
+}
+
 /* Tablet size */
 @media (max-width: 900px) {
   .letter {
@@ -134,6 +147,13 @@ body {
   .header {
     padding-left: 50px;
     padding-right: 50px;
+  }
+}
+
+@media (max-width: 700px) {
+  .option-btn {
+    width: 122px;
+    height: 116px;
   }
 }
 
@@ -173,6 +193,16 @@ body {
   }
 }
 
+@media (max-width: 525px) {
+  .option-btn {
+    width: 81px;
+    height: 77px;
+  }
+  .bar {
+    width: 100%;
+  }
+}
+
 /* Smaller phones */
 @media (max-width: 490px) {
   /* .header {
@@ -189,6 +219,13 @@ body {
   .play-btn {
     width: 104px;
     height: 104px;
+    margin: 0;
+  }
+  .submit {
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
   }
 }
 
