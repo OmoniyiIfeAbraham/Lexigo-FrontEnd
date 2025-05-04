@@ -2,7 +2,7 @@ import { ChevronLeft, ChevronRight, Menu, Pause, Plus, X } from "lucide-react";
 import React, { useState } from "react";
 import { Colors } from "../../../../Utils/Colors";
 import { useNavigate } from "react-router-dom";
-// import "./VowelAStyle.css";
+import "./OneStyle.css";
 
 const One = () => {
   const navigate = useNavigate();
@@ -22,18 +22,18 @@ const One = () => {
   };
 
   return (
-    <div
-      style={{
-        backgroundImage: `url(${require("./../../../../../Assets/Images/Phonological/Blending Module/Background-1.png")})`,
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "100% 100vh", // Ensures full width while keeping height proportional
-        backgroundPosition: "top center", // Aligns image to the top
-      }}
-      className="w-full min-h-screen relative"
-    >
+    <div className="w-full relative wrapper">
+      {/* Full-screen background image div */}
+      <div className="absolute inset-0 z-0">
+        <img
+          src={require("./../../../../../Assets/Images/Phonological/Blending Module/Background-1.png")}
+          alt="Background"
+          className="w-full h-full object-fit"
+        />
+      </div>
       <div className="content relative z-10 h-full">
         {/* header */}
-        <div className="header flex w-full h-[75px] items-center justify-between px-[110px] pt-24">
+        <div className="header flex w-full h-[75px] items-center justify-between">
           <button
             className="navBtn w-[75px] h-[75px] flex justify-center items-center"
             style={{ backgroundColor: Colors.BeastyBrown2 }}
@@ -52,13 +52,13 @@ const One = () => {
           </button>
         </div>
         {/* body */}
-        <div className="body flex w-full justify-between items-center mt-10">
+        <div className="body flex w-full justify-between items-center">
           <ChevronLeft
             className="left w-[125px] h-[125px]"
             style={{ color: Colors.Grey }}
           />
           <div>
-            <div className="w-full flex justify-between px-32 items-center">
+            <div className="option-btn-group w-full flex justify-between px-32 items-center">
               <img
                 src={require("./../../../../../Assets/Images/Phonological/Blending Module/c.png")}
                 className="option-btn w-[122px] h-[116px]"
@@ -97,7 +97,7 @@ const One = () => {
           </button>
         </div>
         {/* play */}
-        <div className="play flex justify-center items-center mt-10">
+        <div className="play flex justify-center items-center">
           {playing ? (
             <div
               className="play-btn w-[138px] h-[138px] flex justify-center items-center"
