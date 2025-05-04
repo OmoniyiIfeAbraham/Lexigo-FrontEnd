@@ -6,6 +6,7 @@ import axios from "axios";
 import { BaseUrl } from "../../../../Config/Config";
 import Notify from "../../../../Notification/Notify";
 import Swal from "sweetalert2";
+import "./BlendingQuizStyle.css";
 
 const questions = [
   {
@@ -236,18 +237,17 @@ const BlendingQuiz = () => {
   }
 
   return (
-    <div
-      style={{
-        backgroundImage: `url(${require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Background-Quiz-Text.png")})`,
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "100% 100vh", // Ensures full width while keeping height proportional
-        backgroundPosition: "top center", // Aligns image to the top
-      }}
-      className="w-full min-h-screen relative"
-    >
+    <div className="relative w-full wrapper">
+      <div className="absolute inset-0 z-0">
+        <img
+          src={require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Background-Quiz-Text.png")}
+          alt="Background"
+          className="w-full h-full object-fit"
+        />
+      </div>
       <div className="content relative z-10 h-full">
         {/* header */}
-        <div className="header flex w-full h-[75px] items-center justify-between px-[110px] pt-24">
+        <div className="header flex w-full h-[75px] items-center justify-between">
           <button
             className="navBtn w-[75px] h-[75px] flex justify-center items-center"
             style={{ backgroundColor: Colors.BeastyBrown2 }}
@@ -266,7 +266,7 @@ const BlendingQuiz = () => {
           </button>
         </div>
         {/* body */}
-        <div className="body flex w-full justify-between items-center mt-10">
+        <div className="body flex w-full justify-between items-center">
           {currentQuestion > 0 ? (
             <button onClick={handlePrevious}>
               <ChevronLeft
@@ -286,7 +286,7 @@ const BlendingQuiz = () => {
               {Array.from({ length: 2 }, (_, index) => (
                 <div
                   key={index}
-                  className={`w-1/6 h-[10px] mx-1 rounded-lg`}
+                  className={`progress w-1/6 h-[10px] mx-1 rounded-lg`}
                   style={{
                     backgroundColor:
                       index <= currentQuestion
@@ -305,49 +305,49 @@ const BlendingQuiz = () => {
             </p>
             {/* Question */}
             {currentQuestion === 0 ? (
-              <div className="w-full flex justify-center px-32 items-center">
+              <div className="option-btn-f-group w-full flex justify-center px-32 items-center">
                 <img
                   src={require("./../../../../../Assets/Images/Phonological/Blending Module/c.png")}
-                  className="option-btn w-[90px] h-[90px]"
+                  className="option-btn-f w-[90px] h-[90px]"
                 />
 
-                <Plus className="w-[50px] h-[50px] mx-5" />
+                <Plus className="plus w-[50px] h-[50px] mx-5" />
 
                 <img
                   src={require("./../../../../../Assets/Images/Phonological/Blending Module/a.png")}
-                  className="option-btn w-[90px] h-[90px]"
+                  className="option-btn-f w-[90px] h-[90px]"
                 />
 
-                <Plus className="w-[50px] h-[50px] mx-5" />
+                <Plus className="plus w-[50px] h-[50px] mx-5" />
 
                 <img
                   src={require("./../../../../../Assets/Images/Phonological/Blending Module/t.png")}
-                  className="option-btn w-[90px] h-[90px]"
+                  className="option-btn-f w-[90px] h-[90px]"
                 />
               </div>
             ) : (
-              <div className="w-full flex justify-center px-32 items-center">
+              <div className="option-btn-f-group w-full flex justify-center px-32 items-center">
                 <img
                   src={require("./../../../../../Assets/Images/Phonological/Blending Module/p.png")}
-                  className="option-btn w-[90px] h-[90px]"
+                  className="option-btn-f w-[90px] h-[90px]"
                 />
 
-                <Plus className="w-[50px] h-[50px] mx-5" />
+                <Plus className="plus w-[50px] h-[50px] mx-5" />
 
                 <img
                   src={require("./../../../../../Assets/Images/Phonological/Blending Module/a.png")}
-                  className="option-btn w-[90px] h-[90px]"
+                  className="option-btn-f w-[90px] h-[90px]"
                 />
 
-                <Plus className="w-[50px] h-[50px] mx-5" />
+                <Plus className="plus w-[50px] h-[50px] mx-5" />
 
                 <img
                   src={require("./../../../../../Assets/Images/Phonological/Blending Module/n.png")}
-                  className="option-btn w-[90px] h-[90px]"
+                  className="option-btn-f w-[90px] h-[90px]"
                 />
               </div>
             )}
-            <div className="w-full flex justify-center px-32 items-center mt-10">
+            <div className="option-btn-group w-full flex justify-center px-32 items-center mt-10">
               <button onClick={handleFanChange}>
                 <img
                   src={
@@ -383,7 +383,10 @@ const BlendingQuiz = () => {
             </div>
           </div>
           {currentQuestion < 1 ? (
-            <button onClick={handleNext}>
+            <button
+              disabled={!selectedFan && !selectedPan && !selectedCat}
+              onClick={handleNext}
+            >
               <ChevronRight
                 className="right w-[125px] h-[125px]"
                 style={{ color: Colors.Black }}
@@ -392,12 +395,12 @@ const BlendingQuiz = () => {
           ) : (
             <ChevronRight
               className="right w-[125px] h-[125px]"
-              style={{ color: Colors.Black }}
+              style={{ color: Colors.Grey }}
             />
           )}
         </div>
         {/* play */}
-        <div className="play flex justify-between items-center mt-10 px-24">
+        <div className="play flex justify-between items-center">
           <button
             className={`px-10 py-5 bg-blue-500 text-white text-lg font-[Nunito] font-bold`}
             style={{
@@ -411,7 +414,7 @@ const BlendingQuiz = () => {
           </button>
           {playing ? (
             <div
-              className="play-btn w-[138px] h-[138px] flex justify-center items-center"
+              className="play-btn w-[138px] h-[138px] flex justify-center items-center mr-10"
               style={{ backgroundColor: Colors.Bisque, borderRadius: 100 }}
             >
               <Pause
@@ -426,19 +429,22 @@ const BlendingQuiz = () => {
             <button onClick={playSound}>
               <img
                 src={require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Play.png")}
-                className="play-btn w-[138px] h-[138px]"
+                className="play-btn w-[138px] h-[138px] mr-10"
               />
             </button>
           )}
 
           <button
-            className={`px-10 py-5 bg-blue-500 text-white text-lg font-[Nunito] font-bold`}
+            className={`submit px-10 py-5 bg-blue-500 text-white text-lg font-[Nunito] font-bold`}
             style={{
               borderRadius: 20,
               backgroundColor: Colors.Pompelmo,
             }}
             onClick={handleSubmit}
-            disabled={currentQuestion < 1}
+            disabled={
+              currentQuestion < 1 ||
+              (!selectedFan && !selectedPan && !selectedCat)
+            }
           >
             Submit
           </button>
