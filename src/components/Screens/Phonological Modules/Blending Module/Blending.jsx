@@ -135,7 +135,7 @@ const Blending = () => {
         </div>
         {/* buttons */}
         <div className="buttons flex w-full justify-between mt-2">
-          {/* vowels Image with Text Overlay */}
+          {/* blemding Image with Text Overlay */}
           <button
             className="btn relative w-[40%] mx-auto mt-8"
             onClick={() => {

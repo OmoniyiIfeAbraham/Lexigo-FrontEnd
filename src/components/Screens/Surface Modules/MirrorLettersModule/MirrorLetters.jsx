@@ -73,7 +73,7 @@ const MirrorLetters = () => {
         backgroundColor: Colors.Cream,
         backgroundImage: `url(${require("./../../../../Assets/Images/Phonological/Alphabets Module/background.png")})`,
       }}
-      className="w-screen h-screen relative bg-cover bg-center"
+      className="w-screen min-h-screen relative bg-cover bg-center overflow-y-auto"
     >
       <div className="content relative z-10 h-full p-14">
         {/* header */}
@@ -87,7 +87,7 @@ const MirrorLetters = () => {
           >
             <ChevronLeft size={46} color={Colors.White} className="icon" />
           </button>
-          <h1 className="title text-[48px] font-[Nunito]">Blending words</h1>
+          <h1 className="title text-[48px] font-[Nunito]">Mirror Letters</h1>
           <button
             className="navBtn w-[75px] h-[75px] flex justify-center items-center"
             style={{ backgroundColor: Colors.Secondary, opacity: 0 }}
