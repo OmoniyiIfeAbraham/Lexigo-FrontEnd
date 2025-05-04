@@ -74,7 +74,7 @@ const Blending = () => {
         backgroundColor: Colors.Cream,
         backgroundImage: `url(${require("./../../../../Assets/Images/Phonological/Alphabets Module/background.png")})`,
       }}
-      className="w-screen h-screen relative bg-cover bg-center"
+      className="w-screen min-h-screen relative bg-cover bg-center overflow-y-auto"
     >
       <div className="content relative z-10 h-full p-14">
         {/* header */}

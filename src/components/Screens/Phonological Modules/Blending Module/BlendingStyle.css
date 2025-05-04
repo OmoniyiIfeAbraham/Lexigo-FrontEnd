@@ -1,4 +1,4 @@
-.title {
+/* .title {
   font-weight: 400;
 }
 .progress-one {
@@ -117,5 +117,155 @@
   .img-trophy {
     width: 18px;
     height: 18px;
+  }
+} */
+
+
+.progress-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+.progress-one,
+.progress-two,
+.progress-trophy {
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.img {
+  width: 183px;
+  height: 35px;
+  object-fit: contain;
+}
+
+.img-trophy {
+  width: 43px;
+  height: 44px;
+}
+
+/* Buttons layout */
+.buttons {
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.btn img {
+  width: 100%;
+  height: auto;
+  max-width: 474px;
+}
+
+/* Responsive styles */
+@media (max-width: 1024px) {
+  .title {
+    font-size: 40px;
+  }
+
+  .progress-one,
+  .progress-two,
+  .progress-trophy {
+    width: 60px;
+    height: 60px;
+  }
+
+  .progress-text {
+    font-size: 28px;
+  }
+
+  .img {
+    width: 140px;
+    height: 26px;
+  }
+
+  .img-trophy {
+    width: 32px;
+    height: 35px;
+  }
+}
+
+@media (max-width: 768px) {
+  .progress-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .progress-one,
+  .progress-two,
+  .progress-trophy {
+    width: 50px;
+    height: 50px;
+  }
+
+  .progress-text {
+    font-size: 18px;
+  }
+
+  .img {
+    width: 110px;
+    height: 20px;
+  }
+
+  .img-trophy {
+    width: 26px;
+    height: 26px;
+  }
+
+  .buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .btn {
+    width: 90%;
+  }
+}
+
+@media (max-width: 425px) {
+  .title {
+    font-size: 24px;
+  }
+
+  .progress-one,
+  .progress-two,
+  .progress-trophy {
+    width: 40px;
+    height: 40px;
+  }
+
+  .progress-text {
+    font-size: 14px;
+  }
+
+  .img {
+    width: 85px;
+    height: 15px;
+  }
+
+  .img-trophy {
+    width: 20px;
+    height: 20px;
+  }
+
+  .navBtn {
+    width: 42px;
+    height: 42px;
+  }
+
+  .icon {
+    width: 26px;
+    height: 26px;
   }
 }
