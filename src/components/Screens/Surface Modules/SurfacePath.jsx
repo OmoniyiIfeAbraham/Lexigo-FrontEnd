@@ -7,12 +7,15 @@ import "./SurfacePathStyle.css";
 const SurfacePath = () => {
   const navigate = useNavigate();
   return (
-    <div
-      className="relative w-screen h-full bg-cover bg-center"
-      style={{
-        backgroundImage: `url(${require("./../../../Assets/Images/Phonological/background.png")})`,
-      }}
-    >
+    <div className="relative min-h-screen w-screen overflow-auto">
+      {/* Fullscreen Image Div */}
+      <div className="absolute inset-0 w-full h-full z-0">
+        <img
+          src={require("./../../../Assets/Images/Phonological/background.png")}
+          alt="Background"
+          className="w-full h-full object-cover blur-img"
+        />
+      </div>
       {/* Blur Overlay */}
       {/* <div className="absolute inset-0 backdrop-blur-md bg-black/10"></div> */}
 
@@ -56,7 +59,7 @@ const SurfacePath = () => {
           </div>
         </div>
         {/* buttons */}
-        <div className="buttons flex w-full justify-center">
+        <div className="buttons flex w-full justify-center items-center">
           {/* Alphabets Image with Text Overlay */}
           <button
             className="btn relative w-[40%] mx-auto mt-8"
