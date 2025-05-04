@@ -1,0 +1,252 @@
+/* General styling */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  height: 100%;
+}
+
+@media (max-height: 650px), (max-width: 768px) {
+  html,
+  body {
+    overflow-y: auto;
+  }
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* centers vertically */
+  padding-bottom: 60px; /* some space for play button */
+  position: relative;
+}
+
+/* Header */
+/* .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 75px;
+  width: 100%;
+  padding: 24px 110px 0 110px;
+  position: relative;
+} */
+
+.header {
+  padding-top: 130px;
+  padding-left: 115px;
+  padding-right: 115px;
+}
+
+/* Body layout */
+.body {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  /* flex-wrap: wrap; */
+}
+
+.letter-group-r {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* flex-wrap: wrap; */
+}
+
+.options {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Owl Popup */
+.popup {
+  width: 416px;
+  border-radius: 8px;
+  font-family: "Nunito", sans-serif;
+}
+
+/* Play button */
+.play {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 100px;
+}
+
+/* Chevron and button styles adjust via class names from React */
+.left,
+.right,
+.letter,
+.object,
+.play-btn {
+  transition: all 0.3s ease;
+}
+
+/* This class handles conditional scrolling based on screen height */
+
+.wrapper {
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-height: 650px), (max-width: 768px) {
+  .wrapper {
+    height: auto;
+    overflow-y: auto;
+  }
+}
+
+/* Media Queries */
+
+/* Large screens */
+@media (max-width: 2000px) {
+  .body {
+    margin-top: 125px;
+  }
+}
+
+/* Medium large */
+/* @media (max-width: 945px) {
+  .header {
+    padding: 24px 55px 0 55px;
+  }
+} */
+
+@media (max-width: 1100px) {
+  .header {
+    padding-top: 120px;
+    padding-left: 90px;
+    padding-right: 90px;
+  }
+}
+
+@media (max-width: 959px) {
+  .options {
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+  }
+}
+
+/* Tablet size */
+@media (max-width: 900px) {
+  .letter {
+    width: 281px;
+    height: 197px;
+  }
+  .object {
+    width: 215px;
+    height: 235px;
+  }
+  .header {
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+}
+
+@media (max-width: 700px) {
+  .option-btn {
+    width: 122px;
+    height: 116px;
+  }
+}
+
+/* Smaller tablets / big phones */
+@media (max-width: 740px) {
+  /* .header {
+    padding: 24px 25px 0 25px;
+  } */
+  .letter {
+    width: 211px;
+    height: 148px;
+  }
+  .object {
+    width: 161px;
+    height: 176px;
+  }
+}
+
+/* Small phones */
+@media (max-width: 630px) {
+  .left,
+  .right {
+    width: 94px;
+    height: 94px;
+  }
+  .letter {
+    width: 158px;
+    height: 111px;
+  }
+  .object {
+    width: 121px;
+    height: 132px;
+  }
+  .play-btn {
+    width: 104px;
+    height: 104px;
+  }
+}
+
+@media (max-width: 525px) {
+  .option-btn {
+    width: 81px;
+    height: 77px;
+  }
+  .bar {
+    width: 100%;
+  }
+}
+
+/* Smaller phones */
+@media (max-width: 490px) {
+  /* .header {
+    padding: 24px 5px 0 5px;
+  } */
+  .letter {
+    width: 119px;
+    height: 83px;
+  }
+  .object {
+    width: 91px;
+    height: 99px;
+  }
+  .play-btn {
+    width: 104px;
+    height: 104px;
+    margin: 0;
+  }
+  .submit {
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+}
+
+/* Even smaller phones */
+@media (max-width: 415px) {
+  .letter {
+    margin-right: 10px;
+  }
+}
+
+/* Stacking letter/object vertically on smallest phones */
+@media (max-width: 390px) {
+  .letter-group-r {
+    flex-direction: column;
+  }
+  .letter {
+    margin-right: 0;
+    margin-bottom: 30px;
+  }
+  .header {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
