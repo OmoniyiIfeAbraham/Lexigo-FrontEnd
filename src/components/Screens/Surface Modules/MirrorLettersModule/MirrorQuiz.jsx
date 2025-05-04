@@ -6,6 +6,7 @@ import axios from "axios";
 import { BaseUrl } from "../../../Config/Config";
 import Notify from "../../../Notification/Notify";
 import Swal from "sweetalert2";
+import "./MirrorQuizStyle.css";
 
 const questions = [
   {
@@ -236,18 +237,17 @@ const MirrorQuiz = () => {
   }
 
   return (
-    <div
-      style={{
-        backgroundImage: `url(${require("./../../../../Assets/Images/Surface/Mirror Letters/Background.png")})`,
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "100% 100vh", // Ensures full width while keeping height proportional
-        backgroundPosition: "top center", // Aligns image to the top
-      }}
-      className="w-full min-h-screen relative"
-    >
+    <div className="relative w-full wrapper">
+      <div className="absolute inset-0 z-0">
+        <img
+          src={require("./../../../../Assets/Images/Surface/Mirror Letters/Background.png")}
+          alt="Background"
+          className="w-full h-full object-fit"
+        />
+      </div>
       <div className="content relative z-10 h-full">
         {/* header */}
-        <div className="header flex w-full h-[75px] items-center justify-between px-[110px] pt-24">
+        <div className="header flex w-full h-[75px] items-center justify-between">
           <button
             className="navBtn w-[75px] h-[75px] flex justify-center items-center"
             style={{ backgroundColor: Colors.BeastyBrown2 }}
@@ -266,7 +266,7 @@ const MirrorQuiz = () => {
           </button>
         </div>
         {/* body */}
-        <div className="body flex w-full justify-between items-center mt-10">
+        <div className="body flex w-full justify-between items-center">
           {currentQuestion > 0 ? (
             <button onClick={handlePrevious}>
               <ChevronLeft
@@ -314,7 +314,7 @@ const MirrorQuiz = () => {
                 {currentQuestion === 0 ? "p’s" : "q’s"}
               </b>
             </h2>
-            <div className="w-full flex justify-between px-32">
+            <div className="option-btn-group w-full flex justify-between px-32">
               {currentQuestion === 0 ? (
                 <>
                   <button onClick={handleSelectP1}>
@@ -391,7 +391,10 @@ const MirrorQuiz = () => {
             </div>
           </div>
           {currentQuestion < 1 ? (
-            <button onClick={handleNext}>
+            <button
+              disabled={!selectP1 && !selectP2 && !selectQ1 && !selectQ2}
+              onClick={handleNext}
+            >
               <ChevronRight
                 className="right w-[125px] h-[125px]"
                 style={{ color: Colors.Black }}
@@ -405,7 +408,7 @@ const MirrorQuiz = () => {
           )}
         </div>
         {/* play */}
-        <div className="play flex justify-between items-center mt-10 px-24">
+        <div className="play flex justify-between items-center">
           <button
             className={`px-10 py-5 bg-blue-500 text-white text-lg font-[Nunito] font-bold`}
             style={{
@@ -419,7 +422,7 @@ const MirrorQuiz = () => {
           </button>
           {playing ? (
             <div
-              className="play-btn w-[138px] h-[138px] flex justify-center items-center"
+              className="play-btn w-[138px] h-[138px] flex justify-center items-center mr-10"
               style={{ backgroundColor: Colors.Bisque, borderRadius: 100 }}
             >
               <Pause
@@ -434,7 +437,7 @@ const MirrorQuiz = () => {
             <button onClick={playSound}>
               <img
                 src={require("./../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Play.png")}
-                className="play-btn w-[138px] h-[138px]"
+                className="play-btn w-[138px] h-[138px] mr-10"
               />
             </button>
           )}
@@ -446,7 +449,10 @@ const MirrorQuiz = () => {
               backgroundColor: Colors.Pompelmo,
             }}
             onClick={handleSubmit}
-            disabled={currentQuestion < 1}
+            disabled={
+              currentQuestion < 1 ||
+              (!selectP1 && !selectP2 && !selectQ1 && !selectQ2)
+            }
           >
             Done
           </button>
@@ -459,7 +465,7 @@ const MirrorQuiz = () => {
 
       {/* bottom popup */}
       <div
-        className="absolute bg-white p-8 shadow-lg w-104 text-start bottom-20 left-40 z-15"
+        className="bottom-pop absolute bg-white p-8 shadow-lg w-104 text-start bottom-20 left-40 z-15"
         style={{
           borderTopRightRadius: 20,
           borderBottomRightRadius: 20,

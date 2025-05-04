@@ -1,0 +1,262 @@
+/* General styling */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  height: 100%;
+}
+
+@media (max-height: 650px), (max-width: 768px) {
+  html,
+  body {
+    overflow-y: auto;
+  }
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* centers vertically */
+  padding-bottom: 60px; /* some space for play button */
+  position: relative;
+}
+
+.header {
+  padding-top: 130px;
+  padding-left: 115px;
+  padding-right: 115px;
+}
+
+/* Body layout */
+.body {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  /* flex-wrap: wrap; */
+}
+
+.letter-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* flex-wrap: wrap; */
+}
+
+.options {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Owl Popup */
+.popup {
+  width: 416px;
+  border-radius: 8px;
+  font-family: "Nunito", sans-serif;
+}
+
+/* Play button */
+.play {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 100px;
+}
+
+/* Chevron and button styles adjust via class names from React */
+.left,
+.right,
+.play-btn {
+  transition: all 0.3s ease;
+}
+
+/* This class handles conditional scrolling based on screen height */
+
+.wrapper {
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-height: 650px), (max-width: 768px) {
+  .wrapper {
+    height: auto;
+    overflow-y: auto;
+  }
+}
+
+/* Media Queries */
+
+/* Large screens */
+@media (max-width: 2000px) {
+  .body {
+    margin-top: 125px;
+  }
+}
+
+/* Medium large */
+/* @media (max-width: 945px) {
+  .header {
+    padding: 24px 55px 0 55px;
+  }
+} */
+
+@media (max-width: 1100px) {
+  .header {
+    padding-top: 120px;
+    padding-left: 90px;
+    padding-right: 90px;
+  }
+}
+
+@media (max-width: 965px) {
+  .option-btn-group {
+    padding: 0;
+  }
+}
+
+@media (max-width: 959px) {
+  .options {
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+  }
+}
+
+/* Tablet size */
+@media (max-width: 900px) {
+  .header {
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+}
+
+/* Smaller tablets / big phones */
+@media (max-width: 855px) {
+  .option-btn-f {
+    width: 63px;
+    height: 63px;
+  }
+}
+
+@media (max-width: 775px) {
+  .option-btn-f-group {
+    padding: 0;
+  }
+}
+
+/* Smaller tablets / big phones */
+@media (max-width: 740px) {
+  /* .header {
+    padding: 24px 25px 0 25px;
+  } */
+  .bottom-pop {
+    bottom: 50px;
+  }
+}
+
+@media (max-width: 700px) {
+  /* .option-btn {
+      width: 122px;
+      height: 116px;
+    } */
+}
+
+/* Small phones */
+@media (max-width: 630px) {
+  .left,
+  .right {
+    width: 94px;
+    height: 94px;
+  }
+  .play-btn {
+    width: 104px;
+    height: 104px;
+  }
+}
+
+@media (max-width: 560px) {
+  .option-btn {
+    width: 97px;
+    height: 41px;
+  }
+}
+
+@media (max-width: 525px) {
+  /* .option-btn {
+    width: 81px;
+    height: 77px;
+  } */
+  .bar {
+    width: 100%;
+  }
+}
+
+/* Smaller phones */
+@media (max-width: 490px) {
+  /* .header {
+    padding: 24px 5px 0 5px;
+  } */
+  .play-btn {
+    width: 104px;
+    height: 104px;
+    margin: 0;
+  }
+  .submit {
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+}
+
+/* Even smaller phones */
+@media (max-width: 460px) {
+  .progress {
+    width: 100%;
+  }
+  .option-btn-f {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+@media (max-width: 420px) {
+  .play {
+    flex-direction: column;
+  }
+  .play-btn {
+    margin-bottom: 10px;
+  }
+  .option-btn-group {
+    flex-direction: column;
+    align-items: center;
+  }
+  .option-btn {
+    margin-right: 0;
+    margin-top: 10px;
+  }
+  .option-btn-f {
+    width: 40px;
+    height: 40px;
+  }
+  .plus {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+/* Stacking letter/object vertically on smallest phones */
+@media (max-width: 390px) {
+  .letter-group {
+    flex-direction: column;
+  }
+  .header {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
