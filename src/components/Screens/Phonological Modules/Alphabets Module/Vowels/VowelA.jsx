@@ -31,7 +31,7 @@ const VowelA = () => {
           className="w-full h-full object-fit"
         />
       </div>
-      
+
       <div className="content relative z-10 h-full">
         {/* header */}
         <div className="header flex w-full h-[75px] items-center justify-between">
@@ -46,8 +46,9 @@ const VowelA = () => {
           </button>
           <button
             className="navBtn w-[75px] h-[75px] flex justify-center items-center"
-            style={{ backgroundColor: Colors.Pompelmo }}
+            style={{ backgroundColor: Colors.Pompelmo, opacity: 0 }}
             onClick={() => {}}
+            disabled
           >
             <Menu size={46} color={Colors.White} className="icon" />
           </button>

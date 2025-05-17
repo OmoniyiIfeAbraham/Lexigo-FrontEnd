@@ -55,6 +55,8 @@ const Quiz = () => {
 
   const [phonologicalScore, setPhonologicalScore] = useState(0);
   const [surfaceScore, setSurfaceScore] = useState(0);
+  const [percentage, setPercentage] = useState("0");
+  const [btnTempDisabled, setBtnTempDisabled] = useState(false);
 
   const navigate = useNavigate();
 
@@ -64,6 +66,7 @@ const Quiz = () => {
   };
 
   const handleNext = async () => {
+    setBtnTempDisabled(true);
     const Data = await localStorage.getItem("Profile");
     const parsedData = JSON.parse(Data);
 
@@ -112,6 +115,8 @@ const Quiz = () => {
         message: errorMessage,
         Type: "danger",
       });
+    } finally {
+      setBtnTempDisabled(false);
     }
 
     // Go to next question only after request completes
@@ -198,6 +203,31 @@ const Quiz = () => {
     StartQuiz();
   }, []);
 
+  function getDyslexiaResult(phonologicalScore, surfaceScore) {
+    // Calculate dyslexia severity (in percent) from the score
+    const toPercent = (score) => ((3 - score) / 3) * 100;
+
+    let dyslexiaType = "";
+    let percent = 0;
+
+    if (phonologicalScore < surfaceScore) {
+      dyslexiaType = "Phonological Dyslexia";
+      percent = toPercent(phonologicalScore);
+    } else if (surfaceScore < phonologicalScore) {
+      dyslexiaType = "Surface Dyslexia";
+      percent = toPercent(surfaceScore);
+    } else if (phonologicalScore === surfaceScore && phonologicalScore < 3) {
+      dyslexiaType = "Mixed Dyslexia";
+      // Average both percentages
+      percent = (toPercent(phonologicalScore) + toPercent(surfaceScore)) / 2;
+    } else {
+      dyslexiaType = "None";
+      percent = 0;
+    }
+
+    return { dyslexiaType, percent: percent.toFixed(2) + "%" };
+  }
+
   const handleSubmit = async () => {
     const Data = await localStorage.getItem("Profile");
     const parsedData = JSON.parse(Data);
@@ -235,11 +265,16 @@ const Quiz = () => {
 
     // Determine type based on LOWEST score
     let dyslexiaType = "";
-    if (newPScore < newSScore) dyslexiaType = "Phonological Dyslexia";
-    else if (newSScore < newPScore) dyslexiaType = "Surface Dyslexia";
-    else if (newPScore === newSScore && newPScore < 3)
-      dyslexiaType = "Mixed Dyslexia";
-    else if (newPScore === newSScore) dyslexiaType = "None";
+    // if (newPScore < newSScore) dyslexiaType = "Phonological Dyslexia";
+    // else if (newSScore < newPScore) dyslexiaType = "Surface Dyslexia";
+    // else if (newPScore === newSScore && newPScore < 3)
+    //   dyslexiaType = "Mixed Dyslexia";
+    // else if (newPScore === newSScore) dyslexiaType = "None";
+
+    const result = getDyslexiaResult(newPScore, newSScore);
+
+    dyslexiaType = result.dyslexiaType;
+    setPercentage(result.percent);
 
     // Save updated progress
     try {
@@ -387,10 +422,11 @@ const Quiz = () => {
           )}
           {/* next */}
           {selectedOptions !== null && currentQuestion < 5 ? (
-            <button onClick={handleNext}>
+            <button onClick={handleNext} disabled={btnTempDisabled}>
               <img
                 src={require("./../../../Assets/Images/AssesmentPage/front.png")}
                 className="w-20 h-20"
+                style={{ opacity: btnTempDisabled ? 0.3 : 1 }}
               />
             </button>
           ) : currentQuestion === 5 ? (
@@ -507,7 +543,8 @@ const Quiz = () => {
               className="percentage text-[36px] font-[Nunito] my-3"
               style={{ color: Colors.BeastyBrown2 }}
             >
-              {(score / 6) * 100}%
+              {/* {(score / 6) * 100}% */}
+              {percentage}
             </p>
             <p
               className="percentage text-[20px] font-[Nunito]"
@@ -535,7 +572,8 @@ const Quiz = () => {
                   borderStyle: "solid",
                   borderColor: Colors.Primary,
                 }}
-                onClick={() => setShowResult(false)}
+                // onClick={() => setShowResult(false)}
+                disabled
               >
                 Results
               </button>
