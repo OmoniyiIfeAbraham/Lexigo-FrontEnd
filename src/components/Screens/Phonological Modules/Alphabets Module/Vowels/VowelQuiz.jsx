@@ -380,7 +380,7 @@ const VowelQuiz = () => {
           )}
         </div>
         {/* play */}
-        <div className="play flex justify-between items-center">
+        <div className="flex justify-between items-center bg-red-500 z-10 w-full">
           <button
             className={`submit px-10 py-5 bg-blue-500 text-white text-lg font-[Nunito] font-bold`}
             style={{
@@ -389,6 +389,7 @@ const VowelQuiz = () => {
               opacity: 0,
             }}
             onClick={() => {}}
+            disabled
           >
             Submit
           </button>

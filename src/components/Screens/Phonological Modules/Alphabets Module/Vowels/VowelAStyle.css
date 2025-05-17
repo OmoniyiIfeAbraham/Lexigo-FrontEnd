@@ -19,7 +19,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; /* centers vertically */
+  justify-content: center;
   padding-bottom: 60px; /* some space for play button */
   position: relative;
 }

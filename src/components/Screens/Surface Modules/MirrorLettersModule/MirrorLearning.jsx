@@ -45,8 +45,9 @@ const MirrorLearning = () => {
           </button>
           <button
             className="navBtn w-[75px] h-[75px] flex justify-center items-center"
-            style={{ backgroundColor: Colors.Pompelmo }}
+            style={{ backgroundColor: Colors.Pompelmo, opacity: 0 }}
             onClick={() => {}}
+            disabled
           >
             <Menu size={46} color={Colors.White} className="icon" />
           </button>

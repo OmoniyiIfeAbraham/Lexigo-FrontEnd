@@ -231,7 +231,10 @@ const Home = () => {
             className="btn px-4 py-2 transition font-[Nunito] mt-5 w-[268px] h-[84.7px] md:ml-72"
             style={{
               color: Colors.White,
-              backgroundColor: Colors.Pink60,
+              backgroundColor:
+                selectedPhonological || selectedSurface
+                  ? Colors.Pink
+                  : Colors.Pink60,
               fontWeight: "bold",
               borderRadius: 16.7,
               borderWidth: 1,
