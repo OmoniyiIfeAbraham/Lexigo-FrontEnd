@@ -28,6 +28,7 @@ const VowelQuiz = () => {
   const [loading, setLoading] = useState(true);
   const [score, setScore] = useState(0);
   const [finalScore, setFinalScore] = useState(0);
+  const [btnTempDisabled, setBtnTempDisabled] = useState(false);
 
   // Function to play audio
   const playSound = () => {
@@ -42,6 +43,7 @@ const VowelQuiz = () => {
   };
 
   const handleNext = async () => {
+    setBtnTempDisabled(true);
     const Data = await localStorage.getItem("Profile");
     const parsedData = JSON.parse(Data);
 
@@ -79,6 +81,8 @@ const VowelQuiz = () => {
         message: errorMessage,
         Type: "danger",
       });
+    } finally {
+      setBtnTempDisabled(false);
     }
 
     if (currentQuestion < questions.length - 1) {
@@ -363,7 +367,9 @@ const VowelQuiz = () => {
           </div>
           {currentQuestion < 1 ? (
             <button
-              disabled={!selectedA && !selectedE && !selectedO}
+              disabled={
+                (!selectedA && !selectedE && !selectedO) || btnTempDisabled
+              }
               onClick={handleNext}
               className="disabled:opacity-50"
             >
@@ -380,7 +386,7 @@ const VowelQuiz = () => {
           )}
         </div>
         {/* play */}
-        <div className="flex justify-between items-center bg-red-500 z-10 w-full">
+        <div className="flex justify-between items-center w-full md:px-10 mt-[20px] mb-[100px]">
           <button
             className={`submit px-10 py-5 bg-blue-500 text-white text-lg font-[Nunito] font-bold`}
             style={{

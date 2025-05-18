@@ -229,6 +229,9 @@ const Quiz = () => {
   }
 
   const handleSubmit = async () => {
+    if (takenQuiz) {
+      setBtnTempDisabled(true);
+    }
     const Data = await localStorage.getItem("Profile");
     const parsedData = JSON.parse(Data);
 
@@ -299,6 +302,8 @@ const Quiz = () => {
         message: errorMessage,
         Type: "danger",
       });
+    } finally {
+      StartQuiz();
     }
 
     setResult(dyslexiaType);
@@ -431,13 +436,13 @@ const Quiz = () => {
             </button>
           ) : currentQuestion === 5 ? (
             <button
-              className={`mt-6 px-10 py-5 bg-blue-500 text-white text-lg font-[Nunito] font-bold`}
+              className={`mt-6 px-10 py-5 bg-blue-500 text-white text-lg font-[Nunito] font-bold disabled:opacity-50`}
               style={{
                 borderRadius: 40,
                 backgroundColor: Colors.Secondary,
                 opacity: selectedOptions === null ? 0.5 : 1,
               }}
-              disabled={selectedOptions === null}
+              disabled={selectedOptions === null || btnTempDisabled}
               onClick={handleSubmit}
             >
               Submit

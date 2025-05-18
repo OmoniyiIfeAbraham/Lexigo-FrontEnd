@@ -27,6 +27,7 @@ const BlendingQuiz = () => {
   const [loading, setLoading] = useState(true);
   const [score, setScore] = useState(0);
   const [finalScore, setFinalScore] = useState(0);
+  const [btnTempDisabled, setBtnTempDisabled] = useState(false);
 
   // Function to play audio
   const playSound = () => {
@@ -41,6 +42,7 @@ const BlendingQuiz = () => {
   };
 
   const handleNext = async () => {
+    setBtnTempDisabled(true);
     const Data = await localStorage.getItem("Profile");
     const parsedData = JSON.parse(Data);
 
@@ -78,6 +80,8 @@ const BlendingQuiz = () => {
         message: errorMessage,
         Type: "danger",
       });
+    } finally {
+      setBtnTempDisabled(false);
     }
 
     if (currentQuestion < questions.length - 1) {
@@ -385,8 +389,12 @@ const BlendingQuiz = () => {
           </div>
           {currentQuestion < 1 ? (
             <button
-              disabled={!selectedFan && !selectedPan && !selectedCat}
+              disabled={
+                (!selectedFan && !selectedPan && !selectedCat) ||
+                btnTempDisabled
+              }
               onClick={handleNext}
+              className="disabled:opacity-50"
             >
               <ChevronRight
                 className="right w-[125px] h-[125px]"
@@ -401,7 +409,7 @@ const BlendingQuiz = () => {
           )}
         </div>
         {/* play */}
-        <div className="play flex justify-between items-center">
+        <div className="flex justify-between items-center w-full md:px-10 mt-[20px] mb-[100px]">
           <button
             className={`px-10 py-5 bg-blue-500 text-white text-lg font-[Nunito] font-bold`}
             style={{

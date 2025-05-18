@@ -177,6 +177,11 @@ const Home = () => {
                 }}
               />
             </div>
+            <div className="w-full flex flex-row justify-end items-center">
+              <h3 className="font-[Nunito]">
+                {((phonologicalProgress / 6) * 100).toFixed(2)}%
+              </h3>
+            </div>
           </div>
 
           {/* Surface Image + Progress Bar */}
@@ -221,6 +226,11 @@ const Home = () => {
                   borderRadius: "50px",
                 }}
               />
+            </div>
+            <div className="w-full flex flex-row justify-end items-center">
+              <h3 className="font-[Nunito]">
+                {((surfaceProgress / 2) * 100).toFixed(2)}%
+              </h3>
             </div>
           </div>
         </div>

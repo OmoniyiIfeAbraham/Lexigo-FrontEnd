@@ -30,6 +30,7 @@ const MirrorQuiz = () => {
   const [loading, setLoading] = useState(true);
   const [score, setScore] = useState(0);
   const [finalScore, setFinalScore] = useState(0);
+  const [btnTempDisabled, setBtnTempDisabled] = useState(false);
 
   // Function to play audio
   const playSound = () => {
@@ -42,6 +43,7 @@ const MirrorQuiz = () => {
   };
 
   const handleNext = async () => {
+    setBtnTempDisabled(true);
     const Data = await localStorage.getItem("Profile");
     const parsedData = JSON.parse(Data);
 
@@ -79,6 +81,8 @@ const MirrorQuiz = () => {
         message: errorMessage,
         Type: "danger",
       });
+    } finally {
+      setBtnTempDisabled(false);
     }
 
     if (currentQuestion < questions.length - 1) {
@@ -395,10 +399,14 @@ const MirrorQuiz = () => {
             <button
               disabled={!selectP1 && !selectP2 && !selectQ1 && !selectQ2}
               onClick={handleNext}
+              diabled={btnTempDisabled}
             >
               <ChevronRight
                 className="right w-[125px] h-[125px]"
-                style={{ color: Colors.Black }}
+                style={{
+                  color: Colors.Black,
+                  opacity: btnTempDisabled ? 0.5 : 1,
+                }}
               />
             </button>
           ) : (
@@ -409,7 +417,7 @@ const MirrorQuiz = () => {
           )}
         </div>
         {/* play */}
-        <div className="play flex justify-between items-center">
+        <div className="flex justify-between items-center w-full md:px-10 mt-[20px] mb-[100px]">
           <button
             className={`px-10 py-5 bg-blue-500 text-white text-lg font-[Nunito] font-bold`}
             style={{
