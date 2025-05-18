@@ -56,7 +56,10 @@ const Blending = () => {
         message: errorMessage,
         Type: "danger",
       });
-      if (errorMessage === "Unauthorized, please log in again") {
+      if (
+        errorMessage === "Unauthorized, please log in again" ||
+        errorMessage === "Invalid or expired token"
+      ) {
         navigate("/auth/signin");
       }
     } finally {
@@ -116,6 +119,7 @@ const Blending = () => {
                 : require("./../../../../Assets/Images/Phonological/Alphabets Module/Progress Bar.png")
             }
             className="img w-[183px] h-[35px] mx-2"
+            alt=""
           />
           <div
             className="progress-trophy w-[70px] h-[70px] flex justify-center items-center"
@@ -130,6 +134,7 @@ const Blending = () => {
                   : require("./../../../../Assets/Images/Phonological/Alphabets Module/Trophy.png")
               }
               className="img-trophy w-[43px] h-[44px]"
+              alt=""
             />
           </div>
         </div>

@@ -33,12 +33,17 @@ const BlendingQuiz = () => {
   const playSound = () => {
     setPlaying(true);
     const audio = new Audio(
-      require("./../../../../../Assets/Audio/Vowels/A.mp3")
+      require(currentQuestion === 0
+        ? "./../../../../../Assets/Audio/Blending/c_a_t.mp3"
+        : "./../../../../../Assets/Audio/Blending/p_a_n.mp3")
     );
     audio.play();
-    setTimeout(() => {
-      setPlaying(false);
-    }, 1500);
+    setTimeout(
+      () => {
+        setPlaying(false);
+      },
+      currentQuestion === 0 ? 4500 : 5000
+    );
   };
 
   const handleNext = async () => {
@@ -49,8 +54,8 @@ const BlendingQuiz = () => {
     let newScore = score;
 
     if (
-      (currentQuestion == 0 && selectedCat) ||
-      (currentQuestion == 1 && selectedPan)
+      (currentQuestion === 0 && selectedCat) ||
+      (currentQuestion === 1 && selectedPan)
     ) {
       console.log(`Question ${currentQuestion + 1}: ✅ Correct`);
       newScore += 1;
@@ -100,8 +105,8 @@ const BlendingQuiz = () => {
     let newScore = 0;
 
     if (
-      (currentQuestion == 0 && selectedCat) ||
-      (currentQuestion == 1 && selectedPan)
+      (currentQuestion === 0 && selectedCat) ||
+      (currentQuestion === 1 && selectedPan)
     ) {
       console.log(`Question ${currentQuestion + 1}: ✅ Correct`);
       newScore += 1;
@@ -219,7 +224,10 @@ const BlendingQuiz = () => {
         message: errorMessage,
         Type: "danger",
       });
-      if (errorMessage === "Unauthorized, please log in again") {
+      if (
+        errorMessage === "Unauthorized, please log in again" ||
+        errorMessage === "Invalid or expired token"
+      ) {
         navigate("/auth/signin");
       }
     } finally {
@@ -314,6 +322,7 @@ const BlendingQuiz = () => {
                 <img
                   src={require("./../../../../../Assets/Images/Phonological/Blending Module/c.png")}
                   className="option-btn-f w-[90px] h-[90px]"
+                  alt=""
                 />
 
                 <Plus className="plus w-[50px] h-[50px] mx-5" />
@@ -321,6 +330,7 @@ const BlendingQuiz = () => {
                 <img
                   src={require("./../../../../../Assets/Images/Phonological/Blending Module/a.png")}
                   className="option-btn-f w-[90px] h-[90px]"
+                  alt=""
                 />
 
                 <Plus className="plus w-[50px] h-[50px] mx-5" />
@@ -328,6 +338,7 @@ const BlendingQuiz = () => {
                 <img
                   src={require("./../../../../../Assets/Images/Phonological/Blending Module/t.png")}
                   className="option-btn-f w-[90px] h-[90px]"
+                  alt=""
                 />
               </div>
             ) : (
@@ -335,6 +346,7 @@ const BlendingQuiz = () => {
                 <img
                   src={require("./../../../../../Assets/Images/Phonological/Blending Module/p.png")}
                   className="option-btn-f w-[90px] h-[90px]"
+                  alt=""
                 />
 
                 <Plus className="plus w-[50px] h-[50px] mx-5" />
@@ -342,6 +354,7 @@ const BlendingQuiz = () => {
                 <img
                   src={require("./../../../../../Assets/Images/Phonological/Blending Module/a.png")}
                   className="option-btn-f w-[90px] h-[90px]"
+                  alt=""
                 />
 
                 <Plus className="plus w-[50px] h-[50px] mx-5" />
@@ -349,6 +362,7 @@ const BlendingQuiz = () => {
                 <img
                   src={require("./../../../../../Assets/Images/Phonological/Blending Module/n.png")}
                   className="option-btn-f w-[90px] h-[90px]"
+                  alt=""
                 />
               </div>
             )}
@@ -361,6 +375,7 @@ const BlendingQuiz = () => {
                       : require("./../../../../../Assets/Images/Phonological/Blending Module/fan.png")
                   }
                   className="option-btn w-[173px] h-[62px] mr-10"
+                  alt=""
                 />
               </button>
 
@@ -383,6 +398,7 @@ const BlendingQuiz = () => {
                       : require("./../../../../../Assets/Images/Phonological/Blending Module/cat-option.png")
                   }
                   className="option-btn w-[173px] h-[62px]"
+                  alt=""
                 />
               </button>
             </div>
@@ -439,6 +455,7 @@ const BlendingQuiz = () => {
               <img
                 src={require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Play.png")}
                 className="play-btn w-[138px] h-[138px] mr-10"
+                alt=""
               />
             </button>
           )}

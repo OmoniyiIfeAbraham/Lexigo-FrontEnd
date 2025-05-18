@@ -50,8 +50,8 @@ const VowelQuiz = () => {
     let newScore = score;
 
     if (
-      (currentQuestion == 0 && selectedA) ||
-      (currentQuestion == 1 && selectedO)
+      (currentQuestion === 0 && selectedA) ||
+      (currentQuestion === 1 && selectedO)
     ) {
       console.log(`Question ${currentQuestion + 1}: ✅ Correct`);
       newScore += 1;
@@ -100,8 +100,8 @@ const VowelQuiz = () => {
     let newScore = 0;
 
     if (
-      (currentQuestion == 0 && selectedA) ||
-      (currentQuestion == 1 && selectedO)
+      (currentQuestion === 0 && selectedA) ||
+      (currentQuestion === 1 && selectedO)
     ) {
       console.log(`Question ${currentQuestion + 1}: ✅ Correct`);
       newScore += 1;
@@ -220,6 +220,12 @@ const VowelQuiz = () => {
         message: errorMessage,
         Type: "danger",
       });
+      if (
+        errorMessage === "Unauthorized, please log in again" ||
+        errorMessage === "Invalid or expired token"
+      ) {
+        navigate("/auth/signin");
+      }
     } finally {
       Swal.close();
       setLoading(false);
@@ -341,6 +347,7 @@ const VowelQuiz = () => {
                       : require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Option 1.png")
                   }
                   className="option-btn w-[162px] h-[154px]"
+                  alt=""
                 />
               </button>
               <button onClick={handleEChange}>
@@ -351,6 +358,7 @@ const VowelQuiz = () => {
                       : require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Option 2.png")
                   }
                   className="option-btn w-[162px] h-[154px]"
+                  alt=""
                 />
               </button>
               <button onClick={handleOChange}>
@@ -361,6 +369,7 @@ const VowelQuiz = () => {
                       : require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Option 3.png")
                   }
                   className="option-btn w-[162px] h-[154px]"
+                  alt=""
                 />
               </button>
             </div>
@@ -417,6 +426,7 @@ const VowelQuiz = () => {
               <img
                 src={require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Play.png")}
                 className="play-btn w-[138px] h-[138px] mx-20"
+                alt=""
               />
             </button>
           )}

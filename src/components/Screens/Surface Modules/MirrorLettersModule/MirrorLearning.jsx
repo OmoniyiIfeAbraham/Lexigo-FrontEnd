@@ -14,7 +14,11 @@ const MirrorLearning = () => {
   // Function to play audio
   const playSound = () => {
     setPlaying(true);
-    const audio = new Audio(require("./../../../../Assets/Audio/Vowels/A.mp3"));
+    const audio = new Audio(
+      require(selectP
+        ? "./../../../../Assets/Audio/Surface/p.mp3"
+        : "./../../../../Assets/Audio/Surface/q.mp3")
+    );
     audio.play();
     setTimeout(() => {
       setPlaying(false);
@@ -73,6 +77,7 @@ const MirrorLearning = () => {
                 }
                 className={"letter w-[175px] h-[262px]"}
                 style={selectP ? { zIndex: 10 } : null}
+                alt=""
               />
             </button>
             <button
@@ -88,6 +93,7 @@ const MirrorLearning = () => {
                     : require("./../../../../Assets/Images/Surface/Mirror Letters/q-r.png")
                 }
                 className="object w-[175px] h-[262px]"
+                alt=""
               />
             </button>
           </div>
@@ -114,10 +120,15 @@ const MirrorLearning = () => {
               />
             </div>
           ) : (
-            <button onClick={playSound}>
+            <button
+              onClick={playSound}
+              disabled={!selectP && !selectQ}
+              className="disabled:opacity-50"
+            >
               <img
                 src={require("./../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Play.png")}
                 className="play-btn w-[138px] h-[138px]"
+                alt=""
               />
             </button>
           )}

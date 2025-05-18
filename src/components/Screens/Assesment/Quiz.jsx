@@ -167,7 +167,7 @@ const Quiz = () => {
       if (response.data.Error === false) {
         console.log("initial: ", response.data);
         setCurrentQuestion(
-          response.data.Data.Progress == 0 || response.data.Data.Progress == 5
+          response.data.Data.Progress === 0 || response.data.Data.Progress === 5
             ? response.data.Data.Progress
             : response.data.Data.Progress + 1
         );
@@ -190,7 +190,10 @@ const Quiz = () => {
         message: errorMessage,
         Type: "danger",
       });
-      if (errorMessage === "Unauthorized, please log in again") {
+      if (
+        errorMessage === "Unauthorized, please log in again" ||
+        errorMessage === "Invalid or expired token"
+      ) {
         navigate("/auth/signin");
       }
     } finally {
@@ -415,6 +418,7 @@ const Quiz = () => {
               <img
                 src={require("./../../../Assets/Images/AssesmentPage/back-inactive.png")}
                 className="w-20 h-20"
+                alt=""
               />
             </button>
           ) : (
@@ -422,6 +426,7 @@ const Quiz = () => {
               <img
                 src={require("./../../../Assets/Images/AssesmentPage/back-active.png")}
                 className="w-20 h-20"
+                alt=""
               />
             </button>
           )}
@@ -432,6 +437,7 @@ const Quiz = () => {
                 src={require("./../../../Assets/Images/AssesmentPage/front.png")}
                 className="w-20 h-20"
                 style={{ opacity: btnTempDisabled ? 0.3 : 1 }}
+                alt=""
               />
             </button>
           ) : currentQuestion === 5 ? (

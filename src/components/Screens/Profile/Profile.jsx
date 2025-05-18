@@ -54,7 +54,10 @@ const Profile = () => {
         message: errorMessage,
         Type: "danger",
       });
-      if (errorMessage === "Unauthorized, please log in again") {
+      if (
+        errorMessage === "Unauthorized, please log in again" ||
+        errorMessage === "Invalid or expired token"
+      ) {
         navigate("/auth/signin");
       }
     } finally {

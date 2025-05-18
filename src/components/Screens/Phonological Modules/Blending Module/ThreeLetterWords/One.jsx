@@ -13,12 +13,12 @@ const One = () => {
   const playSound = () => {
     setPlaying(true);
     const audio = new Audio(
-      require("./../../../../../Assets/Audio/Vowels/A.mp3")
+      require("./../../../../../Assets/Audio/Blending/c_a_t.mp3")
     );
     audio.play();
     setTimeout(() => {
       setPlaying(false);
-    }, 1500);
+    }, 4500);
   };
 
   return (
@@ -63,6 +63,7 @@ const One = () => {
               <img
                 src={require("./../../../../../Assets/Images/Phonological/Blending Module/c.png")}
                 className="option-btn w-[122px] h-[116px]"
+                alt=""
               />
 
               <Plus className="w-[50px] h-[50px] mx-5" />
@@ -70,6 +71,7 @@ const One = () => {
               <img
                 src={require("./../../../../../Assets/Images/Phonological/Blending Module/a.png")}
                 className="option-btn w-[122px] h-[116px]"
+                alt=""
               />
 
               <Plus className="w-[50px] h-[50px] mx-5" />
@@ -77,16 +79,19 @@ const One = () => {
               <img
                 src={require("./../../../../../Assets/Images/Phonological/Blending Module/t.png")}
                 className="option-btn w-[122px] h-[116px]"
+                alt=""
               />
             </div>
             <div className="letter-group flex justify-center items-center">
               <img
                 src={require("./../../../../../Assets/Images/Phonological/Blending Module/cat.png")}
                 className="letter w-[94px] h-[66px] mr-10"
+                alt=""
               />
               <img
                 src={require("./../../../../../Assets/Images/Phonological/Blending Module/Cat 1.png")}
                 className="object w-[107px] h-[118px]"
+                alt=""
               />
             </div>
           </div>
@@ -117,6 +122,7 @@ const One = () => {
               <img
                 src={require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Play.png")}
                 className="play-btn w-[138px] h-[138px]"
+                alt=""
               />
             </button>
           )}

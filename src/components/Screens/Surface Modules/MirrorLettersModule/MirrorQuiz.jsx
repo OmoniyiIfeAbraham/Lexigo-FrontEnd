@@ -35,7 +35,11 @@ const MirrorQuiz = () => {
   // Function to play audio
   const playSound = () => {
     setPlaying(true);
-    const audio = new Audio(require("./../../../../Assets/Audio/Vowels/A.mp3"));
+    const audio = new Audio(
+      require(selectP1 || selectP2
+        ? "./../../../../Assets/Audio/Surface/p.mp3"
+        : "./../../../../Assets/Audio/Surface/q.mp3")
+    );
     audio.play();
     setTimeout(() => {
       setPlaying(false);
@@ -50,8 +54,8 @@ const MirrorQuiz = () => {
     let newScore = score;
 
     if (
-      (currentQuestion == 0 && selectP1 && selectP2) ||
-      (currentQuestion == 1 && selectQ1 && selectQ2)
+      (currentQuestion === 0 && selectP1 && selectP2) ||
+      (currentQuestion === 1 && selectQ1 && selectQ2)
     ) {
       console.log(`Question ${currentQuestion + 1}: ✅ Correct`);
       newScore += 1;
@@ -101,8 +105,8 @@ const MirrorQuiz = () => {
     let newScore = 0;
 
     if (
-      (currentQuestion == 0 && selectP1 && selectP2) ||
-      (currentQuestion == 1 && selectQ1 && selectQ2)
+      (currentQuestion === 0 && selectP1 && selectP2) ||
+      (currentQuestion === 1 && selectQ1 && selectQ2)
     ) {
       console.log(`Question ${currentQuestion + 1}: ✅ Correct`);
       newScore += 1;
@@ -219,7 +223,10 @@ const MirrorQuiz = () => {
         message: errorMessage,
         Type: "danger",
       });
-      if (errorMessage === "Unauthorized, please log in again") {
+      if (
+        errorMessage === "Unauthorized, please log in again" ||
+        errorMessage === "Invalid or expired token"
+      ) {
         navigate("/auth/signin");
       }
     } finally {
@@ -331,6 +338,7 @@ const MirrorQuiz = () => {
                       }
                       className="option-btn w-[161px] h-[161px]"
                       style={selectP1 ? { zIndex: 10 } : null}
+                      alt=""
                     />
                   </button>
                   <button onClick={handleSelectQ1}>
@@ -353,6 +361,7 @@ const MirrorQuiz = () => {
                       }
                       className="option-btn w-[161px] h-[161px]"
                       style={selectP2 ? { zIndex: 10 } : null}
+                      alt=""
                     />
                   </button>
                 </>
@@ -367,6 +376,7 @@ const MirrorQuiz = () => {
                       }
                       className="option-btn w-[161px] h-[161px]"
                       style={selectQ1 ? { zIndex: 10 } : null}
+                      alt=""
                     />
                   </button>
                   <button onClick={handleSelectQ2}>
@@ -378,6 +388,7 @@ const MirrorQuiz = () => {
                       }
                       className="option-btn w-[161px] h-[161px]"
                       style={selectQ2 ? { zIndex: 10 } : null}
+                      alt=""
                     />
                   </button>
                   <button onClick={handleSelectP1}>
@@ -389,6 +400,7 @@ const MirrorQuiz = () => {
                       }
                       className="option-btn w-[161px] h-[161px]"
                       style={selectP1 ? { zIndex: 10 } : null}
+                      alt=""
                     />
                   </button>
                 </>
@@ -443,10 +455,15 @@ const MirrorQuiz = () => {
               />
             </div>
           ) : (
-            <button onClick={playSound}>
+            <button
+              onClick={playSound}
+              disabled={!selectP1 && !selectP2 && !selectQ1 && !selectQ2}
+              className="disabled:opacity-50"
+            >
               <img
                 src={require("./../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Play.png")}
                 className="play-btn w-[138px] h-[138px] mr-10"
+                alt=""
               />
             </button>
           )}

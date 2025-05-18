@@ -63,10 +63,12 @@ const VowelI = () => {
             <img
               src={require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Ii.png")}
               className="letter w-[374px] h-[263px] mr-10"
+              alt=""
             />
             <img
               src={require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Ice-Cream.png")}
               className="object w-[286px] h-[313px]"
+              alt=""
             />
           </div>
           <button onClick={() => navigate("/phonological-path/bd/vowelO")}>
@@ -96,6 +98,7 @@ const VowelI = () => {
               <img
                 src={require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Play.png")}
                 className="play-btn w-[138px] h-[138px]"
+                alt=""
               />
             </button>
           )}
