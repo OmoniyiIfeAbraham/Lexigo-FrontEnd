@@ -47,6 +47,7 @@ import ConsonantW from "./components/Screens/Phonological Modules/Alphabets Modu
 import ConsonantX from "./components/Screens/Phonological Modules/Alphabets Module/Consonants/ConsonantX";
 import ConsonantY from "./components/Screens/Phonological Modules/Alphabets Module/Consonants/ConsonantY";
 import ConsonantZ from "./components/Screens/Phonological Modules/Alphabets Module/Consonants/ConsonantZ";
+import GeneralQuiz from "./components/Screens/Landing/Quiz";
 
 function App() {
   return (
@@ -56,6 +57,8 @@ function App() {
         <Routes>
           {/* landing page */}
           <Route path="/" element={<HomePage />} />
+          {/* landing page quiz */}
+          <Route path="/general/quiz" element={<GeneralQuiz />} />
           {/* sign in page */}
           <Route path="/auth/signin" element={<SignIn />} />
           {/* sign up page */}
