@@ -205,6 +205,13 @@ const VowelQuiz = () => {
       if (response.data.Error === false) {
         console.log("initial: ", response.data);
         setCurrentQuestion(response.data.Data.Progress);
+        if (response.data.Data.Completed === true) {
+          setBtnTempDisabled(true);
+          setShowPopup(true);
+          window.alert(
+            "You have completed this quiz previously. Reset Progress on your profile to take the quiz again."
+          );
+        }
       } else {
         Notify({
           title: "Error",
@@ -277,7 +284,11 @@ const VowelQuiz = () => {
         {/* body */}
         <div className="body flex w-full justify-between items-center">
           {currentQuestion > 0 ? (
-            <button onClick={handlePrevious}>
+            <button
+              onClick={handlePrevious}
+              disabled={btnTempDisabled}
+              className="disabled:opacity-50"
+            >
               <ChevronLeft
                 className="left w-[125px] h-[125px]"
                 style={{ color: Colors.Black }}
@@ -397,7 +408,7 @@ const VowelQuiz = () => {
         {/* play */}
         <div className="flex justify-between items-center w-full md:px-10 mt-[20px] mb-[100px]">
           <button
-            className={`submit px-10 py-5 bg-blue-500 text-white text-lg font-[Nunito] font-bold`}
+            className={`submit px-10 py-5 bg-blue-500 text-white text-lg font-[Nunito] font-bold disabled:opacity-50`}
             style={{
               borderRadius: 20,
               backgroundColor: Colors.Pompelmo,
@@ -432,7 +443,7 @@ const VowelQuiz = () => {
           )}
 
           <button
-            className={`submit px-10 py-5 bg-blue-500 text-white text-lg font-[Nunito] font-bold`}
+            className={`submit px-10 py-5 bg-blue-500 text-white text-lg font-[Nunito] font-bold disabled:opacity-0`}
             style={{
               borderRadius: 20,
               backgroundColor: Colors.Pompelmo,
@@ -471,13 +482,24 @@ const VowelQuiz = () => {
                 justifySelf: "center",
               }}
             />
-            <p
-              className="text-lg font-semibold font-[Nunito]"
-              style={{ color: Colors.Black }}
-            >
-              Well done young scholar, you have <br /> finished your very first
-              lesson. Its time to <br /> find out what you know. Lets go!!! 😁
-            </p>
+            {btnTempDisabled ? (
+              <p
+                className="text-lg font-semibold font-[Nunito]"
+                style={{ color: Colors.Black }}
+              >
+                You have completed this quiz previously. <br /> Reset Progress
+                on your profile to take the quiz again.
+              </p>
+            ) : (
+              <p
+                className="text-lg font-semibold font-[Nunito]"
+                style={{ color: Colors.Black }}
+              >
+                Well done young scholar, you have <br /> finished your very
+                first lesson. Its time to <br /> find out what you know. Lets
+                go!!! 😁
+              </p>
+            )}
 
             {/* Dog Image (positioned outside but touching bottom-left border of popup) */}
             <img
@@ -508,11 +530,25 @@ const VowelQuiz = () => {
               <X size={46} color={Colors.White} className="icon" />
             </button>
 
-            <img
-              src={require("./../../../../../Assets/Images/AssesmentPage/success.png")}
-              alt="success"
-              className="w-[416px] h-[60px] my-3"
-            />
+            {finalScore === 0 ? (
+              <img
+                src={require("./../../../../../Assets/Images/AssesmentPage/fail.png")}
+                alt="fail"
+                className="w-[416px] h-[60px] my-3"
+              />
+            ) : finalScore === 1 ? (
+              <img
+                src={require("./../../../../../Assets/Images/AssesmentPage/fail.png")}
+                alt="fail"
+                className="w-[416px] h-[60px] my-3"
+              />
+            ) : (
+              <img
+                src={require("./../../../../../Assets/Images/AssesmentPage/success.png")}
+                alt="success"
+                className="w-[416px] h-[60px] my-3"
+              />
+            )}
             <img
               src={require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Owl.png")}
               alt="Owl"
@@ -521,16 +557,16 @@ const VowelQuiz = () => {
             {finalScore === 0 ? (
               <p
                 className="successTitle text-[36px] font-[Nunito] my-1"
-                style={{ color: Colors.Pompelmo, fontWeight: "bolder" }}
+                style={{ color: Colors.Black, fontWeight: "bolder" }}
               >
-                Not Bad. Keep Trying!
+                You would get it next time. Score({finalScore})
               </p>
             ) : finalScore === 1 ? (
               <p
                 className="successTitle text-[36px] font-[Nunito] my-1"
-                style={{ color: Colors.Orange, fontWeight: "bolder" }}
+                style={{ color: Colors.Black, fontWeight: "bolder" }}
               >
-                Nice Work!
+                You would get it next time. Score({finalScore})
               </p>
             ) : (
               <p

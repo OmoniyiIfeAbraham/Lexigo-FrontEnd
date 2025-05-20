@@ -209,6 +209,13 @@ const BlendingQuiz = () => {
       if (response.data.Error === false) {
         console.log("initial: ", response.data);
         setCurrentQuestion(response.data.Data.Progress);
+        if (response.data.Data.Completed === true) {
+          setBtnTempDisabled(true);
+          // setShowPopup(true);
+          window.alert(
+            "You have completed this quiz previously. Reset Progress on your profile to take the quiz again."
+          );
+        }
       } else {
         Notify({
           title: "Error",
@@ -281,7 +288,11 @@ const BlendingQuiz = () => {
         {/* body */}
         <div className="body flex w-full justify-between items-center">
           {currentQuestion > 0 ? (
-            <button onClick={handlePrevious}>
+            <button
+              onClick={handlePrevious}
+              disabled={btnTempDisabled}
+              className="disabled:opacity-50"
+            >
               <ChevronLeft
                 className="left w-[125px] h-[125px]"
                 style={{ color: Colors.Black }}
@@ -461,7 +472,7 @@ const BlendingQuiz = () => {
           )}
 
           <button
-            className={`submit px-10 py-5 bg-blue-500 text-white text-lg font-[Nunito] font-bold`}
+            className={`submit px-10 py-5 bg-blue-500 text-white text-lg font-[Nunito] font-bold disabled:opacity-0`}
             style={{
               borderRadius: 20,
               backgroundColor: Colors.Pompelmo,
@@ -496,11 +507,19 @@ const BlendingQuiz = () => {
               <X size={46} color={Colors.White} className="icon" />
             </button>
 
-            <img
-              src={require("./../../../../../Assets/Images/AssesmentPage/success.png")}
-              alt="success"
-              className="w-[416px] h-[60px] my-3"
-            />
+            {finalScore !== 2 ? (
+              <img
+                src={require("./../../../../../Assets/Images/AssesmentPage/fail.png")}
+                alt="fail"
+                className="w-[416px] h-[60px] my-3"
+              />
+            ) : (
+              <img
+                src={require("./../../../../../Assets/Images/AssesmentPage/success.png")}
+                alt="success"
+                className="w-[416px] h-[60px] my-3"
+              />
+            )}
             <img
               src={require("./../../../../../Assets/Images/Phonological/Blending Module/Cat 2.png")}
               alt="Owl"
@@ -508,17 +527,17 @@ const BlendingQuiz = () => {
             />
             {finalScore === 0 ? (
               <p
-                className="successTitle text-[36px] font-[Nunito] my-1"
-                style={{ color: Colors.Pompelmo, fontWeight: "bolder" }}
+                className="successTitle text-[24px] font-[Nunito] my-1"
+                style={{ color: Colors.Black, fontWeight: "bolder" }}
               >
-                Not Bad. Keep Trying!
+                You will get it next time. Score({finalScore})
               </p>
             ) : finalScore === 1 ? (
               <p
-                className="successTitle text-[36px] font-[Nunito] my-1"
-                style={{ color: Colors.Orange, fontWeight: "bolder" }}
+                className="successTitle text-[24px] font-[Nunito] my-1"
+                style={{ color: Colors.Black, fontWeight: "bolder" }}
               >
-                Nice Work!
+                You will get it next time. Score({finalScore})
               </p>
             ) : (
               <p
