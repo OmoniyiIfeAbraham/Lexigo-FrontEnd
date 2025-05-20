@@ -173,7 +173,12 @@ const Alphabets = () => {
               alt="Vowels"
             />
           </button>
-          <button className="btn relative mx-auto mt-8">
+          <button
+            className="btn relative mx-auto mt-8"
+            onClick={() => {
+              navigate("/phonological-path/bd/consonantB");
+            }}
+          >
             <img
               src={require("./../../../../Assets/Images/Phonological/Alphabets Module/consonants.png")}
               alt="Consonants"

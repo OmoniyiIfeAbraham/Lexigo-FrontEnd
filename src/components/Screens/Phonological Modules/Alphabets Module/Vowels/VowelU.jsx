@@ -17,7 +17,7 @@ const VowelU = () => {
     audio.play();
     setTimeout(() => {
       setPlaying(false);
-    }, 1500);
+    }, 4000);
   };
 
   return (

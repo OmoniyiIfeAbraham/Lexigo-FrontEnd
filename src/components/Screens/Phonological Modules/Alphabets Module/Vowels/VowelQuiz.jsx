@@ -39,7 +39,7 @@ const VowelQuiz = () => {
     audio.play();
     setTimeout(() => {
       setPlaying(false);
-    }, 1500);
+    }, 4000);
   };
 
   const handleNext = async () => {
