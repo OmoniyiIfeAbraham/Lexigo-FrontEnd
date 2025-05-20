@@ -36,11 +36,12 @@ const VowelA = () => {
         {/* header */}
         <div className="header flex w-full h-[75px] items-center justify-between">
           <button
-            className="navBtn w-[75px] h-[75px] flex justify-center items-center"
+            className="navBtn w-[75px] h-[75px] flex justify-center items-center disabled:opacity-50"
             style={{ backgroundColor: Colors.BeastyBrown2 }}
             onClick={() => {
               navigate("/phonological-path/alphabet");
             }}
+            disabled={playing}
           >
             <X size={46} color={Colors.White} className="icon" />
           </button>
@@ -71,7 +72,11 @@ const VowelA = () => {
               alt=""
             />
           </div>
-          <button onClick={() => navigate("/phonological-path/bd/vowelE")}>
+          <button
+            onClick={() => navigate("/phonological-path/bd/vowelE")}
+            disabled={playing}
+            className="disabled:opacity-50"
+          >
             <ChevronRight
               className="right w-[125px] h-[125px]"
               style={{ color: Colors.Black }}

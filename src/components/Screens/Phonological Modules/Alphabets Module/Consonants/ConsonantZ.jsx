@@ -2,9 +2,9 @@ import { ChevronLeft, ChevronRight, Menu, Pause, X } from "lucide-react";
 import React, { useState } from "react";
 import { Colors } from "../../../../Utils/Colors";
 import { useNavigate } from "react-router-dom";
-import "./VowelAStyle.css";
+import "./ConsonantBStyle.css";
 
-const VowelO = () => {
+const ConsonantZ = () => {
   const navigate = useNavigate();
   const [playing, setPlaying] = useState(false);
 
@@ -12,7 +12,7 @@ const VowelO = () => {
   const playSound = () => {
     setPlaying(true);
     const audio = new Audio(
-      require("./../../../../../Assets/Audio/Vowels/O.mp3")
+      require("./../../../../../Assets/Audio/Consonants/Z.mp3")
     );
     audio.play();
     setTimeout(() => {
@@ -30,6 +30,7 @@ const VowelO = () => {
           className="w-full h-full object-fit"
         />
       </div>
+
       <div className="content relative z-10 h-full">
         {/* header */}
         <div className="header flex w-full h-[75px] items-center justify-between">
@@ -55,7 +56,7 @@ const VowelO = () => {
         {/* body */}
         <div className="body flex w-full justify-between items-center">
           <button
-            onClick={() => navigate("/phonological-path/bd/vowelI")}
+            onClick={() => navigate("/phonological-path/bd/consonantY")}
             disabled={playing}
             className="disabled:opacity-50"
           >
@@ -66,19 +67,19 @@ const VowelO = () => {
           </button>
           <div className="letter-group flex justify-between items-center">
             <img
-              src={require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Oo.png")}
+              src={require("./../../../../../Assets/Images/Phonological/Alphabets Module/Consonants/Zz.png")}
               className="letter w-[374px] h-[263px] mr-10"
               alt=""
             />
             <img
-              src={require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Orange.png")}
+              src={require("./../../../../../Assets/Images/Phonological/Alphabets Module/Consonants/26.png")}
               className="object w-[286px] h-[313px]"
               alt=""
             />
           </div>
           <button
-            onClick={() => navigate("/phonological-path/bd/vowelU")}
-            disabled={playing}
+            onClick={() => navigate("/phonological-path/bd/consonantZ")}
+            disabled
             className="disabled:opacity-50"
           >
             <ChevronRight
@@ -117,4 +118,4 @@ const VowelO = () => {
   );
 };
 
-export default VowelO;
+export default ConsonantZ;
