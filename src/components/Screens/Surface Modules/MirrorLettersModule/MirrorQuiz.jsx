@@ -208,6 +208,13 @@ const MirrorQuiz = () => {
       if (response.data.Error === false) {
         console.log("initial: ", response.data);
         setCurrentQuestion(response.data.Data.Progress);
+        if (response.data.Data.Completed === true) {
+          setBtnTempDisabled(true);
+          setShowPopup(true);
+          window.alert(
+            "You have completed this quiz previously. Reset Progress on your profile to take the quiz again."
+          );
+        }
       } else {
         Notify({
           title: "Error",
@@ -280,7 +287,11 @@ const MirrorQuiz = () => {
         {/* body */}
         <div className="body flex w-full justify-between items-center">
           {currentQuestion > 0 ? (
-            <button onClick={handlePrevious}>
+            <button
+              onClick={handlePrevious}
+              disabled={btnTempDisabled}
+              className="disabled:opacity-50"
+            >
               <ChevronLeft
                 className="left w-[125px] h-[125px]"
                 style={{ color: Colors.Black }}
@@ -412,6 +423,7 @@ const MirrorQuiz = () => {
               disabled={!selectP1 && !selectP2 && !selectQ1 && !selectQ2}
               onClick={handleNext}
               diabled={btnTempDisabled}
+              className="disabled:opacity-50"
             >
               <ChevronRight
                 className="right w-[125px] h-[125px]"
@@ -424,7 +436,7 @@ const MirrorQuiz = () => {
           ) : (
             <ChevronRight
               className="right w-[125px] h-[125px]"
-              style={{ color: Colors.Black }}
+              style={{ color: Colors.Black, opacity: 0.5 }}
             />
           )}
         </div>
@@ -469,13 +481,14 @@ const MirrorQuiz = () => {
           )}
 
           <button
-            className={`px-10 py-5 bg-blue-500 text-white text-lg font-[Nunito] font-bold`}
+            className={`px-10 py-5 bg-blue-500 text-white text-lg font-[Nunito] font-bold disabled:opacity-0`}
             style={{
               borderRadius: 20,
               backgroundColor: Colors.Pompelmo,
             }}
             onClick={handleSubmit}
             disabled={
+              btnTempDisabled ||
               currentQuestion < 1 ||
               (!selectP1 && !selectP2 && !selectQ1 && !selectQ2)
             }
@@ -537,13 +550,24 @@ const MirrorQuiz = () => {
                 justifySelf: "center",
               }}
             />
-            <p
-              className="text-lg font-semibold font-[Nunito]"
-              style={{ color: Colors.Black }}
-            >
-              Well done young scholar, you have <br /> finished your very first
-              lesson. Its time to <br /> find out what you know. Lets go!!! 😁
-            </p>
+            {btnTempDisabled ? (
+              <p
+                className="text-lg font-semibold font-[Nunito]"
+                style={{ color: Colors.Black }}
+              >
+                You have completed this quiz previously. <br /> Reset the
+                progress on your profile to take the quiz again.
+              </p>
+            ) : (
+              <p
+                className="text-lg font-semibold font-[Nunito]"
+                style={{ color: Colors.Black }}
+              >
+                Well done young scholar, you have <br /> finished your very
+                first lesson. Its time to <br /> find out what you know. Lets
+                go!!! 😁
+              </p>
+            )}
 
             {/* Dog Image (positioned outside but touching bottom-left border of popup) */}
             <img
@@ -574,11 +598,19 @@ const MirrorQuiz = () => {
               <X size={46} color={Colors.White} className="icon" />
             </button>
 
-            <img
-              src={require("./../../../../Assets/Images/AssesmentPage/success.png")}
-              alt="success"
-              className="w-[416px] h-[60px] my-3"
-            />
+            {finalScore !== 2 ? (
+              <img
+                src={require("./../../../../Assets/Images/AssesmentPage/fail.png")}
+                alt="fail"
+                className="w-[416px] h-[60px] my-3"
+              />
+            ) : (
+              <img
+                src={require("./../../../../Assets/Images/AssesmentPage/success.png")}
+                alt="success"
+                className="w-[416px] h-[60px] my-3"
+              />
+            )}
             <img
               src={require("./../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Owl.png")}
               alt="Owl"
@@ -586,17 +618,17 @@ const MirrorQuiz = () => {
             />
             {finalScore === 0 ? (
               <p
-                className="successTitle text-[36px] font-[Nunito] my-1"
-                style={{ color: Colors.Pompelmo, fontWeight: "bolder" }}
+                className="successTitle text-[24px] font-[Nunito] my-1"
+                style={{ color: Colors.Black, fontWeight: "bolder" }}
               >
-                Not Bad. Keep Trying!
+                You will get it next time. Score({finalScore})
               </p>
             ) : finalScore === 1 ? (
               <p
-                className="successTitle text-[36px] font-[Nunito] my-1"
-                style={{ color: Colors.Orange, fontWeight: "bolder" }}
+                className="successTitle text-[24px] font-[Nunito] my-1"
+                style={{ color: Colors.Black, fontWeight: "bolder" }}
               >
-                Nice Work!
+                You will get it next time. Score({finalScore})
               </p>
             ) : (
               <p

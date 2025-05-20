@@ -139,7 +139,7 @@ const Blending = () => {
           </div>
         </div>
         {/* buttons */}
-        <div className="buttons flex w-full justify-between mt-2">
+        <div className="buttons flex w-full mt-2">
           {/* blemding Image with Text Overlay */}
           <button
             className="btn relative w-[40%] mx-auto mt-8"
@@ -149,7 +149,7 @@ const Blending = () => {
           >
             <img
               src={require("./../../../../Assets/Images/Phonological/Blending Module/one.png")}
-              alt="Vowels"
+              alt="Blanding"
               className="w-[474px] h-[364px]"
             />
           </button>
