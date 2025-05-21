@@ -154,26 +154,32 @@ const MirrorQuiz = () => {
   const handleSelectP1 = () => {
     setSelectP1(!selectP1);
     // setSelectP2(false);
-    setSelectQ1(false);
-    setSelectQ2(false);
+
+    // setSelectQ1(false);
+    // setSelectQ2(false);
   };
   const handleSelectP2 = () => {
     setSelectP2(!selectP2);
     // setSelectP1(false);
-    setSelectQ1(false);
-    setSelectQ2(false);
+
+    // setSelectQ1(false);
+    // setSelectQ2(false);
   };
   const handleSelectQ1 = () => {
     setSelectQ1(!selectQ1);
-    setSelectP2(false);
-    setSelectP1(false);
+
+    // setSelectP2(false);
+    // setSelectP1(false);
+
     // setSelectQ2(false);
   };
   const handleSelectQ2 = () => {
     setSelectQ2(!selectQ2);
-    setSelectP2(false);
+    // setSelectP2(false); -
+
     // setSelectQ1(false);
-    setSelectP1(false);
+
+    // setSelectP1(false); -
   };
 
   const StartQuiz = async () => {
