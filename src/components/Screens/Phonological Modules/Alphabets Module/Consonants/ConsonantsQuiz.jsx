@@ -9,14 +9,14 @@ import Notify from "../../../../Notification/Notify";
 
 const questions = [
   {
-    question: "Which letter makes the Aa sound?",
+    question: "Which letter makes the Gg sound?",
   },
   {
-    question: "Which letter makes the Aa sound?",
+    question: "Which letter makes the Zz sound?",
   },
 ];
 
-const VowelQuiz = () => {
+const ConsonantQuiz = () => {
   const navigate = useNavigate();
   const [showPopup, setShowPopup] = useState(true);
   const [playing, setPlaying] = useState(false);
@@ -34,9 +34,7 @@ const VowelQuiz = () => {
   const playSound = () => {
     setPlaying(true);
     const audio = new Audio(
-      currentQuestion === 0
-        ? require("./../../../../../Assets/Audio/Vowels/A.mp3")
-        : require("./../../../../../Assets/Audio/Vowels/O.mp3")
+      require("./../../../../../Assets/Audio/Vowels/A.mp3")
     );
     audio.play();
     setTimeout(() => {
@@ -606,4 +604,4 @@ const VowelQuiz = () => {
   );
 };
 
-export default VowelQuiz;
+export default ConsonantQuiz;
