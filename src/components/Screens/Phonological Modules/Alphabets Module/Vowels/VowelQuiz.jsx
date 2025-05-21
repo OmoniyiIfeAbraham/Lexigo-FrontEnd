@@ -96,6 +96,7 @@ const VowelQuiz = () => {
   };
 
   const handleSubmit = async () => {
+    setBtnTempDisabled(true);
     const Data = await localStorage.getItem("Profile");
     const parsedData = JSON.parse(Data);
 
@@ -142,6 +143,8 @@ const VowelQuiz = () => {
         message: errorMessage,
         Type: "danger",
       });
+    } finally {
+      setBtnTempDisabled(false);
     }
   };
 
@@ -288,7 +291,7 @@ const VowelQuiz = () => {
           {currentQuestion > 0 ? (
             <button
               onClick={handlePrevious}
-              disabled={btnTempDisabled}
+              disabled={btnTempDisabled || playing}
               className="disabled:opacity-50"
             >
               <ChevronLeft
@@ -390,7 +393,9 @@ const VowelQuiz = () => {
           {currentQuestion < 1 ? (
             <button
               disabled={
-                (!selectedA && !selectedE && !selectedO) || btnTempDisabled
+                (!selectedA && !selectedE && !selectedO) ||
+                btnTempDisabled ||
+                playing
               }
               onClick={handleNext}
               className="disabled:opacity-50"
@@ -452,7 +457,10 @@ const VowelQuiz = () => {
             }}
             onClick={handleSubmit}
             disabled={
-              currentQuestion < 1 || (!selectedA && !selectedE && !selectedO)
+              currentQuestion < 1 ||
+              (!selectedA && !selectedE && !selectedO) ||
+              playing ||
+              btnTempDisabled
             }
           >
             Submit

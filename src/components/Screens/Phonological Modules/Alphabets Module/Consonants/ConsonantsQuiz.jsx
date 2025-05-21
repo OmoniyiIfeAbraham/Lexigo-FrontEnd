@@ -9,10 +9,10 @@ import Notify from "../../../../Notification/Notify";
 
 const questions = [
   {
-    question: "Which letter makes the Gg sound?",
+    question: "Which letter makes the Cc sound?",
   },
   {
-    question: "Which letter makes the Zz sound?",
+    question: "Which letter makes the Ll sound?",
   },
 ];
 
@@ -22,9 +22,9 @@ const ConsonantQuiz = () => {
   const [playing, setPlaying] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [showResult, setShowResult] = useState(false);
-  const [selectedA, setSelectedA] = useState(false);
-  const [selectedE, setSelectedE] = useState(false);
-  const [selectedO, setSelectedO] = useState(false);
+  const [selectedC, setSelectedC] = useState(false);
+  const [selectedF, setSelectedF] = useState(false);
+  const [selectedL, setSelectedL] = useState(false);
   const [loading, setLoading] = useState(true);
   const [score, setScore] = useState(0);
   const [finalScore, setFinalScore] = useState(0);
@@ -34,7 +34,9 @@ const ConsonantQuiz = () => {
   const playSound = () => {
     setPlaying(true);
     const audio = new Audio(
-      require("./../../../../../Assets/Audio/Vowels/A.mp3")
+      currentQuestion === 0
+        ? require("./../../../../../Assets/Audio/Consonants/C.mp3")
+        : require("./../../../../../Assets/Audio/Consonants/L.mp3")
     );
     audio.play();
     setTimeout(() => {
@@ -50,8 +52,8 @@ const ConsonantQuiz = () => {
     let newScore = score;
 
     if (
-      (currentQuestion === 0 && selectedA) ||
-      (currentQuestion === 1 && selectedO)
+      (currentQuestion === 0 && selectedC) ||
+      (currentQuestion === 1 && selectedL)
     ) {
       console.log(`Question ${currentQuestion + 1}: ✅ Correct`);
       newScore += 1;
@@ -63,7 +65,7 @@ const ConsonantQuiz = () => {
 
     try {
       await axios.get(
-        `${BaseUrl}/api/phonological/quiz/alphabets/vowel/progress/add?level=${currentQuestion}&score=${newScore}`,
+        `${BaseUrl}/api/phonological/quiz/alphabets/consonant/progress/add?level=${currentQuestion}&score=${newScore}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -88,20 +90,21 @@ const ConsonantQuiz = () => {
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion((prev) => prev + 1);
     }
-    setSelectedA(false);
-    setSelectedE(false);
-    setSelectedO(false);
+    setSelectedC(false);
+    setSelectedF(false);
+    setSelectedL(false);
   };
 
   const handleSubmit = async () => {
+    setBtnTempDisabled(true);
     const Data = await localStorage.getItem("Profile");
     const parsedData = JSON.parse(Data);
 
     let newScore = 0;
 
     if (
-      (currentQuestion === 0 && selectedA) ||
-      (currentQuestion === 1 && selectedO)
+      (currentQuestion === 0 && selectedC) ||
+      (currentQuestion === 1 && selectedL)
     ) {
       console.log(`Question ${currentQuestion + 1}: ✅ Correct`);
       newScore += 1;
@@ -112,7 +115,7 @@ const ConsonantQuiz = () => {
 
     try {
       const response = await axios.get(
-        `${BaseUrl}/api/phonological/quiz/alphabets/vowel/progress/add?level=${currentQuestion}&score=${newScore}`,
+        `${BaseUrl}/api/phonological/quiz/alphabets/consonant/progress/add?level=${currentQuestion}&score=${newScore}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -140,6 +143,8 @@ const ConsonantQuiz = () => {
         message: errorMessage,
         Type: "danger",
       });
+    } finally {
+      setBtnTempDisabled(false);
     }
   };
 
@@ -147,30 +152,30 @@ const ConsonantQuiz = () => {
     if (currentQuestion > 0) {
       setCurrentQuestion((prev) => prev - 1);
     }
-    setSelectedA(false);
-    setSelectedE(false);
-    setSelectedO(false);
+    setSelectedC(false);
+    setSelectedF(false);
+    setSelectedL(false);
     setScore(0);
   };
 
   console.log(currentQuestion);
 
-  const handleAChange = () => {
-    setSelectedA(!selectedA);
-    setSelectedE(false);
-    setSelectedO(false);
+  const handleCChange = () => {
+    setSelectedC(!selectedC);
+    setSelectedF(false);
+    setSelectedL(false);
   };
 
-  const handleEChange = () => {
-    setSelectedE(!selectedE);
-    setSelectedA(false);
-    setSelectedO(false);
+  const handleFChange = () => {
+    setSelectedF(!selectedF);
+    setSelectedC(false);
+    setSelectedL(false);
   };
 
-  const handleOChange = () => {
-    setSelectedO(!selectedO);
-    setSelectedE(false);
-    setSelectedA(false);
+  const handleLChange = () => {
+    setSelectedL(!selectedL);
+    setSelectedF(false);
+    setSelectedC(false);
   };
 
   const StartQuiz = async () => {
@@ -189,7 +194,7 @@ const ConsonantQuiz = () => {
 
       // console.log(`Bearer ${parsedData.Auth}`);
 
-      let url = `${BaseUrl}/api/phonological/quiz/alphabets/vowel/quiz/start`;
+      let url = `${BaseUrl}/api/phonological/quiz/alphabets/consonant/quiz/start`;
 
       let response = await axios.post(
         url,
@@ -286,7 +291,7 @@ const ConsonantQuiz = () => {
           {currentQuestion > 0 ? (
             <button
               onClick={handlePrevious}
-              disabled={btnTempDisabled}
+              disabled={btnTempDisabled || playing}
               className="disabled:opacity-50"
             >
               <ChevronLeft
@@ -332,7 +337,7 @@ const ConsonantQuiz = () => {
                 {/* {questions[currentQuestion].question} */}
                 Which letter makes the{" "}
                 <b style={{ color: Colors.Pompelmo }} className="text-[32px]">
-                  Aa
+                  Cc
                 </b>{" "}
                 sound?
               </h2>
@@ -344,40 +349,40 @@ const ConsonantQuiz = () => {
                 {/* {questions[currentQuestion].question} */}
                 Which letter makes the{" "}
                 <b style={{ color: Colors.Pompelmo }} className="text-[32px]">
-                  Oo
+                  Ll
                 </b>{" "}
                 sound?
               </h2>
             )}
             <div className="options w-full flex justify-between px-32">
-              <button onClick={handleAChange}>
+              <button onClick={handleCChange}>
                 <img
                   src={
-                    selectedA
-                      ? require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Option 1-S.png")
-                      : require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Option 1.png")
+                    selectedC
+                      ? require("./../../../../../Assets/Images/Phonological/Alphabets Module/Consonants/Option 1-S.png")
+                      : require("./../../../../../Assets/Images/Phonological/Alphabets Module/Consonants/Option 1.png")
                   }
                   className="option-btn w-[162px] h-[154px]"
                   alt=""
                 />
               </button>
-              <button onClick={handleEChange}>
+              <button onClick={handleFChange}>
                 <img
                   src={
-                    selectedE
-                      ? require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Option 2-S.png")
-                      : require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Option 2.png")
+                    selectedF
+                      ? require("./../../../../../Assets/Images/Phonological/Alphabets Module/Consonants/Option 2-S.png")
+                      : require("./../../../../../Assets/Images/Phonological/Alphabets Module/Consonants/Option 2.png")
                   }
                   className="option-btn w-[162px] h-[154px]"
                   alt=""
                 />
               </button>
-              <button onClick={handleOChange}>
+              <button onClick={handleLChange}>
                 <img
                   src={
-                    selectedO
-                      ? require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Option 3-S.png")
-                      : require("./../../../../../Assets/Images/Phonological/Alphabets Module/Vowels/Option 3.png")
+                    selectedL
+                      ? require("./../../../../../Assets/Images/Phonological/Alphabets Module/Consonants/Option 3-S.png")
+                      : require("./../../../../../Assets/Images/Phonological/Alphabets Module/Consonants/Option 3.png")
                   }
                   className="option-btn w-[162px] h-[154px]"
                   alt=""
@@ -388,7 +393,9 @@ const ConsonantQuiz = () => {
           {currentQuestion < 1 ? (
             <button
               disabled={
-                (!selectedA && !selectedE && !selectedO) || btnTempDisabled
+                (!selectedC && !selectedF && !selectedL) ||
+                btnTempDisabled ||
+                playing
               }
               onClick={handleNext}
               className="disabled:opacity-50"
@@ -450,7 +457,10 @@ const ConsonantQuiz = () => {
             }}
             onClick={handleSubmit}
             disabled={
-              currentQuestion < 1 || (!selectedA && !selectedE && !selectedO)
+              currentQuestion < 1 ||
+              (!selectedC && !selectedF && !selectedL) ||
+              playing ||
+              btnTempDisabled
             }
           >
             Submit

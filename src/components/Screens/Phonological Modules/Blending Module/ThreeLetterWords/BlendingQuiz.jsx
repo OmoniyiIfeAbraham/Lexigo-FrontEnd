@@ -99,6 +99,7 @@ const BlendingQuiz = () => {
   };
 
   const handleSubmit = async () => {
+    setBtnTempDisabled(true);
     const Data = await localStorage.getItem("Profile");
     const parsedData = JSON.parse(Data);
 
@@ -145,6 +146,8 @@ const BlendingQuiz = () => {
         message: errorMessage,
         Type: "danger",
       });
+    } finally {
+      setBtnTempDisabled(true);
     }
   };
 
@@ -480,7 +483,9 @@ const BlendingQuiz = () => {
             onClick={handleSubmit}
             disabled={
               currentQuestion < 1 ||
-              (!selectedFan && !selectedPan && !selectedCat)
+              (!selectedFan && !selectedPan && !selectedCat) ||
+              playing ||
+              btnTempDisabled
             }
           >
             Submit
@@ -507,7 +512,7 @@ const BlendingQuiz = () => {
               <X size={46} color={Colors.White} className="icon" />
             </button>
 
-            {finalScore !== 2 ? (
+            {finalScore < 2 ? (
               <img
                 src={require("./../../../../../Assets/Images/AssesmentPage/fail.png")}
                 alt="fail"

@@ -604,7 +604,7 @@ const MirrorQuiz = () => {
               <X size={46} color={Colors.White} className="icon" />
             </button>
 
-            {finalScore !== 2 ? (
+            {finalScore < 2 ? (
               <img
                 src={require("./../../../../Assets/Images/AssesmentPage/fail.png")}
                 alt="fail"

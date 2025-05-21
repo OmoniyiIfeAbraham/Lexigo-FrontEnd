@@ -48,6 +48,7 @@ import ConsonantX from "./components/Screens/Phonological Modules/Alphabets Modu
 import ConsonantY from "./components/Screens/Phonological Modules/Alphabets Module/Consonants/ConsonantY";
 import ConsonantZ from "./components/Screens/Phonological Modules/Alphabets Module/Consonants/ConsonantZ";
 import GeneralQuiz from "./components/Screens/Landing/Quiz";
+import ConsonantQuiz from "./components/Screens/Phonological Modules/Alphabets Module/Consonants/ConsonantsQuiz";
 
 function App() {
   return (
@@ -184,6 +185,10 @@ function App() {
           <Route
             path="/phonological-path/bd/consonantZ"
             element={<ConsonantZ />}
+          />
+          <Route
+            path="/phonological-path/al/consonant/quiz"
+            element={<ConsonantQuiz />}
           />
           {/* mirror letters */}
           <Route path="/surface-path/mirror" element={<MirrorLetters />} />

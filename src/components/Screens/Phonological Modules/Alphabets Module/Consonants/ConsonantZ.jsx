@@ -78,8 +78,8 @@ const ConsonantZ = () => {
             />
           </div>
           <button
-            onClick={() => navigate("/phonological-path/bd/consonantZ")}
-            disabled
+            onClick={() => navigate("/phonological-path/al/consonant/quiz")}
+            disabled={playing}
             className="disabled:opacity-50"
           >
             <ChevronRight
